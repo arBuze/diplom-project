@@ -8,6 +8,10 @@ export default function ProductCard(props) {
     sale
   } = props.card;
 
+  function handleClick() {
+    
+  }
+
   return(
     <li className="new-products__product-card">
               <div className="new-products__img-container">
