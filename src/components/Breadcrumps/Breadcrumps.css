@@ -1,0 +1,38 @@
+.bread-crumps__links {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.bread-crumps__item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.bread-crumps__link {
+  font-size: 18px;
+  line-height: 24px;
+  color: #323F4B;
+  text-decoration: none;
+  transition: opacity .2s ease-in-out;
+}
+
+.bread-crumps__link:not(.bread-crumps__link_active):hover {
+  opacity: .8;
+}
+
+.bread-crumps__link_active {
+  font-weight: 500;
+  border-bottom: 1px solid #3E4C59;
+  cursor: default;
+}
+
+.bread-crumps__dash {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background-color: #3E4C59;
+}

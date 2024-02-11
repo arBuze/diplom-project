@@ -1,0 +1,35 @@
+.search-form {
+  width: 55%;
+  display: flex;
+}
+
+.search-form_type_header {
+  width: 420px;
+}
+
+.search-form__input {
+  width: calc(100% - 40px);
+  height: 40px;
+  box-sizing: border-box;
+  border: none;
+  font-size: 18px;
+  padding: 5px 25px;
+}
+
+.search-form__input:focus {
+  outline: none;
+  font-weight: 500;
+}
+
+.search-form__button {
+  width: 40px;
+  height: 40px;
+  background: #FFF no-repeat url('../../images/search-black.svg') center;
+  border: none;
+  padding: 10px;
+}
+
+.search-form__button:hover {
+  cursor: pointer;
+  opacity: .9;
+}

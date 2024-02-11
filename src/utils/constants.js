@@ -5,7 +5,7 @@ export const cards = [
     image: image,
     productName: 'Корпус 12-1242 2452 54452 13546 225235 624624523',
     productCost: '1200 руб.',
-    sale: '-33%',
+    sale: '1400',
     id: 1,
   },
   {
@@ -43,5 +43,44 @@ export const cards = [
     sale: '-33%',
     id: 6,
   },
+  {
+    image: image,
+    productName: 'Корпус 12-1242 2452 54452 13546 225235 624624523',
+    productCost: '1200 руб.',
+    sale: '-33%',
+    id: 7,
+  },
+  {
+    image: image,
+    productName: 'Корпус 12-1242 2452 54452 13546 225235 624624523',
+    productCost: '1200 руб.',
+    sale: '-33%',
+    id: 8,
+  },
+  {
+    image: image,
+    productName: 'Корпус 12-1242 2452 54452 13546 225235 624624523',
+    productCost: '1200 руб.',
+    sale: '-33%',
+    id: 9,
+  },
 ];
 
+export const linkMatches = [
+  {
+    name: 'Каталог',
+    path: '/catalog',
+  },
+  {
+    name: 'Корпуса',
+    path: '/catalog/computer-cases',
+  },
+  {
+    name: 'Процессоры',
+    path: '/catalog/processors',
+  },
+  {
+    name: 'Материнские платы',
+    path: '/catalog/motherboards',
+  },
+];
