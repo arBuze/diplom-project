@@ -31,9 +31,7 @@ export default function Section({ title, cards }) {
 
   return(
     <section className="new-products">
-        {/* <div className="new-products__decor"> */}
-          <h2 className="new-products__title">{title}</h2>
-       {/*  </div> */}
+        <h2 className="new-products__title">{title}</h2>
         <div className="new-products__show">
           <div className="new-products__container">
             <ul className="new-products__list" style={{transform: `translate(${-265 * numberOfSwipes}px)`}}>
