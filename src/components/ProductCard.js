@@ -9,31 +9,31 @@ export default function ProductCard(props) {
   } = props.card;
 
   return(
-    <li className="new-products__product-card">
-              <div className="new-products__img-container">
-                <img className="new-products__product-img" src={image} alt={productName} />
-                <button className="new-products__like" type="button"></button>
-                <ul className="new-products__rating">
-                  <li className="new-products__star"></li>
-                  <li className="new-products__star"></li>
-                  <li className="new-products__star"></li>
-                  <li className="new-products__star"></li>
-                  <li className="new-products__star"></li>
-                </ul>
-              </div>
-              <div className="new-products__info">
-                <h3 className="new-products__name">{productName}</h3>
-                <span className="new-products__cost">{productCost}</span>
-                <span className="new-products__cost last-cost">{sale}</span>
-                <form className="new-products__add-form" name="add-to-cart">
-                  <button className="new-products__add-btn" type="submit"></button>
-                  <div className="new-products__add-multiple">
-                    <button className="new-products__decrease-btn" type="submit">-</button>
-                    <span className="new-products__quantity">1</span>
-                    <button className="new-products__increase-btn" type="submit">+</button>
-                  </div>
-                </form>
-              </div>
-            </li>
+    <li className="products-list__card">
+      <div className="products-list__img-container">
+        <img className="products-list__product-img" src={image} alt={productName} />
+        <button className="products-list__like" type="button"></button>
+        <ul className="products-list__rating">
+          <li className="products-list__star"></li>
+          <li className="products-list__star"></li>
+          <li className="products-list__star"></li>
+          <li className="products-list__star"></li>
+          <li className="products-list__star"></li>
+        </ul>
+      </div>
+      <div className="products-list__info">
+        <h3 className="products-list__name">{productName}</h3>
+        <span className="products-list__cost">{productCost}</span>
+        <span className="products-list__cost last-cost">{sale}</span>
+        <form className="products-list__add-form" name="add-to-cart">
+          <button className="products-list__add-btn" type="submit"></button>
+          <div className="products-list__add-multiple">
+            <button className="products-list__decrease-btn" type="submit">-</button>
+            <span className="products-list__quantity">1</span>
+            <button className="products-list__increase-btn" type="submit">+</button>
+          </div>
+        </form>
+      </div>
+    </li>
   );
 }
