@@ -1,5 +1,5 @@
 import './ProductsList.css';
-import ProductCard from '../ProductCard';
+import ProductCard from '../ProductCard/ProductCard';
 import { cards } from '../../utils/constants';
 import { useState, useEffect } from 'react';
 

@@ -1,6 +1,7 @@
 /* import oneComp from '../images/one-computer.jpg'; */
+import useComponentDimensions from '../hooks/useComponentDimensions';
 import useWindowDimensions from '../hooks/useWindowDimensions';
-import ProductCard from "./ProductCard";
+import ProductCard from "./ProductCard/ProductCard";
 import { useEffect, useState } from 'react';
 
 export default function Section({ title, cards }) {
@@ -8,6 +9,7 @@ export default function Section({ title, cards }) {
   const [swipeDots, setSwipeDots] = useState([]);
   const { width } = useWindowDimensions();
   const numberOfCards = width >= 1280 ? 5 : 4;
+  /* const cardWidth = width >= 1440 ? (1440 - 154 - 15*4) / 5 : width >= 1280 ? (width - 154 - 15*4) / 5 : 200; */
 
   useEffect(() => {
     let array = [];
@@ -23,6 +25,7 @@ export default function Section({ title, cards }) {
     } else {
       setNumberOfSwipes(numberOfSwipes - 1);
     }
+    /* console.log((document.querySelector('.new-products__list').clientWidth - 15*4 - 7)/5); */
   }
 
   function flip(e) {
@@ -34,10 +37,10 @@ export default function Section({ title, cards }) {
         <h2 className="new-products__title">{title}</h2>
         <div className="new-products__show">
           <div className="new-products__container">
-            <ul className="new-products__list" style={{transform: `translate(${-265 * numberOfSwipes}px)`}}>
+            <ul className="new-products__list" style={{transform: `translate(${-(245 + 15) * numberOfSwipes}px)`}}>
               {
                 cards.map((item) => {
-                  return(<ProductCard key={item.id} card={item} />)
+                  return(<ProductCard key={item.id} card={item} width={cardWidth} />)
                 })
               }
             </ul>
@@ -45,7 +48,7 @@ export default function Section({ title, cards }) {
           <ul className="new-products__dots">
             {
               swipeDots.map((item) => {
-                return(<span key={item} className={`new-products__dot ${numberOfSwipes === item ? 'new-products__dot_active' : ''}`} id={item}
+                return(<li key={item} className={`new-products__dot ${numberOfSwipes === item ? 'new-products__dot_active' : ''}`} id={item}
                   onClick={flip} />)
               })
             }
