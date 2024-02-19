@@ -2,7 +2,7 @@ import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
 
-export default function ComputerCases({ width }) {
+export default function ComputerCases() {
   return(
     <section className="computer-cases">
       <h2 className="computer-cases__title">Корпуса</h2>
@@ -17,7 +17,7 @@ export default function ComputerCases({ width }) {
           <button className="computer-cases__line-view-btn" name="line" type="button" />
         </div>
       </div>
-      <ProductsList width={width} />
+      <ProductsList />
     </section>
   );
 };

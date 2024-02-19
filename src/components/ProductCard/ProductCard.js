@@ -1,9 +1,7 @@
 import oneComp from '../../images/one-computer.jpg';
 import './ProductCard.css';
-import { useLocation } from 'react-router-dom';
 
 export default function ProductCard(props) {
-  const { pathname } = useLocation();
   const {
     productName,
     image,
@@ -12,7 +10,7 @@ export default function ProductCard(props) {
   } = props.card;
 
   return(
-    <li className="products-list__card" style={{width: `${props.width}px`}}>
+    <li className="products-list__card">
       <div className="products-list__img-container">
         <img className="products-list__product-img" src={image} alt={productName} />
         <button className="products-list__like" type="button"></button>

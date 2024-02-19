@@ -1,5 +1,4 @@
 /* import oneComp from '../images/one-computer.jpg'; */
-import useComponentDimensions from '../hooks/useComponentDimensions';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import ProductCard from "./ProductCard/ProductCard";
 import { useEffect, useState } from 'react';
@@ -40,7 +39,7 @@ export default function Section({ title, cards }) {
             <ul className="new-products__list" style={{transform: `translate(${-(245 + 15) * numberOfSwipes}px)`}}>
               {
                 cards.map((item) => {
-                  return(<ProductCard key={item.id} card={item} width={cardWidth} />)
+                  return(<ProductCard key={item.id} card={item} />)
                 })
               }
             </ul>
