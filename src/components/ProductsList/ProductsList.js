@@ -2,8 +2,9 @@ import './ProductsList.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { cards } from '../../utils/constants';
 import { useState, useEffect } from 'react';
+import ProductCardWide from '../ProductCardWide/ProductCardWide';
 
-export default function ProductsList({ width }) {
+export default function ProductsList({ width, display }) {
   const maxCards = width >= 1280 ? 24 : width >= 768 ? 18 : 8;
   const cardsToAdd = width >= 1280 ? 12 : width >= 768 ? 9 : 4;
   const [cardsVisible, setCardsVisible] = useState([]);
@@ -15,10 +16,14 @@ export default function ProductsList({ width }) {
 
   return(
     <div className="products">
-      <ul className="products__list">
-        {
+      <ul className={`products__list ${display === 'grid' ? 'products__list_type_grid' : 'products__list_type_list'}`}>
+        { display === 'grid' ?
           cards.map((item) => {
             return(<ProductCard key={item.id} card={item} />)
+          })
+          :
+          cards.map((item) => {
+            return(<ProductCardWide key={item.id} card={item} />)
           })
         }
       </ul>

@@ -1,16 +1,19 @@
 import oneComp from '../../images/one-computer.jpg';
 import './ProductCard.css';
+import { useLocation } from 'react-router-dom';
 
-export default function ProductCard(props) {
+export default function ProductCard({ card }) {
   const {
     productName,
     image,
     productCost,
     sale
-  } = props.card;
+  } = card;
+
+  const { pathname } = useLocation();
 
   return(
-    <li className="products-list__card">
+    <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
       <div className="products-list__img-container">
         <img className="products-list__product-img" src={image} alt={productName} />
         <button className="products-list__like" type="button"></button>
@@ -29,11 +32,11 @@ export default function ProductCard(props) {
           <span className="products-list__cost last-cost">{sale}</span>
           <form className="products-list__add-form" name="add-to-cart">
             <button className="products-list__add-btn" type="submit"></button>
-            <div className="products-list__add-multiple">
+            {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>
               <button className="products-list__increase-btn" type="submit">+</button>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

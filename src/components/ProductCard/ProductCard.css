@@ -1,7 +1,15 @@
 .products-list__card {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 2;
+}
+
+.products-list__card_type_slider {
   width: 245px;
-  max-height: 355px;
-  /* height: fit-content; */
   display: block;
   border-radius: 20px;
   background-color: #FFF;
@@ -102,12 +110,12 @@
 }
 
 .products-list__add-btn {
-  width: 100%;
+  width: 65px;
   height: 28px;
   background: #94BFFF url('../../images/shopping-cart-add.svg') no-repeat center;
   border-radius: 18px;
   border: none;
-  display: none;
+  /* display: none; */
 }
 
 .products-list__add-btn:hover {

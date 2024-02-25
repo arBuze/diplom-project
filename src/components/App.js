@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="page">
-      <Header />
+      <Header width={width} />
       <main className="main">
       <Routes>
         <Route path='/' element={<Main />} />

@@ -1,3 +1,4 @@
+import './Main.css';
 import SearchForm from "../SearchForm/SearchForm";
 import Section from "../Section";
 import oneComp from '../../images/one-computer.jpg';

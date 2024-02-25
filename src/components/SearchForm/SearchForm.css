@@ -4,7 +4,18 @@
 }
 
 .search-form_type_header {
-  width: 420px;
+  width: 60%;
+}
+
+@media (min-width: 1440px) {
+  .search-form_type_header {
+    width: 420px;
+  }
+}
+
+.search-form_type_filter {
+  width: 100%;
+  border-bottom: 1px solid #CBD2D9;
 }
 
 .search-form__input {

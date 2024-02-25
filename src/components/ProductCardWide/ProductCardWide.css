@@ -1,0 +1,28 @@
+.wide-list__card {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px #CBD2D9;
+}
+
+.wide-list__img-container {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.wide-list__link_type_image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.wide-list__product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
