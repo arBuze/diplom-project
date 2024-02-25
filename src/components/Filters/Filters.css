@@ -4,6 +4,8 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px #CBD2D9;
   box-sizing: border-box;
+  position: sticky;
+  top: 80px;
   padding: 5px 10px;
 }
 

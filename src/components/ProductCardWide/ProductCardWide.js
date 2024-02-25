@@ -18,14 +18,14 @@ export default function ProductCardWide({ card }) {
         <button className="products-list__like" type="button"></button>
       </div>
       <div className="wide-list__info">
-        <Link to='/'>
+        <Link to='/' className="wide-list__link wide-list__link_type_name" >
           <h3 className="wide-list__name">{productName}</h3>
         </Link>
         <p className="wide-list__description">
         Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem.
         </p>
         <div className="wide-list__cost-info">
-          <ul className="wide-list__rating">
+          <ul className="products-list__rating wide-list__rating">
             <li className="products-list__star"></li>
             <li className="products-list__star"></li>
             <li className="products-list__star"></li>

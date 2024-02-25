@@ -1,0 +1,14 @@
+.top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #FF9B9B url(../../images/angle-up.svg) no-repeat center/cover;
+  border: none;
+}
+
+.hidden {
+  display: none;
+}

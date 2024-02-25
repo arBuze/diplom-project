@@ -6,6 +6,7 @@ import Catalog from './Catalog/Catalog';
 import Footer from './Footer/Footer';
 import ComputerCases from './ComputerCases/ComputerCases';
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import TopButton from './TopButton/TopButton';
 
 function App() {
   const { width } = useWindowDimensions();
@@ -23,6 +24,7 @@ function App() {
       </Routes>
       </main>
       <Footer />
+      <TopButton />
     </div>
   );
 }
