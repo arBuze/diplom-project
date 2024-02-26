@@ -1,7 +1,6 @@
 .wide-list__card {
   width: 100%;
   display: flex;
-  gap: 10px;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 2px 5px #CBD2D9;
@@ -43,11 +42,12 @@
 .wide-list__info {
   width: 100%;
   box-sizing: border-box;
-  padding: 20px 15px;
+  padding: 20px 25px;
 }
 
 .wide-list__link_type_name {
-  font-size: 18px;
+  display: inline-block;
+  height: 48px;
   line-height: 24px;
   color: #000;
   text-decoration: none;
@@ -58,10 +58,41 @@
 }
 
 .wide-list__name {
+  font-size: 20px;
   font-weight: 700;
   margin: 0 0 15px;
 }
 
+.wide-list__description {
+  display: inline-block;
+  height: 80px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.wide-list__cost-info {
+  display: flex;
+  align-items: center;
+}
+
+.wide-list__rating-info {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  margin-right: auto;
+}
+
 .wide-list__rating {
   position: static;
+}
+
+.wide-list__rating-number {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.wide-list__cost {
+  font-size: 18px;
+  line-height: 22px;
+  margin-right: 15px;
 }

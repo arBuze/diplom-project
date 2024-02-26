@@ -25,15 +25,18 @@ export default function ProductCardWide({ card }) {
         Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem.
         </p>
         <div className="wide-list__cost-info">
-          <ul className="products-list__rating wide-list__rating">
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-          </ul>
-          <span className="products-list__cost">{productCost}</span>
-          <span className="products-list__cost last-cost">{sale}</span>
+          <div className="wide-list__rating-info">
+            <ul className="products-list__rating wide-list__rating">
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+            </ul>
+            <span className="wide-list__rating-number">30</span>
+          </div>
+          <span className="wide-list__cost">{productCost}</span>
+          <span className="wide-list__cost last-cost">{sale}</span>
           <form className="products-list__add-form" name="add-to-cart">
             <button className="products-list__add-btn" type="submit"></button>
             {/* <div className="products-list__add-multiple">

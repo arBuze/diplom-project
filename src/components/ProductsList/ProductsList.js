@@ -14,6 +14,14 @@ export default function ProductsList({ width, display }) {
     setNumberOfCards(maxCards);
   }, [maxCards])
 
+  useEffect(() => {
+    setCardsVisible(cards.slice(0, numberOfCards));
+  }, [numberOfCards, cards])
+
+  function handleClick() {
+    setNumberOfCards(numberOfCards + cardsToAdd);
+  }
+
   return(
     <div className="products">
       <ul className={`products__list ${display === 'grid' ? 'products__list_type_grid' : 'products__list_type_list'}`}>
@@ -27,13 +35,32 @@ export default function ProductsList({ width, display }) {
           })
         }
       </ul>
-      <button className="products__more-btn" type="button">показать еще</button>
+      { cards.length > cardsVisible.length &&
+        <button className="products__more-btn" type="button" onClick={handleClick}>
+          показать еще
+        </button>
+      }
       <div className="products__slider">
-        <ul className="products__dots">
-          <li className="products__dot">1</li>
-        </ul>
-        <button className="products__arrow products__arrow_type_left" type="button" />
-        <button className="products__arrow products__arrow_type_right" type="button" />
+        <div className="products__slider-container">
+          <div className="products__dots-container">
+            <ul className="products__dots">
+              <li className="products__dot">1</li>
+              <li className="products__dot">2</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+              <li className="products__dot">3</li>
+            </ul>
+          </div>
+          <button className="products__arrow products__arrow_type_left" type="button" />
+          <button className="products__arrow products__arrow_type_right" type="button" />
+        </div>
       </div>
     </div>
   );

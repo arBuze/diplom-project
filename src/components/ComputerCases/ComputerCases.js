@@ -5,7 +5,7 @@ import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
 
 export default function ComputerCases({ width }) {
-  const [displayType, setDisplaytype] = useState('list');
+  const [displayType, setDisplaytype] = useState('grid');
 
   function onViewChange(e) {
     setDisplaytype(e.target.name);
