@@ -9,6 +9,8 @@ export default function ProductsList({ width, display }) {
   const cardsToAdd = width >= 1280 ? 12 : width >= 768 ? 9 : 4;
   const [cardsVisible, setCardsVisible] = useState([]);
   const [numberOfCards, setNumberOfCards] = useState(0);
+  const [numberOfSwipes, setNumberOfSwipes] = useState(0);
+  const [swipeDots, setSwipeDots] = useState([]);
 
   useEffect(() => {
     setNumberOfCards(maxCards);
@@ -17,6 +19,14 @@ export default function ProductsList({ width, display }) {
   useEffect(() => {
     setCardsVisible(cards.slice(0, numberOfCards));
   }, [numberOfCards, cards])
+
+  useEffect(() => {
+    let array = [];
+    for(let i = 0; i <= (cards.length / maxCards); i = i + 1) {
+      array.push(i);
+    }
+    setSwipeDots(array);
+  }, [cards])
 
   function handleClick() {
     setNumberOfCards(numberOfCards + cardsToAdd);
