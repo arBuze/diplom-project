@@ -1,6 +1,6 @@
 import oneComp from '../../images/one-computer.jpg';
 import './ProductCard.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 export default function ProductCard({ card }) {
   const {
@@ -15,7 +15,9 @@ export default function ProductCard({ card }) {
   return(
     <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
       <div className="products-list__img-container">
-        <img className="products-list__product-img" src={image} alt={productName} />
+        <Link to="/" className="products-list__link products-list__link_type_image">
+          <img className="products-list__product-img" src={image} alt={productName} />
+        </Link>
         <button className="products-list__like" type="button"></button>
         <ul className="products-list__rating">
           <li className="products-list__star"></li>
@@ -26,7 +28,9 @@ export default function ProductCard({ card }) {
         </ul>
       </div>
       <div className="products-list__info">
-        <h3 className="products-list__name">{productName}</h3>
+        <Link to="/" className="products-list__link products-list__link_type_name">
+          <h3 className="products-list__name">{productName}</h3>
+        </Link>
         <div className="product-list__cost-info">
           <span className="products-list__cost">{productCost}</span>
           <span className="products-list__cost last-cost">{sale}</span>
