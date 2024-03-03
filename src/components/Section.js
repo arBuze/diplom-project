@@ -12,11 +12,11 @@ export default function Section({ title, cards }) {
 
   useEffect(() => {
     let array = [];
-    for(let i = 0; i <= cards.length - numberOfCards; i = i + 1) {
+    for (let i = 0; i <= cards.length - numberOfCards; i = i + 1) {
       array.push(i);
     }
     setSwipeDots(array);
-  }, [numberOfCards])
+  }, [numberOfCards, cards])
 
   function swipe(e) {
     if (e.target.id === 'right') {

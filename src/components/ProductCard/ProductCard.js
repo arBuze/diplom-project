@@ -7,7 +7,8 @@ export default function ProductCard({ card }) {
     productName,
     image,
     productCost,
-    sale
+    sale,
+    id
   } = card;
 
   const { pathname } = useLocation();
@@ -15,7 +16,7 @@ export default function ProductCard({ card }) {
   return(
     <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
       <div className="products-list__img-container">
-        <Link to="/" className="products-list__link products-list__link_type_image">
+        <Link to={pathname + '/' + id} className="products-list__link products-list__link_type_image">
           <img className="products-list__product-img" src={image} alt={productName} />
         </Link>
         <button className="products-list__like" type="button"></button>
@@ -28,7 +29,7 @@ export default function ProductCard({ card }) {
         </ul>
       </div>
       <div className="products-list__info">
-        <Link to="/" className="products-list__link products-list__link_type_name">
+        <Link to={pathname + id} className="products-list__link products-list__link_type_name">
           <h3 className="products-list__name">{productName}</h3>
         </Link>
         <div className="product-list__cost-info">

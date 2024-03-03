@@ -13,7 +13,7 @@
   list-style: none;
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 25px;
 }
 
 .products__list_type_grid {
@@ -39,7 +39,7 @@
   color: #FFF;
   border: none;
   padding: 10px 0;
-  margin: 25px 0 15px;
+  margin: 0 0 15px;
   transition: opacity .2s ease-in-out;
 }
 
@@ -51,7 +51,6 @@
 .products__slider {
   width: 100%;
   display: flex;
-  margin: 30px 0 15px;
 }
 
 .products__slider-container {
@@ -60,9 +59,10 @@
 }
 
 .products__dots-container {
-  max-width: 244px;
+  max-width: 154px;
   height: 26px;
   overflow: hidden;
+  padding: 2px;
   margin: 0 auto;
 }
 
@@ -70,7 +70,8 @@
   display: flex;
   list-style: none;
   justify-content: flex-start;
-  gap: 5px;
+  align-self: center;
+  gap: 6px;
   padding: 0;
   margin: 0;
 }
@@ -79,36 +80,59 @@
   width: 26px;
   height: 26px;
   flex-shrink: 0;
-  background-color: #7B93DB;
+  background-color: #cad5f7;
   font-size: 14px;
   line-height: 26px;
   text-align: center;
   border-radius: 50%;
 }
 
+.products__dot_active {
+  background-color: #a4b7f0;
+}
+
+.products__dot:hover {
+  cursor: pointer;
+  box-shadow: 0 0 3px #000;
+}
+
 .products__arrow {
   position: absolute;
   width: 26px;
   height: 26px;
-  top: 0;
+  top: 3px;
   border: none;
-  transition: opacity .2s ease-in-out
-  ;
+  transition: opacity .2s ease-in-out;
+  appearance: none;
 }
 
-.products__arrow:hover {
+.products__arrow_disabled {
+  opacity: .5;
+}
+
+.products__arrow:not(.products__arrow_disabled):hover {
   cursor: pointer;
   opacity: .7;
 }
 
 .products__arrow_type_left {
-  background: transparent url(../../images/angle-small-left.svg);
+  background: transparent url(../../images/angle-small-left.svg) no-repeat center;
   left: -30px;
 }
 
 .products__arrow_type_right {
-  background: transparent url(../../images/angle-small-right.svg);
+  background: transparent url(../../images/angle-small-right.svg) no-repeat center;
   right: -30px;
+}
+
+.products__arrow_type_begin {
+  background: transparent url(../../images/angle-double-small-left.svg) no-repeat center;
+  left: -55px;
+}
+
+.products__arrow_type_end {
+  background: transparent url(../../images/angle-double-small-right.svg) no-repeat center;
+  right: -55px;
 }
 
 @media (min-width: 1148px) {

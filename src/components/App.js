@@ -7,9 +7,13 @@ import Footer from './Footer/Footer';
 import ComputerCases from './ComputerCases/ComputerCases';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 import TopButton from './TopButton/TopButton';
+import useVerticalScroll from '../hooks/useVerticalScroll';
+import ProductView from './ProductView/ProductView';
 
 function App() {
   const { width } = useWindowDimensions();
+  /* const { pathname } = useLocation(); */
+  const scroll = useVerticalScroll();
 
   return (
     <div className="page">
@@ -19,12 +23,13 @@ function App() {
         <Route path='/' element={<Main />} />
         <Route path='/catalog'>
           <Route index element={<Catalog />} />
-          <Route path='computer-cases' element={<ComputerCases width={width} />} />
+          <Route path='computer-cases' element={<ComputerCases width={width} scroll={scroll} />} />
+          <Route path='computer-cases/:id' element={<ProductView />} />
         </Route>
       </Routes>
       </main>
       <Footer />
-      <TopButton />
+      <TopButton scroll={scroll} />
     </div>
   );
 }

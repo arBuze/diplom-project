@@ -3,12 +3,19 @@ import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import Filters from '../Filters/Filters';
 import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
+import { cards } from '../../utils/constants';
 
-export default function ComputerCases({ width }) {
+export default function ComputerCases({ width, scroll }) {
   const [displayType, setDisplaytype] = useState('grid');
+  const [isReversed, setIsReversed] = useState(false);
 
   function onViewChange(e) {
     setDisplaytype(e.target.name);
+  }
+
+  function onReverseBtnClick() {
+    setIsReversed(!isReversed);
+    console.log(cards.reverse());
   }
 
   return(
@@ -27,7 +34,8 @@ export default function ComputerCases({ width }) {
                 <option className="computer-cases__filter-option">По рейтингу</option>
                 <option className="computer-cases__filter-option">По скидке</option>
               </select>
-              <button className="computer-cases__reverse-btn" type="button" />
+              <button className={`computer-cases__reverse-btn ${isReversed ? 'computer-cases__reverse-btn_active' : ''}`} type="button"
+                onClick={onReverseBtnClick} />
             </div>
             <div className="computer-cases__add-container">
               <label className="computer-cases__view-container">
@@ -42,7 +50,7 @@ export default function ComputerCases({ width }) {
               </label>
             </div>
           </div>
-          <ProductsList width={width} display={displayType} />
+          <ProductsList cards={isReversed ? cards.reverse() : cards} width={width} display={displayType} scroll={scroll} isReversed={isReversed} />
         </div>
       </div>
     </section>

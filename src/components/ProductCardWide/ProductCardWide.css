@@ -91,6 +91,14 @@
   line-height: 22px;
 }
 
+.wide-list__status {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 22px;
+  text-decoration: underline;
+  margin-right: 15px;
+}
+
 .wide-list__cost {
   font-size: 18px;
   line-height: 22px;

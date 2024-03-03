@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './Filters.css';
-import SearchForm from '../SearchForm/SearchForm';
 
 export default function Filters({ width }) {
   const [minPrice, setMinPrice] = useState(0);
@@ -28,7 +27,10 @@ export default function Filters({ width }) {
 
   return(
     <form className="filters" name="filters">
-      <SearchForm additional={'search-form_type_filter'} />
+      <fieldset className="filters__field filters__search-field" name="category-search">
+        <input className="filters__search-input" type="text" placeholder="Поиск по категории..." />
+        <button className="filters__search-btn" />
+      </fieldset>
       <fieldset className="filters__field filters__main-check" name="main">
         <label className="filters__check-name">
           <input type="checkbox" className="filters__check" name="in-stock" />

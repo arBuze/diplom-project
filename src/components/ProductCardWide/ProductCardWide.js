@@ -1,24 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './ProductCardWide.css';
 
 export default function ProductCardWide({ card }) {
+  const { pathname } = useLocation();
   const {
     productName,
     image,
     productCost,
-    sale
+    sale,
+    id
   } = card;
 
   return(
     <li className="wide-list__card">
       <div className="wide-list__img-container">
-        <Link to='/' className="wide-list__link wide-list__link_type_image">
+        <Link to={pathname + '/' + id} className="wide-list__link wide-list__link_type_image">
           <img className="wide-list__product-img" src={image} alt={productName} />
         </Link>
         <button className="products-list__like" type="button"></button>
       </div>
       <div className="wide-list__info">
-        <Link to='/' className="wide-list__link wide-list__link_type_name" >
+        <Link to={pathname + '/' + id} className="wide-list__link wide-list__link_type_name" >
           <h3 className="wide-list__name">{productName}</h3>
         </Link>
         <p className="wide-list__description">
@@ -35,6 +37,7 @@ export default function ProductCardWide({ card }) {
             </ul>
             <span className="wide-list__rating-number">30</span>
           </div>
+          <span className="wide-list__status">нет в наличии</span>
           <span className="wide-list__cost">{productCost}</span>
           <span className="wide-list__cost last-cost">{sale}</span>
           <form className="products-list__add-form" name="add-to-cart">

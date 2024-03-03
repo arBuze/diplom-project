@@ -13,11 +13,6 @@
   }
 }
 
-.search-form_type_filter {
-  width: 100%;
-  border-bottom: 1px solid #CBD2D9;
-}
-
 .search-form__input {
   width: calc(100% - 40px);
   height: 40px;
