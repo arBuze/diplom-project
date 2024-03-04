@@ -5,7 +5,7 @@ import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
 import { cards } from '../../utils/constants';
 
-export default function ComputerCases({ width, scroll }) {
+export default function ComputerCases({ width, scroll, onProductClick }) {
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
 
@@ -50,7 +50,10 @@ export default function ComputerCases({ width, scroll }) {
               </label>
             </div>
           </div>
-          <ProductsList cards={isReversed ? cards.reverse() : cards} width={width} display={displayType} scroll={scroll} isReversed={isReversed} />
+          <ProductsList cards={isReversed ? cards.reverse() : cards}
+            width={width} display={displayType}
+            scroll={scroll} isReversed={isReversed}
+            onProductClick={onProductClick} />
         </div>
       </div>
     </section>

@@ -9,24 +9,37 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import TopButton from './TopButton/TopButton';
 import useVerticalScroll from '../hooks/useVerticalScroll';
 import ProductView from './ProductView/ProductView';
+import { CurrentUserContext } from '../contexts/CurrentUserContexts';
+import { CurrentCardContext } from '../contexts/CurrentCardContext';
+import { useState } from 'react';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentCard, setCurrentCard] = useState({});
   const { width } = useWindowDimensions();
   /* const { pathname } = useLocation(); */
   const scroll = useVerticalScroll();
+
+  function handleProductClick(card) {
+    setCurrentCard(card);
+  }
 
   return (
     <div className="page">
       <Header width={width} />
       <main className="main">
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/catalog'>
-          <Route index element={<Catalog />} />
-          <Route path='computer-cases' element={<ComputerCases width={width} scroll={scroll} />} />
-          <Route path='computer-cases/:id' element={<ProductView />} />
-        </Route>
-      </Routes>
+        <CurrentUserContext.Provider value={currentUser}>
+          <CurrentCardContext.Provider value={currentCard}>
+            <Routes>
+              <Route path='/' element={<Main onProductClick={handleProductClick} />} />
+              <Route path='/catalog'>
+                <Route index element={<Catalog />} />
+                <Route path='computer-cases' element={<ComputerCases width={width} scroll={scroll} onProductClick={handleProductClick} />} />
+                <Route path='computer-cases/:id' element={<ProductView card={currentCard} />} />
+              </Route>
+            </Routes>
+          </CurrentCardContext.Provider>
+        </CurrentUserContext.Provider>
       </main>
       <Footer />
       <TopButton scroll={scroll} />

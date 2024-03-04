@@ -3,7 +3,7 @@ import useWindowDimensions from '../hooks/useWindowDimensions';
 import ProductCard from "./ProductCard/ProductCard";
 import { useEffect, useState } from 'react';
 
-export default function Section({ title, cards }) {
+export default function Section({ title, cards, onProductClick }) {
   const [numberOfSwipes, setNumberOfSwipes] = useState(0);
   const [swipeDots, setSwipeDots] = useState([]);
   const { width } = useWindowDimensions();
@@ -39,7 +39,7 @@ export default function Section({ title, cards }) {
             <ul className="new-products__list" style={{transform: `translate(${-(245 + 15) * numberOfSwipes}px)`}}>
               {
                 cards.map((item) => {
-                  return(<ProductCard key={item.id} card={item} />)
+                  return(<ProductCard key={item.id} card={item} onProductClick={onProductClick} />)
                 })
               }
             </ul>

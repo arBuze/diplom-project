@@ -5,7 +5,7 @@ import oneComp from '../../images/one-computer.jpg';
 import { cards } from "../../utils/constants";
 import { Link } from "react-router-dom";
 
-export default function Main() {
+export default function Main({ onProductClick }) {
   return(
     <>
       <section className="intro">
@@ -15,8 +15,8 @@ export default function Main() {
           <SearchForm />
         </div>
       </section>
-      <Section title='Новинки' cards={cards} /> {/* передавать название секции и карточки */}
-      <Section title='Акции' cards={cards} />
+      <Section title='Новинки' cards={cards} onProductClick={onProductClick} /> {/* передавать название секции и карточки */}
+      <Section title='Акции' cards={cards} onProductClick={onProductClick} />
 
       <section className="catalog-preview">
         <h2 className="catalog-preview__title">Кaталог</h2>

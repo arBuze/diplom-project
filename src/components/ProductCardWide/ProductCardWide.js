@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import './ProductCardWide.css';
 
-export default function ProductCardWide({ card }) {
+export default function ProductCardWide({ card, onProductClick }) {
   const { pathname } = useLocation();
   const {
     productName,
@@ -10,6 +10,10 @@ export default function ProductCardWide({ card }) {
     sale,
     id
   } = card;
+
+  function handleLinkClick() {
+    onProductClick(card);
+  }
 
   return(
     <li className="wide-list__card">
