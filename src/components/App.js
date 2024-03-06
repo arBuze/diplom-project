@@ -11,7 +11,7 @@ import useVerticalScroll from '../hooks/useVerticalScroll';
 import ProductView from './ProductView/ProductView';
 import { CurrentUserContext } from '../contexts/CurrentUserContexts';
 import { CurrentCardContext } from '../contexts/CurrentCardContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -20,8 +20,14 @@ function App() {
   /* const { pathname } = useLocation(); */
   const scroll = useVerticalScroll();
 
+  useEffect(() => {
+    const card = localStorage.getItem('card');
+    setCurrentCard(JSON.parse(card));
+  },[])
+
   function handleProductClick(card) {
     setCurrentCard(card);
+    localStorage.setItem('card', JSON.stringify(card));
   }
 
   return (
@@ -35,7 +41,7 @@ function App() {
               <Route path='/catalog'>
                 <Route index element={<Catalog />} />
                 <Route path='computer-cases' element={<ComputerCases width={width} scroll={scroll} onProductClick={handleProductClick} />} />
-                <Route path='computer-cases/:id' element={<ProductView card={currentCard} />} />
+                <Route path='computer-cases/:id' element={<ProductView />} />
               </Route>
             </Routes>
           </CurrentCardContext.Provider>

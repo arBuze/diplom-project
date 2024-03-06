@@ -14,6 +14,7 @@ export default function ProductCard({ card, onProductClick, type = 'grid' }) {
   const { pathname } = useLocation();
 
   function handleLinkClick() {
+    console.log(card);
     onProductClick(card);
   }
 

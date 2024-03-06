@@ -1,23 +1,33 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './ProductView.css';
-import { cards } from '../../utils/constants';
 import photo from '../../images/user.svg';
+import { useContext } from 'react';
+import { CurrentCardContext } from '../../contexts/CurrentCardContext';
 
-export default function ProductView({ card }) {
+export default function ProductView() {
+  const currentCard = useContext(CurrentCardContext);
   const {
     productName,
     image,
     productCost,
     sale,
     id
-  } = card;
+  } = currentCard;
 
   return(
     <section className="product-view">
       <Breadcrumps productName='Aboba' />
       <div className="product-view__container">
         <div className="product-view__images-container">
-
+          <img className="product-view__image" src={image} alt="" />
+          <div className="product-view__all-images">
+            <img className="product-view__small-image" src={image} alt="" />
+            <img className="product-view__small-image" src={image} alt="" />
+            <img className="product-view__small-image" src={image} alt="" />
+            <img className="product-view__small-image" src={image} alt="" />
+          </div>
+          <button className="product-view__arrow product-view__arrow_left" type="button" />
+          <button className="product-view__arrow product-view__arrow_right" type="button" />
         </div>
         <div className="product-view__info-container">
           <h2 className="product-view__title">{productName}</h2>
@@ -50,22 +60,33 @@ export default function ProductView({ card }) {
           </div>
           <div className="product-view__colors">
             <span className="product-view__name">Цвета:</span>
-            <label className="product-view__color">
-              <input type="radio" className="product-view__color-input" name="color" />
-              <span className="product-view__pseudo-input"></span>
-            </label>
-            <label className="product-view__color">
-              <input type="radio" className="product-view__color-input" name="color" />
-              <span className="product-view__pseudo-input"></span>
-            </label>
-            <label className="product-view__color">
-              <input type="radio" className="product-view__color-input" name="color" />
-              <span className="product-view__pseudo-input"></span>
-            </label>
+            <div className="product-view__colors-container">
+              <label className="product-view__color">
+                <input type="radio" className="product-view__color-input" name="color" />
+                <span className="product-view__pseudo-input"></span>
+              </label>
+              <label className="product-view__color">
+                <input type="radio" className="product-view__color-input" name="color" />
+                <span className="product-view__pseudo-input"></span>
+              </label>
+              <label className="product-view__color">
+                <input type="radio" className="product-view__color-input" name="color" />
+                <span className="product-view__pseudo-input"></span>
+              </label>
+            </div>
           </div>
           <div className="product-view__description">
             <h3 className="product-view__description-title">Описание</h3>
-            <p className="product-view__paragraph"></p>
+            <p className="product-view__paragraph">Глянцевый тинт для губ в приглушённом персиковом оттенке придаст губам яркий цвет и сочный сияющий финиш.
+
+Объём: 4гр.
+
+Преимущества:
+Имеет глянцевую текстуру, которая ровным слоем ложится на кожу, не забиваясь в складочки губ.
+Стойкий пигмент оставляет натуральный оттенок на губах, даже когда тинт полностью впитается.
+Имеет среднюю насыщенность пигмента, благодаря чему его удобно наслаивать и регулировать оттенок, а также создавать эффект градиента.
+Вспомогательный компонент:
+Гиалуроновая кислота активно увлажняет кожу губ, устраняя сухость и препятствуя шелушениям.</p>
           </div>
           <div className="product-view__properties">
             <h3 className="product-view__properties-title">Характеристики</h3>
