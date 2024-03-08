@@ -1,7 +1,6 @@
 import './ProductsList.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { useState, useEffect } from 'react';
-import ProductCardWide from '../ProductCardWide/ProductCardWide';
 
 export default function ProductsList({ cards, width, display, isReversed, onProductClick }) {
   const maxCards = width >= 1440 ? 24 : width >= 1280 ? 18 : width >= 768 ? 12 : 8;

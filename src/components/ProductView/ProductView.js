@@ -19,32 +19,32 @@ export default function ProductView() {
       <Breadcrumps productName='Aboba' />
       <div className="product-view__container">
         <div className="product-view__images-container">
-          <img className="product-view__image" src={image} alt="" />
+          <div className="product-view__image-container">
+            <img className="product-view__image" src={image} alt="" />
+            <button className="product-view__arrow product-view__arrow_left" type="button" />
+            <button className="product-view__arrow product-view__arrow_right" type="button" />
+          </div>
           <div className="product-view__all-images">
             <img className="product-view__small-image" src={image} alt="" />
             <img className="product-view__small-image" src={image} alt="" />
             <img className="product-view__small-image" src={image} alt="" />
             <img className="product-view__small-image" src={image} alt="" />
           </div>
-          <button className="product-view__arrow product-view__arrow_left" type="button" />
-          <button className="product-view__arrow product-view__arrow_right" type="button" />
         </div>
         <div className="product-view__info-container">
           <h2 className="product-view__title">{productName}</h2>
-          <div className="product-view__other-info">
-            <span className="product-view__code">Артикул: 123123</span>
-            <span className="product-view__in-stock">в наличии</span>
-            <div className="product-view__rating-info">
-              <ul className="products-list__rating">
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-              </ul>
-              <a className="product-view__feedback-link" href="#feedback">Отзывы:</a>
-              <span className="product-view__feedback-number">3</span>
-            </div>
+          <div className="product-view__rating-info">
+            <ul className="products-list__rating products-list__rating_place_product">
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+              <li className="products-list__star"></li>
+            </ul>
+            <span className="product-view__rating-value">5.0</span>
+            <a className="product-view__feedback-link" href="#feedback">Отзывы:
+              {/* <span className="product-view__feedback-number"> */} 3{/* </span> */}
+            </a>
           </div>
           <div className="product-view__cost-info">
             <span className="product-view__price">{productCost}</span>
@@ -74,6 +74,10 @@ export default function ProductView() {
                 <span className="product-view__pseudo-input"></span>
               </label>
             </div>
+          </div>
+          <div className="product-view__other-info">
+            <span className="product-view__code">Артикул: 123123</span>
+            <span className="product-view__in-stock">в наличии</span>
           </div>
           <div className="product-view__description">
             <h3 className="product-view__description-title">Описание</h3>
