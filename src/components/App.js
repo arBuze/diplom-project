@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import '../index.css';
 import Header from './Header/Header';
 import Main from './Main/Main';
@@ -17,13 +17,13 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [currentCard, setCurrentCard] = useState({});
   const { width } = useWindowDimensions();
-  /* const { pathname } = useLocation(); */
+  const { pathname } = useLocation();
   const scroll = useVerticalScroll();
 
-  useEffect(() => {
+  /* useEffect(() => {
     const card = localStorage.getItem('card');
     setCurrentCard(JSON.parse(card));
-  },[])
+  },[]) */
 
   function handleProductClick(card) {
     setCurrentCard(card);
@@ -41,7 +41,7 @@ function App() {
               <Route path='/catalog'>
                 <Route index element={<Catalog />} />
                 <Route path='computer-cases' element={<ComputerCases width={width} scroll={scroll} onProductClick={handleProductClick} />} />
-                <Route path='computer-cases/:id' element={<ProductView />} />
+                <Route path='computer-cases/:id' element={<ProductView pathname={pathname} />} />
               </Route>
             </Routes>
           </CurrentCardContext.Provider>

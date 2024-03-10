@@ -142,12 +142,12 @@
   flex-direction: column;
   gap: 7px;
   overflow-y: auto;
-  scrollbar-width: thin;
+  scrollbar-width: auto;
   scrollbar-color: #7B93DB #CBD2D9;
 }
 
 .filters__checks-container::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .filters__checks-container::-webkit-scrollbar-track {
