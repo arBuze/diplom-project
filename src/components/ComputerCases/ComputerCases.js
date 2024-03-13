@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import Filters from '../Filters/Filters';
 import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
-import { cards } from '../../utils/constants';
 
-export default function ComputerCases({ width, scroll, onProductClick }) {
+export default function ComputerCases({ name, cards, width, scroll, pathname }) {
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
+
+  useEffect(() => {
+    if (scroll > 0) {
+      window.scrollTo({
+        top: 0,
+        left: 0
+      });
+    }
+  },[])
 
   function onViewChange(e) {
     setDisplaytype(e.target.name);
@@ -15,12 +23,11 @@ export default function ComputerCases({ width, scroll, onProductClick }) {
 
   function onReverseBtnClick() {
     setIsReversed(!isReversed);
-    console.log(cards.reverse());
   }
 
   return(
     <section className="computer-cases">
-      <h2 className="computer-cases__title">Корпуса</h2>
+      <h2 className="computer-cases__title">{name}</h2>
       <Breadcrumps />
       <div className="computer-cases__container">
         { width >= 1024 && <Filters width={width} /> }
@@ -50,10 +57,9 @@ export default function ComputerCases({ width, scroll, onProductClick }) {
               </label>
             </div>
           </div>
-          <ProductsList cards={isReversed ? cards.reverse() : cards}
+          <ProductsList cards={isReversed ? cards.slice().reverse() : cards}
             width={width} display={displayType}
-            scroll={scroll} isReversed={isReversed}
-            onProductClick={onProductClick} />
+            isReversed={isReversed} pathname={pathname} />
         </div>
       </div>
     </section>

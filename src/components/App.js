@@ -10,41 +10,86 @@ import TopButton from './TopButton/TopButton';
 import useVerticalScroll from '../hooks/useVerticalScroll';
 import ProductView from './ProductView/ProductView';
 import { CurrentUserContext } from '../contexts/CurrentUserContexts';
-import { CurrentCardContext } from '../contexts/CurrentCardContext';
 import { useEffect, useState } from 'react';
+import { cards } from '../utils/constants';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-  const [currentCard, setCurrentCard] = useState({});
   const { width } = useWindowDimensions();
   const { pathname } = useLocation();
   const scroll = useVerticalScroll();
-
-  /* useEffect(() => {
-    const card = localStorage.getItem('card');
-    setCurrentCard(JSON.parse(card));
-  },[]) */
-
-  function handleProductClick(card) {
-    setCurrentCard(card);
-    localStorage.setItem('card', JSON.stringify(card));
-  }
 
   return (
     <div className="page">
       <Header width={width} />
       <main className="main">
         <CurrentUserContext.Provider value={currentUser}>
-          <CurrentCardContext.Provider value={currentCard}>
-            <Routes>
-              <Route path='/' element={<Main onProductClick={handleProductClick} />} />
-              <Route path='/catalog'>
-                <Route index element={<Catalog />} />
-                <Route path='computer-cases' element={<ComputerCases width={width} scroll={scroll} onProductClick={handleProductClick} />} />
-                <Route path='computer-cases/:id' element={<ProductView pathname={pathname} />} />
-              </Route>
-            </Routes>
-          </CurrentCardContext.Provider>
+          <Routes>
+            <Route path='/' element={<Main pathname={pathname} />} />
+            <Route path='/catalog'>
+              <Route index element={<Catalog />} />
+              <Route path='computer-cases' element={
+                <ComputerCases name='Корпуса'cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='computer-cases/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='processors' element={
+                <ComputerCases name='Процессоры' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='processors/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='motherboards' element={
+                <ComputerCases name='Материнские платы' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='motherboards/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='video-cards' element={
+                <ComputerCases name='Видеокарты' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='video-cards/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='coolers' element={
+                <ComputerCases name='Кулеры' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='coolers/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='rams' element={
+                <ComputerCases name='Оперативная память' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='rams/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='power-units' element={
+                <ComputerCases name='Блок питания' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='power-units/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='storages' element={
+                <ComputerCases name='Хранение данных' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='storages/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='sound-boards' element={
+                <ComputerCases name='Звуковые карты' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='sound-boards/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+              <Route path='monitors' element={
+                <ComputerCases name='Мониторы' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              } />
+              <Route path='monitors/:id' element={
+                <ProductView pathname={pathname} cards={cards} />
+              } />
+            </Route>
+          </Routes>
         </CurrentUserContext.Provider>
       </main>
       <Footer />

@@ -1,8 +1,7 @@
-import oneComp from '../../images/one-computer.jpg';
 import './ProductCard.css';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function ProductCard({ card, onProductClick, type = 'grid' }) {
+export default function ProductCard({ card, type = 'grid', pathname }) {
   const {
     productName,
     image,
@@ -11,19 +10,11 @@ export default function ProductCard({ card, onProductClick, type = 'grid' }) {
     id
   } = card;
 
-  const { pathname } = useLocation();
-
-  function handleLinkClick() {
-    console.log(card);
-    onProductClick(card);
-  }
-
   return(
     type === 'grid' ?
     <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
       <div className="products-list__img-container">
-        <Link to={pathname + '/' + id} className="products-list__link products-list__link_type_image"
-          onClick={handleLinkClick}>
+        <Link to={pathname + '/' + id} className="products-list__link products-list__link_type_image">
           <img className="products-list__product-img" src={image} alt={productName} />
         </Link>
         <button className="products-list__like" type="button"></button>
@@ -36,8 +27,7 @@ export default function ProductCard({ card, onProductClick, type = 'grid' }) {
         </ul>
       </div>
       <div className="products-list__info">
-        <Link to={pathname + id} className="products-list__link products-list__link_type_name"
-          onClick={handleLinkClick}>
+        <Link to={pathname + id} className="products-list__link products-list__link_type_name">
           <h3 className="products-list__name">{productName}</h3>
         </Link>
         <div className="product-list__cost-info">

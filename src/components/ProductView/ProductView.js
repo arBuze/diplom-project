@@ -1,20 +1,11 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './ProductView.css';
 import photo from '../../images/user.svg';
-import { useContext, useEffect, useState } from 'react';
-import { CurrentCardContext } from '../../contexts/CurrentCardContext';
-import { cards } from '../../utils/constants';
+import { useEffect, useState } from 'react';
 
-export default function ProductView({ pathname }) {
-  /* const currentCard = useContext(CurrentCardContext); */
+export default function ProductView({ pathname, cards }) {
   const [currentCard, setCurrentCard] = useState({});
-  /* const {
-    productName,
-    image,
-    productCost,
-    sale,
-    id
-  } = currentCard; */
+
   useEffect(() => {
     const id = pathname.slice(pathname.lastIndexOf('/') + 1,);
     const card = cards.find((item) => item.id === Number(id));
@@ -28,7 +19,7 @@ export default function ProductView({ pathname }) {
 
   return(
     <section className="product-view">
-      <Breadcrumps productName='Aboba' />
+      <Breadcrumps productName={currentCard?.productName} />
       <div className="product-view__container">
         <div className="product-view__images-container">
           <div className="product-view__image-container">

@@ -248,7 +248,7 @@ export const cards = [
   },
   {
     image: image,
-    productName: 'Корпус 12-1242 2452 54452 13546 225235 624624523',
+    productName: 'Корпус 88-1242 2452 54452 13546 225235 624624523',
     productCost: '1277 руб.',
     sale: '-33%',
     id: 36,
@@ -271,5 +271,41 @@ export const linkMatches = [
   {
     name: 'Материнские платы',
     path: '/catalog/motherboards',
+  },
+  {
+    name: 'Видеокарты',
+    path: '/catalog/video-cards',
+  },
+  {
+    name: 'Кулеры',
+    path: '/catalog/coolers',
+  },
+  {
+    name: 'Оперативная память',
+    path: '/catalog/rams',
+  },
+  {
+    name: 'Блок питания',
+    path: '/catalog/power-units',
+  },
+  {
+    name: 'Хранение данных',
+    path: '/catalog/storages',
+  },
+  {
+    name: 'Звуковые карты',
+    path: '/catalog/sound-boards',
+  },
+  {
+    name: 'Мониторы',
+    path: '/catalog/monitors',
+  },
+  {
+    name: 'Корзина',
+    path: '/catalog/cart',
+  },
+  {
+    name: 'Избранное',
+    path: '/catalog/favorite',
   },
 ];
