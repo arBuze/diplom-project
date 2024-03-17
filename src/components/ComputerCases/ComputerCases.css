@@ -1,3 +1,13 @@
+.computer-cases {
+  padding-top: 12px;
+}
+
+.computer-cases__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 0;
+}
+
 .computer-cases__container {
   display: flex;
   gap: 10px;
@@ -6,8 +16,6 @@
 
 .computer-cases__list-container {
   flex-grow: 1;
-  /* flex-basis: 1; */
-  /* width: 100%; */
 }
 
 .computer-cases__filters-container {
