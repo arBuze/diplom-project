@@ -12,6 +12,7 @@ import ProductView from './ProductView/ProductView';
 import { CurrentUserContext } from '../contexts/CurrentUserContexts';
 import { useEffect, useState } from 'react';
 import { cards } from '../utils/constants';
+import Cart from './Cart/Cart';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -89,6 +90,7 @@ function App() {
                 <ProductView pathname={pathname} cards={cards} />
               } />
             </Route>
+            <Route path='/cart' element={<Cart />} />
           </Routes>
         </CurrentUserContext.Provider>
       </main>

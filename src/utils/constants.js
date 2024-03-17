@@ -302,10 +302,10 @@ export const linkMatches = [
   },
   {
     name: 'Корзина',
-    path: '/catalog/cart',
+    path: '/cart',
   },
   {
     name: 'Избранное',
-    path: '/catalog/favorite',
+    path: '/favorite',
   },
 ];
