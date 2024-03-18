@@ -1,5 +1,6 @@
 .main {
   max-width: 1440px;
+  min-height: 55vh;
   box-sizing: border-box;
   padding: 15px 48px;
   margin: 0 auto;

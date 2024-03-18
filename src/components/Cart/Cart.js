@@ -1,6 +1,7 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import prod from '../../images/gnider-tam-ge_ftrk7wDc-unsplash 3.jpg';
 import './Cart.css';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
   return(
@@ -19,22 +20,44 @@ export default function Cart() {
         <div className="cart__products">
           <ul className="cart__products-list">
             <li className="cart__product">
-              <div className="cart__image-container">
+              <Link to={'/'} className="cart__image-container">
                 <img className="cart__product-img" src={prod} alt="" />
                 <button className="cart__like-btn" type="button" />
-              </div>
+              </Link>
               <div className="cart__product-info">
-                <span className="cart__product-name">Корпус 88-1242 2452 54452 13546 225235 624624523</span>
+                <Link to={'/'} className="cart__product-name">Корпус JWD JAWDWW AWD SEFSESEFSEFSEFSE88-1242 2452 54452 13546 225235 624624523</Link>
                 <button className="cart__remove-btn" type="button" />
                 <div className="cart__product-cost-info">
                   <div className="cart__one-product-cost">
                     <span className="cart__one-cost-value">2790 &#8381;</span>
-                    <span className="'cart__one-cost-label">цена за 1 шт</span>
+                    <span className="cart__one-cost-label">цена за 1 шт</span>
                   </div>
                   <div className="cart__quantity">
-                    <button className="cart__decrease-btn" type="button" />
+                    <button className="cart__decrease-btn" type="button" >-</button>
                     <input className="cart__quantity-input" type="number" />
-                    <button className="cart__increase-btn" type="button" />
+                    <button className="cart__increase-btn" type="button" >+</button>
+                  </div>
+                  <span className="cart__all-cost">2790 &#8381;</span>
+                </div>
+              </div>
+            </li>
+            <li className="cart__product">
+              <Link to={'/'} className="cart__image-container">
+                <img className="cart__product-img" src={prod} alt="" />
+                <button className="cart__like-btn" type="button" />
+              </Link>
+              <div className="cart__product-info">
+                <Link to={'/'} className="cart__product-name">Корпус JWD JAWDWW AWD SEFSESEFSEFSEFSE88-1242 2452 54452 13546 225235 624624523</Link>
+                <button className="cart__remove-btn" type="button" />
+                <div className="cart__product-cost-info">
+                  <div className="cart__one-product-cost">
+                    <span className="cart__one-cost-value">2790 &#8381;</span>
+                    <span className="cart__one-cost-label">цена за 1 шт</span>
+                  </div>
+                  <div className="cart__quantity">
+                    <button className="cart__decrease-btn" type="button" >-</button>
+                    <input className="cart__quantity-input" type="number" />
+                    <button className="cart__increase-btn" type="button" >+</button>
                   </div>
                   <span className="cart__all-cost">2790 &#8381;</span>
                 </div>

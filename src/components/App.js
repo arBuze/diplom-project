@@ -13,6 +13,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContexts';
 import { useEffect, useState } from 'react';
 import { cards } from '../utils/constants';
 import Cart from './Cart/Cart';
+import Favorite from './Favorite/Favorite';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -91,6 +92,7 @@ function App() {
               } />
             </Route>
             <Route path='/cart' element={<Cart />} />
+            <Route path='/favorite' element={<Favorite />} />
           </Routes>
         </CurrentUserContext.Provider>
       </main>

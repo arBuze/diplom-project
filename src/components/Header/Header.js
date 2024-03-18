@@ -8,6 +8,10 @@ import Navigation from '../Navigation/Navigation';
 export default function Header({ width }) {
   const navigate = useNavigate();
 
+  function handleFavClick() {
+    navigate('/favorite');
+  }
+
   function handleCartClick() {
     navigate('/cart');
   }
@@ -38,7 +42,7 @@ export default function Header({ width }) {
               <SearchForm additional="search-form_type_header" />
             }
             <div className="header__favorites">
-              <button className="header__fav-button" type="button" />
+              <button className="header__fav-button" type="button" onClick={handleFavClick} />
               <span className="header__item-number">99</span>
             </div>
             <div className="header__shopping-cart">
