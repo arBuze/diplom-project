@@ -3,9 +3,15 @@ import SearchForm from "../SearchForm/SearchForm";
 import Section from "../Section";
 import oneComp from '../../images/one-computer.jpg';
 import { cards } from "../../utils/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Main({ pathname }) {
+  const navigate = useNavigate();
+
+  function handleFormBtnClick() {
+    navigate('/repair');
+  }
+
   return(
     <>
       <section className="intro">
@@ -111,11 +117,21 @@ export default function Main({ pathname }) {
       {/* <section className="build">
         <h2 className="build__title"></h2>
         <a className="build__link" href="#"></a>
-      </section>
-      <section className="repair">
-        <h2 className="repair__title"></h2>
-        <p className="repair__info"></p>
       </section> */}
+      <section className="repair-view">
+        <h2 className="repair-view__title">Ремонт</h2>
+        <ul className="repair-view__action-list">
+          <li className="repair-view__item">
+            <span className="repair-view__action-name">Заполнить форму</span>
+            <button className="repair-view__action-btn repair-view__action-btn_type_form" type="button"
+              onClick={handleFormBtnClick} />
+          </li>
+          <li className="repair-view__item">
+            <span className="repair-view__action-name">Связаться с нами</span>
+            <button className="repair-view__action-btn repair-view__action-btn_type_tel" type="button" />
+          </li>
+        </ul>
+      </section>
     </>
   );
 };

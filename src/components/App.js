@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { cards } from '../utils/constants';
 import Cart from './Cart/Cart';
 import Favorite from './Favorite/Favorite';
+import Repair from './Repair/Repair';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -91,8 +92,9 @@ function App() {
                 <ProductView pathname={pathname} cards={cards} />
               } />
             </Route>
+            <Route path='/repair' element={<Repair />} />
             <Route path='/cart' element={<Cart />} />
-            <Route path='/favorite' element={<Favorite />} />
+            <Route path='/favorite' element={<Favorite cards={cards} width={width} pathname={pathname} />} />
           </Routes>
         </CurrentUserContext.Provider>
       </main>

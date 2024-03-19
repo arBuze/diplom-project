@@ -308,4 +308,20 @@ export const linkMatches = [
     name: 'Избранное',
     path: '/favorite',
   },
+  {
+    name: 'Ремонт',
+    path: '/repair',
+  },
+  {
+    name: 'Сборка',
+    path: '/build',
+  },
+  {
+    name: 'Акции',
+    path: '/sale',
+  },
+  {
+    name: 'О нас',
+    path: '/about-us',
+  },
 ];
