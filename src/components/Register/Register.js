@@ -1,7 +1,8 @@
+import '../Login/Login.css';
+import './Register.css';
 import { Link } from 'react-router-dom';
-import './Login.css';
 
-export default function Login() {
+export default function Register() {
   function handleSubmit(e) {
     e.preventDefault();
   }
@@ -10,7 +11,7 @@ export default function Login() {
     <section className="login">
       <Link to='/' className="login__main-link">&#8701; На главную</Link>
       <div className='login__container'>
-        <h2 className="login__title">Вход</h2>
+        <h2 className="login__title">Регистрация</h2>
         <form className="login__form" name="login" onSubmit={handleSubmit}>
           <label className="login__label">
             E-mail или телефон
@@ -24,19 +25,12 @@ export default function Login() {
               <button className="login__hide-btn" type="button" />
             </div>
           </label>
-          <div className="login__other">
-            <label className="login__remember-label">
-              <input type="checkbox" className="login__remember-check" />
-              Запомнить меня
-            </label>
-            <button type="button" className="login__forgot-btn">Забыли пароль</button>
-          </div>
           <span className="login__input-error">error error error error error error error error error error error error error error</span>
 
           <span className="login__auth-error">error</span>
-          <button className="login__auth-btn" type="submit">войти</button>
+          <button className="login__auth-btn" type="submit">Зарегистрироваться</button>
           <p className="login__question">
-            Нет аккаунта? <Link to='/signup' className="login__link">Зарегистрируйтесь</Link>
+            Уже зарегистрированы? <Link to='/signin' className="login__link">Войти</Link>
           </p>
         </form>
       </div>

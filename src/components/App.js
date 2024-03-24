@@ -15,16 +15,33 @@ import { cards } from '../utils/constants';
 import Cart from './Cart/Cart';
 import Favorite from './Favorite/Favorite';
 import Repair from './Repair/Repair';
+import Login from './Login/Login';
+import Register from './Register/Register';
+import PopupRepair from './PopupRepair/PopupRepair';
+import Profile from './Profile/Profile';
+import UserData from './UserData/UserData';
+import Orders from './Orders/Orders';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
   const { width } = useWindowDimensions();
   const { pathname } = useLocation();
   const scroll = useVerticalScroll();
 
+  function handleRepairSubmit() {
+    setIsPopupRepairOpened(true);
+  }
+
+  function handleAllPopupsClose() {
+    setIsPopupRepairOpened(false);
+  }
+
   return (
     <div className="page">
-      <Header width={width} />
+      { (pathname !== '/signin' && pathname !== '/signup') &&
+        <Header width={width} />
+      }
       <main className="main">
         <CurrentUserContext.Provider value={currentUser}>
           <Routes>
@@ -92,13 +109,22 @@ function App() {
                 <ProductView pathname={pathname} cards={cards} />
               } />
             </Route>
-            <Route path='/repair' element={<Repair />} />
+            <Route path='/repair' element={<Repair onRepairSubmit={handleRepairSubmit} />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/favorite' element={<Favorite cards={cards} width={width} pathname={pathname} />} />
+            <Route path='/profile' >
+              <Route index element={<Profile title='Профиль'> <UserData /> </Profile>} />
+              <Route path='orders' element={<Profile title='Заказы'> <Orders /> </Profile>} />
+            </Route>
+            <Route path='/signin' element={<Login />} />
+            <Route path='/signup' element={<Register />} />
           </Routes>
         </CurrentUserContext.Provider>
       </main>
-      <Footer />
+      { (pathname !== '/signin' && pathname !== '/signup') &&
+        <Footer />
+      }
+      <PopupRepair isOpened={isPopupRepairOpened} onClose={handleAllPopupsClose} />
       <TopButton scroll={scroll} />
     </div>
   );

@@ -324,4 +324,12 @@ export const linkMatches = [
     name: 'О нас',
     path: '/about-us',
   },
+  {
+    name: 'Профиль',
+    path: '/profile',
+  },
+  {
+    name: 'Заказы',
+    path: '/profile/orders',
+  },
 ];

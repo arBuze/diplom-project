@@ -103,10 +103,6 @@
   background: rgba(0, 0, 0, 0) url('../../images/heart.svg') center/cover;
 }
 
-.header__fav-button:hover {
-  cursor: pointer;
-}
-
 .header__item-number {
   display: inline-block;
   width: 20px;
@@ -129,15 +125,20 @@
   background: rgba(0, 0, 0, 0) url('../../images/shopping-cart.svg') center/cover;
 }
 
-.header__cart-button:hover {
-  cursor: pointer;
-}
-
 .header__profile-button {
   width: 33px;
   height: 30px;
   border: none;
   background: rgba(0, 0, 0, 0) url('../../images/user.svg');
+}
+
+.header__fav-button, .header__cart-button, .header__profile-button {
+  transition: opacity .2s ease-in-out;
+}
+
+.header__fav-button:hover, .header__cart-button:hover, .header__profile-button:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .header__notification {

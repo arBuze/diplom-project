@@ -16,6 +16,10 @@ export default function Header({ width }) {
     navigate('/cart');
   }
 
+  function handleProfileClick() {
+    navigate('/profile');
+  }
+
   return(
     <header className="header">
       <div className="header__container">
@@ -50,7 +54,7 @@ export default function Header({ width }) {
               <span className="header__item-number">99</span>
             </div>
             <div className="header__profile">
-              <button className="header__profile-button" type="button" />
+              <button className="header__profile-button" type="button" onClick={handleProfileClick} />
               <span className="header__notification"></span>
             </div>
           </div>
