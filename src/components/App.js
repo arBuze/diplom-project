@@ -21,6 +21,7 @@ import PopupRepair from './PopupRepair/PopupRepair';
 import Profile from './Profile/Profile';
 import UserData from './UserData/UserData';
 import Orders from './Orders/Orders';
+import Sales from './Sales/Sales';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -110,11 +111,12 @@ function App() {
               } />
             </Route>
             <Route path='/repair' element={<Repair onRepairSubmit={handleRepairSubmit} />} />
+            <Route path='/sales' element={<Sales />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/favorite' element={<Favorite cards={cards} width={width} pathname={pathname} />} />
             <Route path='/profile' >
-              <Route index element={<Profile title='Профиль'> <UserData /> </Profile>} />
-              <Route path='orders' element={<Profile title='Заказы'> <Orders /> </Profile>} />
+              <Route index element={<Profile title='Профиль' pathname={pathname}> <UserData /> </Profile>} />
+              <Route path='orders' element={<Profile title='Заказы' pathname={pathname}> <Orders /> </Profile>} />
             </Route>
             <Route path='/signin' element={<Login />} />
             <Route path='/signup' element={<Register />} />

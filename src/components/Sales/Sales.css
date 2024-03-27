@@ -1,0 +1,63 @@
+.sales {
+  padding: 15px 0 20px;
+}
+
+.sales__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.sales__additives {
+  display: flex;
+  gap: 10px;
+  background-color: #FFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px #CBD2D9;
+  box-sizing: border-box;
+  padding: 15px 20px;
+}
+
+.sales__label {
+  position: relative;
+}
+
+.sales__radio {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  inset: 50% 0 0 0;
+}
+
+.sales__pseudo-radio {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 16px;
+  background-color: #BED0F7;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.sales__radio:checked + .sales__pseudo-radio {
+  background-color: #98AEEB;
+}
+
+.sales__pseudo-radio:hover {
+  cursor: pointer;
+}
+
+.sales__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 15px;
+  column-gap: 20px;
+  grid-auto-rows: 200px;
+  background-color: #FFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px #CBD2D9;
+}
+
+.sales__image {
+  width: 100px;
+  height: 100px;
+}

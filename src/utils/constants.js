@@ -318,7 +318,7 @@ export const linkMatches = [
   },
   {
     name: 'Акции',
-    path: '/sale',
+    path: '/sales',
   },
   {
     name: 'О нас',

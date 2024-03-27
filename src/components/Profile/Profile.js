@@ -1,9 +1,15 @@
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import './Profile.css';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 
 
-export default function Profile({ children, title }) {
+export default function Profile({ children, title, pathname }) {
+  const navigate = useNavigate();
+
+  function handleExitBtnClick() {
+    navigate('/signin');
+  }
+
   return(
     <section className="profile">
       <h2 className="profile__title">{title}</h2>
@@ -12,7 +18,7 @@ export default function Profile({ children, title }) {
         <div className="profile__links-container">
           <ul className="profile__links">
             <li className="profile__item">
-              <NavLink to='/profile' className={({ isActive }) => `profile__link ${isActive ? 'profile__link_active' : ''}`}>
+              <NavLink exact to='/profile' className={`profile__link ${pathname === '/profile' ? 'profile__link_active' : ''}`}>
                 Личные данные
               </NavLink>
             </li>
@@ -28,7 +34,7 @@ export default function Profile({ children, title }) {
               <Link to='/favorite' className="profile__link">Избранное</Link>
             </li>
           </ul>
-          <button type="button" className="profile__exit-btn">Выйти из аккаунта</button>
+          <button type="button" className="profile__exit-btn" onClick={handleExitBtnClick}>Выйти из аккаунта</button>
         </div>
         <div className="profile__info-container">
           {children}

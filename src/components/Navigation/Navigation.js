@@ -15,7 +15,7 @@ export default function Navigation() {
           <Link to="/build" className="menu__item">Сборка</Link>
         </li>
         <li className="menu__link">
-          <Link to="/sale" className="menu__item">Акции</Link>
+          <Link to="/sales" className="menu__item">Акции</Link>
         </li>
         <li className="menu__link">
           <Link to="/about-us" className="menu__item">О нас</Link>
