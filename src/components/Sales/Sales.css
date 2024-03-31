@@ -49,15 +49,58 @@
 .sales__list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  row-gap: 15px;
-  column-gap: 20px;
+  row-gap: 20px;
+  column-gap: 25px;
   grid-auto-rows: 200px;
+  list-style: none;
   background-color: #FFF;
   border-radius: 10px;
   box-shadow: 0 2px 5px #CBD2D9;
+  box-sizing: border-box;
+  padding: 20px 25px;
+}
+
+.sales__item {
+  display: flex;
 }
 
 .sales__image {
-  width: 100px;
-  height: 100px;
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sales__info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #CBD2D9;
+  padding: 10px 15px;
+}
+
+.sales__name {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  margin: 0 0 10px;
+}
+
+.sales__duration {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.sales__link {
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: none;
+  color: #2244a3;
+  margin-top: auto;
+}
+
+.sales__name:hover, .sales__link:hover {
+  color: #CA4141;
 }

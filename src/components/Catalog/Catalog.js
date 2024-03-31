@@ -75,8 +75,8 @@ export default function Catalog() {
           </li>
           <li className="catalog__item">
             <img className="catalog__item-image" src={oneComp} alt="" />
-            <Link to="/catalog/monitors" className="catalog__link">
-              <h3 className="catalog__item-title">Мониторы</h3>
+            <Link to="/catalog/peripheral" className="catalog__link">
+              <h3 className="catalog__item-title">Периферия</h3>
             </Link>
             <p className="catalog__quantity">{`${cards.length} товар${[11, 12, 13, 14].indexOf(cards.length % 100) !== -1 ? 'ов' : cards.length % 10 === 1 ? '' : [2, 3, 4].indexOf(cards.length % 10) !== -1 ? 'а' : 'ов'}`}</p>
           </li>

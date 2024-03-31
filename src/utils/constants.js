@@ -297,8 +297,8 @@ export const linkMatches = [
     path: '/catalog/sound-boards',
   },
   {
-    name: 'Мониторы',
-    path: '/catalog/monitors',
+    name: 'Периферия',
+    path: '/catalog/peripheral',
   },
   {
     name: 'Корзина',

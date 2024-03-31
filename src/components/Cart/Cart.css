@@ -115,6 +115,7 @@
 
 .cart__product {
   display: flex;
+  position: relative;
   gap: 25px;
   background-color: #FFF;
   border-radius: 15px;
@@ -140,6 +141,15 @@
   border-radius: 50%;
   background: #FFF url(../../images/not-liked.svg) no-repeat center;
   z-index: 1;
+}
+
+.cart__like-btn:hover {
+  background-color: #CCC;
+  cursor: pointer;
+}
+
+.liked {
+  background-image: url('../../images/liked.svg');
 }
 
 .cart__product-info {
@@ -171,10 +181,12 @@
   background: #FFF url(../../images/trash.svg) no-repeat center;
   border: none;
   border-radius: 50%;
+  transition: opacity .2s ease-in-out;
 }
 
-.cart__like-btn:hover, .cart__remove-btn:hover {
+.cart__remove-btn:hover {
   cursor: pointer;
+  opacity: .7;
 }
 
 .cart__product-cost-info {

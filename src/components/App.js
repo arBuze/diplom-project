@@ -22,10 +22,16 @@ import Profile from './Profile/Profile';
 import UserData from './UserData/UserData';
 import Orders from './Orders/Orders';
 import Sales from './Sales/Sales';
+import SaleView from './SaleView/SaleView';
+import OrderView from './OrderView/OrderView';
+import Build from './Build/Build';
+import PageNotFound from './PageNotFound/PageNotFound';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
+  const [buildMode, setBuildMode] = useState(false);
+  const [productsToBuild, setProductsToBuild] = useState([]);
   const { width } = useWindowDimensions();
   const { pathname } = useLocation();
   const scroll = useVerticalScroll();
@@ -50,7 +56,7 @@ function App() {
             <Route path='/catalog'>
               <Route index element={<Catalog />} />
               <Route path='computer-cases' element={
-                <ComputerCases name='Корпуса'cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Корпуса' cards={cards} width={width} scroll={scroll} pathname={pathname} />
               } />
               <Route path='computer-cases/:id' element={
                 <ProductView pathname={pathname} cards={cards} />
@@ -103,23 +109,27 @@ function App() {
               <Route path='sound-boards/:id' element={
                 <ProductView pathname={pathname} cards={cards} />
               } />
-              <Route path='monitors' element={
-                <ComputerCases name='Мониторы' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+              <Route path='peripheral' element={
+                <ComputerCases name='Периферия' cards={cards} width={width} scroll={scroll} pathname={pathname} />
               } />
-              <Route path='monitors/:id' element={
+              <Route path='peripheral/:id' element={
                 <ProductView pathname={pathname} cards={cards} />
               } />
             </Route>
             <Route path='/repair' element={<Repair onRepairSubmit={handleRepairSubmit} />} />
+            <Route path='/build' element={<Build cards={cards} width={width} scroll={scroll} pathname={pathname} /> } />
             <Route path='/sales' element={<Sales />} />
+            <Route path='/sales/:id' element={<SaleView cards={cards} width={width} pathname={pathname} />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/favorite' element={<Favorite cards={cards} width={width} pathname={pathname} />} />
             <Route path='/profile' >
               <Route index element={<Profile title='Профиль' pathname={pathname}> <UserData /> </Profile>} />
               <Route path='orders' element={<Profile title='Заказы' pathname={pathname}> <Orders /> </Profile>} />
+              <Route path='orders/:id' element={<Profile title='Заказы' pathname={pathname}> <OrderView /> </Profile>} />
             </Route>
             <Route path='/signin' element={<Login />} />
             <Route path='/signup' element={<Register />} />
+            <Route path='*' element={<PageNotFound />} />
           </Routes>
         </CurrentUserContext.Provider>
       </main>

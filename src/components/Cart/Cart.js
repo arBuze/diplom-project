@@ -4,6 +4,11 @@ import './Cart.css';
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
+
+  function like(e) {
+    e.target.classList.toggle('liked');
+  }
+
   return(
     <section className="cart">
       <h2 className="cart__title">Корзина</h2>
@@ -22,8 +27,8 @@ export default function Cart() {
             <li className="cart__product">
               <Link to={'/'} className="cart__image-container">
                 <img className="cart__product-img" src={prod} alt="" />
-                <button className="cart__like-btn" type="button" />
               </Link>
+              <button className="cart__like-btn" type="button" onClick={like} />
               <div className="cart__product-info">
                 <Link to={'/'} className="cart__product-name">Корпус JWD JAWDWW AWD SEFSESEFSEFSEFSE88-1242 2452 54452 13546 225235 624624523</Link>
                 <button className="cart__remove-btn" type="button" />
@@ -34,7 +39,7 @@ export default function Cart() {
                   </div>
                   <div className="cart__quantity">
                     <button className="cart__decrease-btn" type="button" >-</button>
-                    <input className="cart__quantity-input" type="number" />
+                    <input className="cart__quantity-input" type="text" readOnly />
                     <button className="cart__increase-btn" type="button" >+</button>
                   </div>
                   <span className="cart__all-cost">2790 &#8381;</span>
@@ -44,8 +49,8 @@ export default function Cart() {
             <li className="cart__product">
               <Link to={'/'} className="cart__image-container">
                 <img className="cart__product-img" src={prod} alt="" />
-                <button className="cart__like-btn" type="button" />
               </Link>
+              <button className="cart__like-btn" type="button" onClick={like} />
               <div className="cart__product-info">
                 <Link to={'/'} className="cart__product-name">Корпус JWD JAWDWW AWD SEFSESEFSEFSEFSE88-1242 2452 54452 13546 225235 624624523</Link>
                 <button className="cart__remove-btn" type="button" />
@@ -56,7 +61,7 @@ export default function Cart() {
                   </div>
                   <div className="cart__quantity">
                     <button className="cart__decrease-btn" type="button" >-</button>
-                    <input className="cart__quantity-input" type="number" />
+                    <input className="cart__quantity-input" type="text" readOnly />
                     <button className="cart__increase-btn" type="button" >+</button>
                   </div>
                   <span className="cart__all-cost">2790 &#8381;</span>
@@ -73,7 +78,7 @@ export default function Cart() {
                 <span className="cart__sale-value">0 &#8381;</span>
               </div>
               <div className="cart__cost-info">
-                <span className="cart__cost-label">6 товаров</span>
+                <span className="cart__cost-label">{`2 товар${[11, 12, 13, 14].indexOf(2 % 100) !== -1 ? 'ов' : 2 % 10 === 1 ? '' : [2, 3, 4].indexOf(2 % 10) !== -1 ? 'а' : 'ов'}`}</span>
                 <span className="cart__cost-value">3290 &#8381;</span>
               </div>
             </div>

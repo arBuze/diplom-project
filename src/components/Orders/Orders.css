@@ -6,7 +6,7 @@
 }
 
 .orders__item {
-  border: 1px solid #94BFFF;
+  border-bottom: 1px solid #94BFFF;
   padding: 10px 20px 35px;
   margin-bottom: 10px;
 }
@@ -43,19 +43,21 @@
   line-height: 20px;
 }
 
-.orders__details-btn {
+.orders__details {
   font-size: 16px;
   line-height: 20px;
   color: #FFF;
   background-color: #000;
   text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
   border: none;
   padding: 7px 12px;
   margin-top: auto;
   transition: opacity .2s ease-in-out;
 }
 
-.orders__details-btn:hover {
+.orders__details:hover {
   cursor: pointer;
   opacity: .8;
 }

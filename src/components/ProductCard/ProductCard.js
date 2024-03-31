@@ -10,6 +10,10 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
     id
   } = card;
 
+  function like(e) {
+    e.target.classList.toggle('liked');
+  }
+
   return(
     type === 'grid' ?
     <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
@@ -17,7 +21,7 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
         <Link to={pathname + '/' + id} className="products-list__link products-list__link_type_image">
           <img className="products-list__product-img" src={image} alt={productName} />
         </Link>
-        <button className="products-list__like" type="button"></button>
+        <button className="products-list__like" type="button" onClick={like}></button>
         <ul className="products-list__rating">
           <li className="products-list__star"></li>
           <li className="products-list__star"></li>

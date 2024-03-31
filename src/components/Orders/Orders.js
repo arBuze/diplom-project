@@ -12,7 +12,7 @@ export default function Orders() {
             <div className="orders__info">
               <span className="orders__quantity">6 товаров на сумму <span className="orders__cost">15000 &#8381;</span></span>
               <span className="orders__status">Статус: в сборке</span>
-              <button className="orders__details-btn">подробнее</button>
+              <Link to='/profile/orders/1' className="orders__details">подробнее</Link>
             </div>
             <ul className="orders__product-list">
               <li className="orders__product">
@@ -47,7 +47,7 @@ export default function Orders() {
             <div className="orders__info">
               <span className="orders__quantity">6 товаров на сумму <span className="orders__cost">15000 &#8381;</span></span>
               <span className="orders__status">Статус: в сборке</span>
-              <button className="orders__details-btn">подробнее</button>
+              <Link to='/profile/orders/1' className="orders__details">подробнее</Link>
             </div>
             <ul className="orders__product-list">
               <li className="orders__product">
@@ -82,7 +82,7 @@ export default function Orders() {
             <div className="orders__info">
               <span className="orders__quantity">6 товаров на сумму <span className="orders__cost">15000 &#8381;</span></span>
               <span className="orders__status">Статус: в сборке</span>
-              <button className="orders__details-btn">подробнее</button>
+              <Link to='/profile/orders/1' className="orders__details">подробнее</Link>
             </div>
             <ul className="orders__product-list">
               <li className="orders__product">
@@ -117,7 +117,7 @@ export default function Orders() {
             <div className="orders__info">
               <span className="orders__quantity">6 товаров на сумму <span className="orders__cost">15000 &#8381;</span></span>
               <span className="orders__status">Статус: в сборке</span>
-              <button className="orders__details-btn">подробнее</button>
+              <Link to='/profile/orders/1' className="orders__details">подробнее</Link>
             </div>
             <ul className="orders__product-list">
               <li className="orders__product">

@@ -101,7 +101,7 @@ export default function ProductsList({ cards, width, display, isReversed, pathna
   }
 
   return(
-    <div className="products">
+    <div className={`products ${pathname.includes('sales') ? 'products_sales' : ''}`}>
       <ul className={`products__list ${display === 'grid' ? 'products__list_type_grid' : 'products__list_type_list'}`}>
         {
           cardsVisible.map((item) => {
