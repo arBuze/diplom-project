@@ -1,7 +1,7 @@
 import './ProductCard.css';
 import { Link } from 'react-router-dom';
 
-export default function ProductCard({ card, type = 'grid', pathname }) {
+export default function ProductCard({ card, type = 'grid', pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const {
     productName,
     image,
@@ -10,8 +10,24 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
     id
   } = card;
 
-  function like(e) {
-    e.target.classList.toggle('liked');
+  function handleLikeClick(e) {
+    let isFave = e.target.classList.contains('liked');
+
+    if (isFave) {
+      onDislike(id);
+      return;
+    }
+    onLike(id);
+  }
+
+  function handleCartClick(e) {
+    let isInCart = e.target.classList.contains('added');
+
+    if (isInCart) {
+      onCartRemove(id);
+      return;
+    }
+    onCartAdd(id);
   }
 
   return(
@@ -21,7 +37,7 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
         <Link to={pathname + '/' + id} className="products-list__link products-list__link_type_image">
           <img className="products-list__product-img" src={image} alt={productName} />
         </Link>
-        <button className="products-list__like" type="button" onClick={like}></button>
+        <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
         <ul className="products-list__rating">
           <li className="products-list__star"></li>
           <li className="products-list__star"></li>
@@ -37,14 +53,14 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
         <div className="product-list__cost-info">
           <span className="products-list__cost">{productCost}</span>
           <span className="products-list__cost last-cost">{sale}</span>
-          <form className="products-list__add-form" name="add-to-cart">
-            <button className="products-list__add-btn" type="submit"></button>
+          <div className="products-list__add-form">
+            <button className={`products-list__add-btn ${cart.find((item) => item === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
             {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>
               <button className="products-list__increase-btn" type="submit">+</button>
             </div> */}
-          </form>
+          </div>
         </div>
       </div>
     </li>
@@ -54,7 +70,7 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
         <Link to={pathname + '/' + id} className="wide-list__link wide-list__link_type_image">
           <img className="wide-list__product-img" src={image} alt={productName} />
         </Link>
-        <button className="products-list__like" type="button"></button>
+        <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
       </div>
       <div className="wide-list__info">
         <Link to={pathname + '/' + id} className="wide-list__link wide-list__link_type_name" >
@@ -77,14 +93,14 @@ export default function ProductCard({ card, type = 'grid', pathname }) {
           <span className="wide-list__status">нет в наличии</span>
           <span className="wide-list__cost">{productCost}</span>
           <span className="wide-list__cost last-cost">{sale}</span>
-          <form className="products-list__add-form" name="add-to-cart">
-            <button className="products-list__add-btn" type="submit"></button>
+          <div className="products-list__add-form">
+            <button className={`products-list__add-btn ${cart.find((item) => item === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
             {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>
               <button className="products-list__increase-btn" type="submit">+</button>
             </div> */}
-          </form>
+          </div>
         </div>
       </div>
     </li>

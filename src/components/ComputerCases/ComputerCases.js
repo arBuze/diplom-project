@@ -4,7 +4,7 @@ import Filters from '../Filters/Filters';
 import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
 
-export default function ComputerCases({ name, cards, width, scroll, pathname }) {
+export default function ComputerCases({ name, cards, width, scroll, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
 
@@ -59,7 +59,10 @@ export default function ComputerCases({ name, cards, width, scroll, pathname }) 
           </div>
           <ProductsList cards={isReversed ? cards.slice().reverse() : cards}
             width={width} display={displayType}
-            isReversed={isReversed} pathname={pathname} />
+            isReversed={isReversed} pathname={pathname}
+            faves={faves} cart={cart}
+            onLike={onLike} onDislike={onDislike}
+            onCartAdd={onCartAdd} onCartRemove={onCartRemove} />
         </div>
       </div>
     </section>

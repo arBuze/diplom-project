@@ -3,7 +3,7 @@ import './ProductView.css';
 import photo from '../../images/user.svg';
 import { useEffect, useState } from 'react';
 
-export default function ProductView({ pathname, cards }) {
+export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const [currentCard, setCurrentCard] = useState({});
 
   useEffect(() => {
@@ -15,6 +15,26 @@ export default function ProductView({ pathname, cards }) {
   function onLinkClick(e) {
     e.preventDefault();
     document.querySelector('#feedback').scrollIntoView({behavior: 'smooth'});
+  }
+
+  function handleLikeClick(e) {
+    let isFave = e.target.classList.contains('liked');
+
+    if (isFave) {
+      onDislike(currentCard.id);
+      return;
+    }
+    onLike(currentCard.id);
+  }
+
+  function handleCartClick(e) {
+    let isInCart = e.target.classList.contains('added');
+
+    if (isInCart) {
+      onCartRemove(currentCard.id);
+      return;
+    }
+    onCartAdd(currentCard.id);
   }
 
   return(
@@ -68,15 +88,19 @@ export default function ProductView({ pathname, cards }) {
           </div>
           <div className="product-view__cost-info">
             <span className="product-view__price">{currentCard?.productCost}</span>
-            <form className="product-view__add-form" name="add-to-cart">
-              <button className="product-view__add-btn" type="submit">В корзину</button>
+            <div className="product-view__add-form">
+              <button className={`product-view__add-btn ${cart.find((item) => item === currentCard.id) ? 'view-added' : ''}`} type="button"
+                onClick={handleCartClick}>
+                {`${cart.find((item) => item === currentCard.id) ? 'Добавлено' : 'В корзину'}`}
+              </button>
               {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>
               <button className="products-list__increase-btn" type="submit">+</button>
               </div> */}
-            </form>
-            <button className="product-view__like-btn" type="button" />
+            </div>
+            <button className={`product-view__like-btn ${faves.find((item) => item === currentCard.id) ? 'liked' : ''}`} type="button"
+              onClick={handleLikeClick} />
           </div>
           <div className="product-view__other-info">
             <span className="product-view__code">Артикул: 123123</span>

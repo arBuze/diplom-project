@@ -1,5 +1,9 @@
 import image from '../images/one-computer.jpg';
 
+export const NAME_REG = "[A-Za-zА-Яа-яЁё\\s\\-]{1,30}";
+export const EMAIL_REG = "[a-zA-Z0-9\\.'+_`\\-]+@[a-zA-Z0-9.]+\\.[a-zA-Z0-9]{2,}";
+export const PHONE_REG="[0-9]{11}"; /* переделать */
+
 export const cards = [
   {
     image: image,

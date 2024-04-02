@@ -5,7 +5,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import { Link, useNavigate } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-export default function Header({ width }) {
+export default function Header({ width, cart, faves }) {
   const navigate = useNavigate();
 
   function handleFavClick() {
@@ -47,11 +47,11 @@ export default function Header({ width }) {
             }
             <div className="header__favorites">
               <button className="header__fav-button" type="button" onClick={handleFavClick} />
-              <span className="header__item-number">99</span>
+              <span className="header__item-number">{faves.length}</span>
             </div>
             <div className="header__shopping-cart">
               <button className="header__cart-button" type="button" onClick={handleCartClick} />
-              <span className="header__item-number">99</span>
+              <span className="header__item-number">{cart.length}</span>
             </div>
             <div className="header__profile">
               <button className="header__profile-button" type="button" onClick={handleProfileClick} />

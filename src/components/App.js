@@ -32,9 +32,20 @@ function App() {
   const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
   const [buildMode, setBuildMode] = useState(false);
   const [productsToBuild, setProductsToBuild] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isUpdateResponseLoading, setIsUpdateResponseLoading] = useState(false);
   const { width } = useWindowDimensions();
   const { pathname } = useLocation();
   const scroll = useVerticalScroll();
+  /* temp */
+  const [cart, setCart] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [orders, setOrders] = useState([]);
+  /* const { cart, favorites, orders } = currentUser; */
+
+  /* useEffect(() => {
+    setCurrentUser()
+  }) */
 
   function handleRepairSubmit() {
     setIsPopupRepairOpened(true);
@@ -44,86 +55,171 @@ function App() {
     setIsPopupRepairOpened(false);
   }
 
+  function handleUserUpdate(phone, email, name, lastName) {
+    /* const token = localStorage.getItem('jwt');
+    if (token) { */
+
+    /* сабмит на сервер */
+
+    /* } */
+  }
+
+  function handleLikeClick(newCard) {
+    setFavorites([...favorites, newCard]);
+  }
+
+  function handleDislikeClick(card) {
+    setFavorites(favorites.filter((item) => !(item === card)));
+  }
+
+  function handleAddToCartClick(newCard) {
+    setCart([...cart, newCard]);
+  }
+
+  function handleRemoveFromCart(card) {
+    setCart(cart.filter((item) => !(item === card)));
+  }
+
+  function handleEditClick() {
+    setIsEdit(true);
+  }
+
+
   return (
     <div className="page">
       { (pathname !== '/signin' && pathname !== '/signup') &&
-        <Header width={width} />
+        <Header width={width} cart={cart} faves={favorites} />
       }
       <main className="main">
         <CurrentUserContext.Provider value={currentUser}>
           <Routes>
-            <Route path='/' element={<Main pathname={pathname} />} />
+            <Route path='/' element={<Main cards={cards} pathname={pathname}
+              onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+              onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />} />
             <Route path='/catalog'>
               <Route index element={<Catalog />} />
               <Route path='computer-cases' element={
-                <ComputerCases name='Корпуса' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Корпуса' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='computer-cases/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='processors' element={
-                <ComputerCases name='Процессоры' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Процессоры' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='processors/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='motherboards' element={
-                <ComputerCases name='Материнские платы' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Материнские платы' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='motherboards/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='video-cards' element={
-                <ComputerCases name='Видеокарты' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Видеокарты' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='video-cards/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='coolers' element={
-                <ComputerCases name='Кулеры' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Кулеры' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='coolers/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='rams' element={
-                <ComputerCases name='Оперативная память' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Оперативная память' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='rams/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='power-units' element={
-                <ComputerCases name='Блок питания' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Блок питания' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='power-units/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='storages' element={
-                <ComputerCases name='Хранение данных' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Хранение данных' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='storages/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='sound-boards' element={
-                <ComputerCases name='Звуковые карты' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Звуковые карты' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='sound-boards/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='peripheral' element={
-                <ComputerCases name='Периферия' cards={cards} width={width} scroll={scroll} pathname={pathname} />
+                <ComputerCases name='Периферия' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='peripheral/:id' element={
-                <ProductView pathname={pathname} cards={cards} />
+                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                  onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
+                  onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
             </Route>
             <Route path='/repair' element={<Repair onRepairSubmit={handleRepairSubmit} />} />
             <Route path='/build' element={<Build cards={cards} width={width} scroll={scroll} pathname={pathname} /> } />
             <Route path='/sales' element={<Sales />} />
-            <Route path='/sales/:id' element={<SaleView cards={cards} width={width} pathname={pathname} />} />
-            <Route path='/cart' element={<Cart />} />
-            <Route path='/favorite' element={<Favorite cards={cards} width={width} pathname={pathname} />} />
+            <Route path='/sales/:id' element={
+              <SaleView cards={cards} width={width} pathname={pathname}
+                onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
+            } />
+            <Route path='/cart' element={
+              <Cart onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
+            } />
+            <Route path='/favorite' element={
+              <Favorite cards={cards} width={width} pathname={pathname}
+                onLike={handleLikeClick} onCartAdd={handleAddToCartClick} cart={cart}
+                onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
+            } />
             <Route path='/profile' >
-              <Route index element={<Profile title='Профиль' pathname={pathname}> <UserData /> </Profile>} />
+              <Route index element={<Profile title='Профиль' pathname={pathname}>
+                <UserData isEdit={isEdit} isLoading={isUpdateResponseLoading} onEditClick={handleEditClick} />
+              </Profile>} />
               <Route path='orders' element={<Profile title='Заказы' pathname={pathname}> <Orders /> </Profile>} />
               <Route path='orders/:id' element={<Profile title='Заказы' pathname={pathname}> <OrderView /> </Profile>} />
             </Route>

@@ -12,10 +12,10 @@ export default function Footer() {
             <Link to="/catalog" className="footer__main-link">Каталог</Link>
           </li>
           <li className="footer__links-item">
-            <Link to="/catalog" className="footer__main-link">Ремонт</Link>
+            <Link to="/repair" className="footer__main-link">Ремонт</Link>
           </li>
           <li className="footer__links-item">
-            <Link to="/catalog" className="footer__main-link">Акции</Link>
+            <Link to="/sales" className="footer__main-link">Акции</Link>
           </li>
         </ul>
         <div className="footer__information">

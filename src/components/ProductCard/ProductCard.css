@@ -152,6 +152,10 @@
   cursor: pointer;
 }
 
+.added {
+  background: #65D6AD url('../../images/shopping-cart-check.svg') no-repeat center;
+}
+
 .products-list__add-multiple {
   /* display: none; */
   width: 65px;

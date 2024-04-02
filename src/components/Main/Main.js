@@ -2,10 +2,9 @@ import './Main.css';
 import SearchForm from "../SearchForm/SearchForm";
 import Section from "../Section";
 import oneComp from '../../images/one-computer.jpg';
-import { cards } from "../../utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Main({ pathname }) {
+export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const navigate = useNavigate();
 
   function handleFormBtnClick() {
@@ -21,8 +20,14 @@ export default function Main({ pathname }) {
           <SearchForm />
         </div>
       </section>
-      <Section title='Новинки' cards={cards} pathname={pathname} /> {/* передавать название секции и карточки */}
-      <Section title='Акции' cards={cards} pathname={pathname} />
+      <Section title='Новинки' cards={cards} pathname={pathname}
+        faves={faves} cart={cart}
+        onLike={onLike} onDislike={onDislike}
+        onCartAdd={onCartAdd} onCartRemove={onCartRemove} />
+      <Section title='Акции' cards={cards} pathname={pathname}
+        faves={faves} cart={cart}
+        onLike={onLike} onDislike={onDislike}
+        onCartAdd={onCartAdd} onCartRemove={onCartRemove} />
 
       <section className="catalog-preview">
         <h2 className="catalog-preview__title">Кaталог</h2>

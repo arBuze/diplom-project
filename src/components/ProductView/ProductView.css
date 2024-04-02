@@ -189,6 +189,10 @@
   padding: 0;
 }
 
+.view-added {
+  background-color: #65D6AD;
+}
+
 .product-view__like-btn {
   width: 30px;
   height: 30px;
