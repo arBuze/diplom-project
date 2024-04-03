@@ -27,7 +27,7 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
       onCartRemove(id);
       return;
     }
-    onCartAdd(id);
+    onCartAdd(id, productCost);
   }
 
   return(
@@ -51,10 +51,10 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
           <h3 className="products-list__name">{productName}</h3>
         </Link>
         <div className="product-list__cost-info">
-          <span className="products-list__cost">{productCost}</span>
+          <span className="products-list__cost">{productCost} &#8381;</span>
           <span className="products-list__cost last-cost">{sale}</span>
           <div className="products-list__add-form">
-            <button className={`products-list__add-btn ${cart.find((item) => item === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+            <button className={`products-list__add-btn ${cart.find((item) => item.cardId === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
             {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>
@@ -91,7 +91,7 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
             <span className="wide-list__rating-number">30</span>
           </div>
           <span className="wide-list__status">нет в наличии</span>
-          <span className="wide-list__cost">{productCost}</span>
+          <span className="wide-list__cost">{`${productCost} &#8381;`}</span>
           <span className="wide-list__cost last-cost">{sale}</span>
           <div className="products-list__add-form">
             <button className={`products-list__add-btn ${cart.find((item) => item === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>

@@ -2,8 +2,13 @@ import './Favorite.css'
 import '../Cart/Cart.css'
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import ProductsList from '../ProductsList/ProductsList';
+import { useEffect } from 'react';
 
-export default function Favorite({ cards, width, pathname }) {
+export default function Favorite({ cards, width, pathname, faves, cart, onLike, onDislike, onCartAdd, onCartRemove }) {
+  useEffect(() => {
+    console.log(faves);
+  },[])
+
   return(
     <section className="favorite">
       <h2 className="favorite__title">Избранное</h2>
@@ -14,10 +19,20 @@ export default function Favorite({ cards, width, pathname }) {
             <input type="text" className="cart__search-input" placeholder="Поиск..." />
             <button type="button" className="cart__search-btn" />
           </div>
-          <p className="cart__label">Всего товаров: <span className="cart__number">6</span></p>
+          <p className="cart__label">Всего товаров: <span className="cart__number">{faves.length}</span></p>
         </div>
       </div>
-      <ProductsList cards={cards} width={width} display='grid' pathname={pathname} />
+      { faves.length === 0 ?
+        <div className="favorite__void">
+          <p className="favorite__void-text">Нет избранных товаров</p>
+        </div>
+        :
+        <ProductsList cards={cards} width={width}
+          display='grid' pathname={pathname}
+          faves={faves} cart={cart}
+          onLike={onLike} onDislike={onDislike}
+          onCartAdd={onCartAdd} onCartRemove={onCartRemove} />
+      }
     </section>
   );
 }

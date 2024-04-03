@@ -72,12 +72,22 @@ function App() {
     setFavorites(favorites.filter((item) => !(item === card)));
   }
 
-  function handleAddToCartClick(newCard) {
-    setCart([...cart, newCard]);
+  function handleAddToCartClick(newCard, price) {
+    setCart([...cart, { cardId: newCard, quantity: 1, price }]);
   }
 
   function handleRemoveFromCart(card) {
-    setCart(cart.filter((item) => !(item === card)));
+    setCart(cart.filter((item) => !(item.cardId === card)));
+  }
+
+  function handleCartClear() {
+    setCart([]);
+  }
+
+  function handleQuantityChange(e) {
+    const id = Number(e.target.id);
+    const { quantity, price } = cart.find((item) => item.cardId === id);
+    setCart(state => state.map((item) => item.cardId === id ? { cardId: id,  quantity: e.target.name === 'increase' ? quantity + 1 : quantity - 1, price } : item));
   }
 
   function handleEditClick() {
@@ -208,11 +218,13 @@ function App() {
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
             <Route path='/cart' element={
-              <Cart onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
-                onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
+              <Cart onLike={handleLikeClick} cards={cart.map((item) => cards.find((card) => card.id === item.cardId))} faves={favorites}
+                onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
+                cart={cart} onCartClear={handleCartClear}
+                onQuantityChange={handleQuantityChange} />
             } />
             <Route path='/favorite' element={
-              <Favorite cards={cards} width={width} pathname={pathname}
+              <Favorite cards={favorites.map((item) => cards.find((card) => card.id === item))} faves={favorites} width={width} pathname={pathname}
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} cart={cart}
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />

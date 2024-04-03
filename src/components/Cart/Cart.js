@@ -3,10 +3,20 @@ import prod from '../../images/gnider-tam-ge_ftrk7wDc-unsplash 3.jpg';
 import './Cart.css';
 import { Link } from 'react-router-dom';
 
-export default function Cart() {
+export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, cart, onCartClear, onQuantityChange }) {
 
-  function like(e) {
-    e.target.classList.toggle('liked');
+  function handleLikeClick(e) {
+    let isLiked = e.target.classList.contains('liked');
+
+    if (isLiked) {
+      onDislike(Number(e.target.id));
+      return;
+    }
+    onLike(Number(e.target.id));
+  }
+
+  function handleCartRemove(e) {
+    onCartRemove(Number(e.target.id));
   }
 
   return(
@@ -19,56 +29,48 @@ export default function Cart() {
             <input type="text" className="cart__search-input" placeholder="Поиск..." />
             <button type="button" className="cart__search-btn" />
           </div>
-            <p className="cart__label">Всего товаров: <span className="cart__number">6</span></p>
-          <button className="cart__clear-btn" type="button">очистить</button>
+            <p className="cart__label">Всего товаров: <span className="cart__number">{cards.length}</span></p>
+          <button className="cart__clear-btn" type="button" onClick={onCartClear}>очистить</button>
         </div>
         <div className="cart__products">
-          <ul className="cart__products-list">
-            <li className="cart__product">
-              <Link to={'/'} className="cart__image-container">
-                <img className="cart__product-img" src={prod} alt="" />
-              </Link>
-              <button className="cart__like-btn" type="button" onClick={like} />
-              <div className="cart__product-info">
-                <Link to={'/'} className="cart__product-name">Корпус JWD JAWDWW AWD SEFSESEFSEFSEFSE88-1242 2452 54452 13546 225235 624624523</Link>
-                <button className="cart__remove-btn" type="button" />
-                <div className="cart__product-cost-info">
-                  <div className="cart__one-product-cost">
-                    <span className="cart__one-cost-value">2790 &#8381;</span>
-                    <span className="cart__one-cost-label">цена за 1 шт</span>
+          { cards.length === 0 ?
+            <div className="cart__void">
+              <p className="cart__void-text">Корзина пуста</p>
+            </div>
+            : <ul className="cart__products-list">
+            {
+              cards.map((card) => {
+                let quan = cart.find((item) => item.cardId === card.id).quantity;
+                return(
+                <li key={card.id} className="cart__product">
+                  <Link to={'/'} className="cart__image-container">
+                    <img className="cart__product-img" src={card.image} alt="" />
+                  </Link>
+                  <button className={`cart__like-btn ${faves.find((item) => item === card.id) ? 'liked' : ''}`} type="button"
+                    onClick={handleLikeClick} id={card.id} />
+                  <div className="cart__product-info">
+                    <Link to={'/'} className="cart__product-name">{card.productName}</Link>
+                    <button className="cart__remove-btn" type="button" id={card.id}
+                      onClick={handleCartRemove} />
+                    <div className="cart__product-cost-info">
+                      <div className="cart__one-product-cost">
+                        <span className="cart__one-cost-value">{card.productCost} &#8381;</span>
+                        <span className="cart__one-cost-label">цена за 1 шт</span>
+                      </div>
+                      <div className="cart__quantity">
+                        <button className="cart__decrease-btn" type="button" name='decrease' id={card.id} onClick={onQuantityChange}>-</button>
+                        <input className="cart__quantity-input" value={quan}  type="text" readOnly />
+                        <button className="cart__increase-btn" type="button" name='increase' id={card.id} onClick={onQuantityChange}>+</button>
+                      </div>
+                      <span className="cart__all-cost">{quan * card.productCost} &#8381;</span>
+                    </div>
                   </div>
-                  <div className="cart__quantity">
-                    <button className="cart__decrease-btn" type="button" >-</button>
-                    <input className="cart__quantity-input" type="text" readOnly />
-                    <button className="cart__increase-btn" type="button" >+</button>
-                  </div>
-                  <span className="cart__all-cost">2790 &#8381;</span>
-                </div>
-              </div>
-            </li>
-            <li className="cart__product">
-              <Link to={'/'} className="cart__image-container">
-                <img className="cart__product-img" src={prod} alt="" />
-              </Link>
-              <button className="cart__like-btn" type="button" onClick={like} />
-              <div className="cart__product-info">
-                <Link to={'/'} className="cart__product-name">Корпус JWD JAWDWW AWD SEFSESEFSEFSEFSE88-1242 2452 54452 13546 225235 624624523</Link>
-                <button className="cart__remove-btn" type="button" />
-                <div className="cart__product-cost-info">
-                  <div className="cart__one-product-cost">
-                    <span className="cart__one-cost-value">2790 &#8381;</span>
-                    <span className="cart__one-cost-label">цена за 1 шт</span>
-                  </div>
-                  <div className="cart__quantity">
-                    <button className="cart__decrease-btn" type="button" >-</button>
-                    <input className="cart__quantity-input" type="text" readOnly />
-                    <button className="cart__increase-btn" type="button" >+</button>
-                  </div>
-                  <span className="cart__all-cost">2790 &#8381;</span>
-                </div>
-              </div>
-            </li>
+                </li>
+              )
+            })
+            }
           </ul>
+          }
           <div className="cart__form">
             <button className="cart__form-btn">оформить заказ</button>
             <div className="cart__form-info">
@@ -78,8 +80,8 @@ export default function Cart() {
                 <span className="cart__sale-value">0 &#8381;</span>
               </div>
               <div className="cart__cost-info">
-                <span className="cart__cost-label">{`2 товар${[11, 12, 13, 14].indexOf(2 % 100) !== -1 ? 'ов' : 2 % 10 === 1 ? '' : [2, 3, 4].indexOf(2 % 10) !== -1 ? 'а' : 'ов'}`}</span>
-                <span className="cart__cost-value">3290 &#8381;</span>
+                <span className="cart__cost-label">{`${cards.length} товар${[11, 12, 13, 14].indexOf(cards.length % 100) !== -1 ? 'ов' : cards.length % 10 === 1 ? '' : [2, 3, 4].indexOf(cards.length % 10) !== -1 ? 'а' : 'ов'}`}</span>
+                <span className="cart__cost-value">{cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} &#8381;</span>
               </div>
             </div>
           </div>
