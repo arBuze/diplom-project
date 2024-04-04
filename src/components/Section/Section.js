@@ -1,6 +1,6 @@
-/* import oneComp from '../images/one-computer.jpg'; */
-import useWindowDimensions from '../hooks/useWindowDimensions';
-import ProductCard from "./ProductCard/ProductCard";
+import './Section.css';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
+import ProductCard from "../ProductCard/ProductCard";
 import { useEffect, useState } from 'react';
 
 export default function Section({ title, cards, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {

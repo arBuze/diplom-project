@@ -1,6 +1,6 @@
 import './Main.css';
 import SearchForm from "../SearchForm/SearchForm";
-import Section from "../Section";
+import Section from "../Section/Section";
 import oneComp from '../../images/one-computer.jpg';
 import { Link, useNavigate } from "react-router-dom";
 

@@ -9,6 +9,7 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
     sale,
     id
   } = card;
+  const path = pathname + '/' + id;
 
   function handleLikeClick(e) {
     let isFave = e.target.classList.contains('liked');
@@ -27,14 +28,14 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
       onCartRemove(id);
       return;
     }
-    onCartAdd(id, productCost);
+    onCartAdd(card);
   }
 
   return(
     type === 'grid' ?
     <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
       <div className="products-list__img-container">
-        <Link to={pathname + '/' + id} className="products-list__link products-list__link_type_image">
+        <Link to={path} className="products-list__link products-list__link_type_image">
           <img className="products-list__product-img" src={image} alt={productName} />
         </Link>
         <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
@@ -54,7 +55,7 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
           <span className="products-list__cost">{productCost} &#8381;</span>
           <span className="products-list__cost last-cost">{sale}</span>
           <div className="products-list__add-form">
-            <button className={`products-list__add-btn ${cart.find((item) => item.cardId === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+            <button className={`products-list__add-btn ${cart.find((item) => item.id === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
             {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>

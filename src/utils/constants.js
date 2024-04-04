@@ -11,6 +11,7 @@ export const cards = [
     productCost: 1200,
     sale: '1400',
     id: 1,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -18,6 +19,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 2,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -25,6 +27,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 3,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -32,6 +35,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 4,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -39,6 +43,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 5,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -46,6 +51,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 6,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -53,6 +59,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 7,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -60,6 +67,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 8,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -67,6 +75,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 9,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -74,6 +83,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 10,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -81,6 +91,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 11,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -88,6 +99,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 12,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -95,6 +107,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 13,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -102,6 +115,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 14,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -109,6 +123,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 15,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -116,6 +131,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 16,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -123,6 +139,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 17,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -130,6 +147,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 18,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -137,6 +155,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 19,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -144,6 +163,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 20,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -151,6 +171,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 21,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -158,6 +179,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 22,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -165,6 +187,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 23,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -172,6 +195,7 @@ export const cards = [
     productCost: 14300,
     sale: '-33%',
     id: 24,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -179,6 +203,7 @@ export const cards = [
     productCost: 12060,
     sale: '-33%',
     id: 25,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -186,6 +211,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 26,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -193,6 +219,7 @@ export const cards = [
     productCost: 123500,
     sale: '-33%',
     id: 27,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -200,6 +227,7 @@ export const cards = [
     productCost: 12980,
     sale: '-33%',
     id: 28,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -207,6 +235,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 29,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -214,6 +243,7 @@ export const cards = [
     productCost: 1120,
     sale: '-33%',
     id: 30,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -221,6 +251,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 31,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -228,6 +259,7 @@ export const cards = [
     productCost: 19876,
     sale: '-33%',
     id: 32,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -235,6 +267,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 33,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -242,6 +275,7 @@ export const cards = [
     productCost: 234,
     sale: '-33%',
     id: 34,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -249,6 +283,7 @@ export const cards = [
     productCost: 1200,
     sale: '-33%',
     id: 35,
+    category: 'computer-cases',
   },
   {
     image: image,
@@ -256,6 +291,7 @@ export const cards = [
     productCost: 1277,
     sale: '-33%',
     id: 36,
+    category: 'computer-cases',
   },
 ];
 

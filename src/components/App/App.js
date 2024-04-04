@@ -1,31 +1,31 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import '../index.css';
-import Header from './Header/Header';
-import Main from './Main/Main';
-import Catalog from './Catalog/Catalog';
-import Footer from './Footer/Footer';
-import ComputerCases from './ComputerCases/ComputerCases';
-import useWindowDimensions from '../hooks/useWindowDimensions';
-import TopButton from './TopButton/TopButton';
-import useVerticalScroll from '../hooks/useVerticalScroll';
-import ProductView from './ProductView/ProductView';
-import { CurrentUserContext } from '../contexts/CurrentUserContexts';
+import './App.css';
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import Catalog from '../Catalog/Catalog';
+import Footer from '../Footer/Footer';
+import ComputerCases from '../ComputerCases/ComputerCases';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
+import TopButton from '../TopButton/TopButton';
+import useVerticalScroll from '../../hooks/useVerticalScroll';
+import ProductView from '../ProductView/ProductView';
+import { CurrentUserContext } from '../../contexts/CurrentUserContexts';
 import { useEffect, useState } from 'react';
-import { cards } from '../utils/constants';
-import Cart from './Cart/Cart';
-import Favorite from './Favorite/Favorite';
-import Repair from './Repair/Repair';
-import Login from './Login/Login';
-import Register from './Register/Register';
-import PopupRepair from './PopupRepair/PopupRepair';
-import Profile from './Profile/Profile';
-import UserData from './UserData/UserData';
-import Orders from './Orders/Orders';
-import Sales from './Sales/Sales';
-import SaleView from './SaleView/SaleView';
-import OrderView from './OrderView/OrderView';
-import Build from './Build/Build';
-import PageNotFound from './PageNotFound/PageNotFound';
+import { cards } from '../../utils/constants';
+import Cart from '../Cart/Cart';
+import Favorite from '../Favorite/Favorite';
+import Repair from '../Repair/Repair';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
+import PopupRepair from '../PopupRepair/PopupRepair';
+import Profile from '../Profile/Profile';
+import UserData from '../UserData/UserData';
+import Orders from '../Orders/Orders';
+import Sales from '../Sales/Sales';
+import SaleView from '../SaleView/SaleView';
+import OrderView from '../OrderView/OrderView';
+import Build from '../Build/Build';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -72,12 +72,12 @@ function App() {
     setFavorites(favorites.filter((item) => !(item === card)));
   }
 
-  function handleAddToCartClick(newCard, price) {
-    setCart([...cart, { cardId: newCard, quantity: 1, price }]);
+  function handleAddToCartClick(newCard) {
+    setCart([...cart, { ...newCard, quantity: 1 }]);
   }
 
   function handleRemoveFromCart(card) {
-    setCart(cart.filter((item) => !(item.cardId === card)));
+    setCart(cart.filter((item) => !(item.id === card)));
   }
 
   function handleCartClear() {
@@ -86,8 +86,23 @@ function App() {
 
   function handleQuantityChange(e) {
     const id = Number(e.target.id);
-    const { quantity, price } = cart.find((item) => item.cardId === id);
-    setCart(state => state.map((item) => item.cardId === id ? { cardId: id,  quantity: e.target.name === 'increase' ? quantity + 1 : quantity - 1, price } : item));
+    /* будет полное обновление корзины, передать id пользователя и новое значение количества */
+    /* const newCard = user.cart.find((item) => item.id === id) */
+    /* setCart(state => state.map((item) => item.id === id ? newCard : item)); */
+    const { quantity } = cart.find((item) => item.id === id);
+    const newQuantity = e.target.name === 'increase' ? quantity + 1 : quantity - 1;
+    setCart(state => state.map((item) => item.id === id ? { quantity: newQuantity, ...item } : item));
+  }
+
+  function handleOrderCreate() {
+    const date = new Date();
+
+    setOrders([{
+      id: orders.length + 1,
+      products: cart, createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
+      status: 'в сборке'
+    }, ...orders]);
+    handleCartClear();
   }
 
   function handleEditClick() {
@@ -218,10 +233,10 @@ function App() {
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
             <Route path='/cart' element={
-              <Cart onLike={handleLikeClick} cards={cart.map((item) => cards.find((card) => card.id === item.cardId))} faves={favorites}
+              <Cart onLike={handleLikeClick} cards={cart} faves={favorites} /* cart.map((item) => cards.find((card) => card.id === item.cardId)) */
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
                 cart={cart} onCartClear={handleCartClear}
-                onQuantityChange={handleQuantityChange} />
+                onQuantityChange={handleQuantityChange} onOrderCreate={handleOrderCreate} />
             } />
             <Route path='/favorite' element={
               <Favorite cards={favorites.map((item) => cards.find((card) => card.id === item))} faves={favorites} width={width} pathname={pathname}
@@ -232,7 +247,7 @@ function App() {
               <Route index element={<Profile title='Профиль' pathname={pathname}>
                 <UserData isEdit={isEdit} isLoading={isUpdateResponseLoading} onEditClick={handleEditClick} />
               </Profile>} />
-              <Route path='orders' element={<Profile title='Заказы' pathname={pathname}> <Orders /> </Profile>} />
+              <Route path='orders' element={<Profile title='Заказы' pathname={pathname}> <Orders orders={orders} /> </Profile>} />
               <Route path='orders/:id' element={<Profile title='Заказы' pathname={pathname}> <OrderView /> </Profile>} />
             </Route>
             <Route path='/signin' element={<Login />} />

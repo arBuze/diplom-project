@@ -1,0 +1,9 @@
+@import url(../../vendor/normalize.css);
+@import url(../../vendor/fonts/fonts.css);
+
+.page {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', Arial, sans-serif;
+  background-color: #F5F7FA;
+}
