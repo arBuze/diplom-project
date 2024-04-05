@@ -372,4 +372,8 @@ export const linkMatches = [
     name: 'Заказы',
     path: '/profile/orders',
   },
+  {
+    name: 'Оформление заказа',
+    path: '/profile/order-create',
+  },
 ];

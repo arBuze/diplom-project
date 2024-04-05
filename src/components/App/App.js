@@ -26,6 +26,7 @@ import SaleView from '../SaleView/SaleView';
 import OrderView from '../OrderView/OrderView';
 import Build from '../Build/Build';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import OrderCreate from '../OrderCreate/OrderCreate';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -102,7 +103,6 @@ function App() {
       products: cart, createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
       status: 'в сборке'
     }, ...orders]);
-    handleCartClear();
   }
 
   function handleEditClick() {
@@ -235,9 +235,10 @@ function App() {
             <Route path='/cart' element={
               <Cart onLike={handleLikeClick} cards={cart} faves={favorites} /* cart.map((item) => cards.find((card) => card.id === item.cardId)) */
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                cart={cart} onCartClear={handleCartClear}
-                onQuantityChange={handleQuantityChange} onOrderCreate={handleOrderCreate} />
+                onCartClear={handleCartClear}
+                onQuantityChange={handleQuantityChange} />
             } />
+            <Route path='/order-create' element={<OrderCreate cards={cart} onOrderCreate={handleOrderCreate} />} />
             <Route path='/favorite' element={
               <Favorite cards={favorites.map((item) => cards.find((card) => card.id === item))} faves={favorites} width={width} pathname={pathname}
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} cart={cart}
@@ -248,7 +249,10 @@ function App() {
                 <UserData isEdit={isEdit} isLoading={isUpdateResponseLoading} onEditClick={handleEditClick} />
               </Profile>} />
               <Route path='orders' element={<Profile title='Заказы' pathname={pathname}> <Orders orders={orders} /> </Profile>} />
-              <Route path='orders/:id' element={<Profile title='Заказы' pathname={pathname}> <OrderView /> </Profile>} />
+              <Route path='orders/:id' element={
+                <Profile title='Заказы' pathname={pathname}>
+                  <OrderView cards={orders} pathname={pathname} />
+                </Profile>} />
             </Route>
             <Route path='/signin' element={<Login />} />
             <Route path='/signup' element={<Register />} />

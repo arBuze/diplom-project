@@ -12,7 +12,7 @@ export default function Orders({ orders }) {
           orders.map((item) => {
             const cardsToShow = item.products.slice(0, maxCardsShown);
             return (
-              <li className="orders__item">
+              <li key={item.id} className="orders__item">
                 <p className="orders__title">Заказ №1283 от {item.createdAt}</p>
                 <div className="orders__container">
                   <div className="orders__info">
@@ -25,7 +25,7 @@ export default function Orders({ orders }) {
                   <ul className="orders__product-list">
                     {
                       cardsToShow.map((card) =>
-                        <li className="orders__product">
+                        <li key={card.id} className="orders__product">
                           <Link to={'/catalog/' + card.category + '/' + card.id} className="orders__link">
                             <img className="orders__image" src={card.image} alt='Товар' />
                           </Link>

@@ -1,9 +1,10 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import prod from '../../images/gnider-tam-ge_ftrk7wDc-unsplash 3.jpg';
 import './Cart.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, cart, onCartClear, onQuantityChange, onOrderCreate }) {
+export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, onCartClear, onQuantityChange }) {
+  const navigate = useNavigate();
 
   function handleLikeClick(e) {
     let isLiked = e.target.classList.contains('liked');
@@ -17,6 +18,10 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, ca
 
   function handleCartRemove(e) {
     onCartRemove(Number(e.target.id));
+  }
+
+  function handleOrderCreate() {
+    navigate('/order-create');
   }
 
   return(
@@ -72,7 +77,7 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, ca
           </ul>
           }
           <div className="cart__form">
-            <button className="cart__form-btn" onClick={onOrderCreate}>оформить заказ</button>
+            <button className="cart__form-btn" onClick={handleOrderCreate}>оформить заказ</button>
             <div className="cart__form-info">
               <span className="cart__form-all">Итого:</span>
               <div className="cart__sale-info">
@@ -81,7 +86,7 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, ca
               </div>
               <div className="cart__cost-info">
                 <span className="cart__cost-label">{`${cards.length} товар${[11, 12, 13, 14].indexOf(cards.length % 100) !== -1 ? 'ов' : cards.length % 10 === 1 ? '' : [2, 3, 4].indexOf(cards.length % 10) !== -1 ? 'а' : 'ов'}`}</span>
-                <span className="cart__cost-value">{cart.reduce((sum, item) => sum + item.productCost * item.quantity, 0)} &#8381;</span>
+                <span className="cart__cost-value">{cards.reduce((sum, item) => sum + item.productCost * item.quantity, 0)} &#8381;</span>
               </div>
             </div>
           </div>

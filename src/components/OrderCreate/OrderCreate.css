@@ -1,0 +1,24 @@
+.order-create {
+  padding: 15px 0 20px;
+}
+
+.order-create__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.order-create__container {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.order-create__info-container {
+  background-color: #FFF;
+  border-radius: 15px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px #CBD2D9;
+  padding: 20px;
+}
