@@ -1,6 +1,6 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './SaleView.css';
-import comp from '../../images/giorgio-trovato-v_bri4iVuiM-unsplash.jpg';
+import comp from '../../images/giorgio-trovato.jpg';
 import ProductsList from '../ProductsList/ProductsList';
 const title = 'Скидки на корпуса 1233452'
 

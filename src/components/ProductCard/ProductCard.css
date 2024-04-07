@@ -88,6 +88,10 @@
   background: url('../../images/star-line.svg') center/contain;
 }
 
+.products-list__star_full {
+  background: url('../../images/star-full.svg') center/contain;
+}
+
 .products-list__info {
   width: 100%;
   box-sizing: border-box;

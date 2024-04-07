@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 
 export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const [currentCard, setCurrentCard] = useState({});
+  const ratingStars = [1, 2, 3, 4, 5];
+  const starsColored = Math.round(currentCard?.rating);
+  const isInCart = cart.find((item) => item.id === currentCard.id);
 
   useEffect(() => {
     const id = pathname.slice(pathname.lastIndexOf('/') + 1,);
@@ -28,13 +31,11 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
   }
 
   function handleCartClick(e) {
-    let isInCart = e.target.classList.contains('added');
-
     if (isInCart) {
       onCartRemove(currentCard.id);
       return;
     }
-    onCartAdd(currentCard.id);
+    onCartAdd(currentCard);
   }
 
   return(
@@ -58,13 +59,13 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
           <h2 className="product-view__title">{currentCard?.productName}</h2>
           <div className="product-view__rating-info">
             <ul className="products-list__rating products-list__rating_place_product">
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
+              {
+                ratingStars.map((item) =>
+                  <li key={item} className={`products-list__star ${item <= starsColored ? 'products-list__star_full' : ''}`} />
+                )
+              }
             </ul>
-            <span className="product-view__rating-value">5.0</span>
+            <span className="product-view__rating-value">{currentCard?.rating?.toFixed(1)}</span>
             <a className="product-view__feedback-link" href="#feedback" onClick={onLinkClick}>Отзывы:
               {/* <span className="product-view__feedback-number"> */} 3{/* </span> */}
             </a>
@@ -87,11 +88,11 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
             </div>
           </div>
           <div className="product-view__cost-info">
-            <span className="product-view__price">{currentCard?.productCost}</span>
+            <span className="product-view__price">{currentCard?.productCost} &#8381;</span>
             <div className="product-view__add-form">
-              <button className={`product-view__add-btn ${cart.find((item) => item === currentCard.id) ? 'view-added' : ''}`} type="button"
+              <button className={`product-view__add-btn ${isInCart ? 'view-added' : ''}`} type="button"
                 onClick={handleCartClick}>
-                {`${cart.find((item) => item === currentCard.id) ? 'Добавлено' : 'В корзину'}`}
+                {`${isInCart ? 'В корзине' : 'В корзину'}`}
               </button>
               {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>

@@ -1,22 +1,77 @@
 import { useState } from 'react';
 import './Filters.css';
 
-export default function Filters({ width }) {
+export default function Filters({ width, limits, onCostChange }) {
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(10);
+  const [maxPrice, setMaxPrice] = useState(100);
   const [isVisible, setIsVisible] = useState(true);
+  const [values, setValues] = useState({});
+  const percent = (limits.max - limits.min) / 100;
+
+  function onPriceInputChange(e) {
+    const { name, value } = e.target;
+    const valueNum = Number(value);
+    if (isNaN(valueNum)) {
+      values[name] ? setValues({
+        ...values
+      })
+      : setValues({
+        ...values,
+        [name]: limits[name]
+      });
+      return;
+    }
+    if (name === 'min') {
+        setValues({
+          ...values,
+          min: valueNum
+        });
+        setMinPrice(Math.round((valueNum - limits.min)/percent));
+        onCostChange(valueNum, values.max);
+    } else {
+        console.log(valueNum, 'AS');
+        setValues({
+          ...values,
+          max: valueNum
+        });
+        setMaxPrice(Math.round((valueNum - limits.min)/percent));
+        onCostChange(values.min, valueNum);
+    }
+  }
 
   function onPriceChange(e) {
     const price = Number(e.target.value);
     if (e.target.id === 'left') {
-      setMinPrice(price);
       if (price > maxPrice) {
         setMinPrice(maxPrice);
+        setValues({
+          ...values,
+          min: Math.round(maxPrice * percent) + limits.min
+        });
+        onCostChange(Math.round(maxPrice * percent) + limits.min, values.max)
+      } else {
+        setMinPrice(price);
+        setValues({
+          ...values,
+          min: Math.round(price * percent) + limits.min
+        });
+        onCostChange(Math.round(price * percent) + limits.min, values.max)
       }
     } else {
-      setMaxPrice(price);
       if (price < minPrice) {
         setMaxPrice(minPrice);
+        setValues({
+            ...values,
+            max: Math.round(minPrice * percent) + limits.min
+        });
+        onCostChange(values.min, Math.round(minPrice * percent) + limits.min);
+      } else {
+        setMaxPrice(price);
+        setValues({
+          ...values,
+          max: Math.round(price * percent) + limits.min
+        });
+        onCostChange(values.min, Math.round(price * percent) + limits.min);
       }
     }
   }
@@ -51,16 +106,18 @@ export default function Filters({ width }) {
         { isVisible &&
           <div className="filters__input">
             <div className="filters__price-inputs">
-              <input type="number" className="filters__price-input" />
-              <input type="number" className="filters__price-input" />
+              <input type="text" className="filters__price-input" name='min'
+                value={values?.min} placeholder={limits.min} onChange={onPriceInputChange} />
+              <input type="text" className="filters__price-input" name='max'
+                value={values?.max} placeholder={limits.max} onChange={onPriceInputChange} />
             </div>
             { width >= 768 &&
               <div className="filters__wrapper">
                 <div className="filters__container">
                   <div className="filters__slider-track" style={{background: `linear-gradient(to right, #D4D4D4 ${minPrice}%, #98AEEB ${minPrice}%, #98AEEB ${maxPrice}%, #D4D4D4 ${maxPrice}%)`}}></div>
-                  <input type="range" min="0" max="100" step="1" className="filters__slider" id='left'
+                  <input type="range" min={0} max={100} step="1" className="filters__slider" id='left'
                     value={minPrice} onChange={onPriceChange} />
-                  <input type="range" min="0" max="100" step="1" className="filters__slider" id='right'
+                  <input type="range" min={0} max={100} step="1" className="filters__slider" id='right'
                     value={maxPrice} onChange={onPriceChange} />
                 </div>
               </div>

@@ -1,5 +1,6 @@
 .products {
   width: 100%;
+  min-height: 377px;
   background-color: #FFF;
   box-shadow: 0 2px 5px #CBD2D9;
   border-radius: 10px;
@@ -9,6 +10,19 @@
 
 .products_sales {
   box-shadow: none;
+}
+
+.products_void {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.products__void-text {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0;
 }
 
 .products__list {

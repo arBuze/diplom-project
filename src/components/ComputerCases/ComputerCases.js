@@ -7,14 +7,27 @@ import './ComputerCases.css';
 export default function ComputerCases({ name, cards, width, scroll, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
+  const [shownCards, setShowCards] = useState([]);
+
+  const limits = cards.reduce(({min, max}, item) => {
+    if (min > item.productCost) {
+      min = item.productCost;
+    }
+    if (max < item.productCost) {
+      max = item.productCost;
+    }
+    return({min, max});
+  }, {min: cards[0].productCost, max: cards[0].productCost});
 
   useEffect(() => {
+    setShowCards(cards);
     if (scroll > 0) {
       window.scrollTo({
         top: 0,
         left: 0
       });
     }
+    console.log(limits);
   },[])
 
   function onViewChange(e) {
@@ -23,6 +36,14 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
 
   function onReverseBtnClick() {
     setIsReversed(!isReversed);
+    setShowCards(shownCards.slice().reverse());
+  }
+
+  function handlePriceFilterChange(minCost, maxCost) {
+    const minPrice = minCost ? minCost : limits.min;
+    const maxPrice = maxCost ? maxCost : limits.max;
+    const filteredCards = cards.filter((item) => item.productCost >= minPrice && item.productCost <= maxPrice);
+    setShowCards(filteredCards);
   }
 
   return(
@@ -30,7 +51,10 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       <h2 className="computer-cases__title">{name}</h2>
       <Breadcrumps />
       <div className="computer-cases__container">
-        { width >= 1024 && <Filters width={width} /> }
+        { width >= 1024 &&
+          <Filters width={width} limits={limits}
+            onCostChange={handlePriceFilterChange} />
+        }
         <div className="computer-cases__list-container">
           <div className="computer-cases__filters-container">
             <div className="computer-cases__add-container">
@@ -57,7 +81,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
               </label>
             </div>
           </div>
-          <ProductsList cards={isReversed ? cards.slice().reverse() : cards}
+          <ProductsList cards={shownCards}
             width={width} display={displayType}
             isReversed={isReversed} pathname={pathname}
             faves={faves} cart={cart}

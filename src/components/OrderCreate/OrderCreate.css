@@ -9,6 +9,7 @@
 }
 
 .order-create__container {
+  width: 100%;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -16,9 +17,70 @@
 }
 
 .order-create__info-container {
+  flex-grow: 1;
   background-color: #FFF;
   border-radius: 15px;
   box-sizing: border-box;
   box-shadow: 0 2px 5px #CBD2D9;
   padding: 20px;
+}
+
+.order-create__user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.order-create__user-title {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 500;
+  margin: 0 0 5px;
+}
+
+.order-create__contacts {
+  display: flex;
+  align-items: center;
+}
+
+.order-create__label {
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  width: 330px;
+  align-items: center;
+  margin: 0;
+}
+
+.order-create__required {
+  font-size: 14px;
+  color: #AB091E;
+}
+
+.order-create__data-input {
+  font-size: 16px;
+  line-height: 20px;
+  border: 1px solid #adadad;
+  padding: 5px;
+  margin-left: auto;
+}
+
+.order-create__data-input[type='tel'] {
+  letter-spacing: .4px;
+}
+
+.order-create__data-input:focus {
+  outline: none;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.order-create__data-input::placeholder {
+  font-size: 14px;
+}
+
+.order-create__or {
+  font-weight: 300;
+  margin: 0 10px;
 }

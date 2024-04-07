@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -38,6 +38,7 @@ function App() {
   const { width } = useWindowDimensions();
   const { pathname } = useLocation();
   const scroll = useVerticalScroll();
+  const navigate = useNavigate();
   /* temp */
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -103,6 +104,9 @@ function App() {
       products: cart, createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
       status: 'в сборке'
     }, ...orders]);
+
+    handleCartClear();
+    navigate('/profile/orders');
   }
 
   function handleEditClick() {
@@ -118,7 +122,7 @@ function App() {
       <main className="main">
         <CurrentUserContext.Provider value={currentUser}>
           <Routes>
-            <Route path='/' element={<Main cards={cards} pathname={pathname}
+            <Route path='/' element={<Main cards={cards.slice(0, 15)} pathname={pathname}
               onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
               onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />} />
             <Route path='/catalog'>
@@ -225,7 +229,11 @@ function App() {
               } />
             </Route>
             <Route path='/repair' element={<Repair onRepairSubmit={handleRepairSubmit} />} />
-            <Route path='/build' element={<Build cards={cards} width={width} scroll={scroll} pathname={pathname} /> } />
+            <Route path='/build' element={
+              <Build cards={cards} width={width} scroll={scroll} pathname={pathname}
+                onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
+                onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
+            } />
             <Route path='/sales' element={<Sales />} />
             <Route path='/sales/:id' element={
               <SaleView cards={cards} width={width} pathname={pathname}

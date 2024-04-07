@@ -7,9 +7,14 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
     image,
     productCost,
     sale,
-    id
+    id,
+    category,
+    rating,
   } = card;
-  const path = pathname + '/' + id;
+  const path = '/catalog/' + category + '/' + id;
+  const ratingStars = [1, 2, 3, 4, 5];
+  const starsColored = Math.round(rating);
+  const isInCart = cart.find((item) => item.id === id);
 
   function handleLikeClick(e) {
     let isFave = e.target.classList.contains('liked');
@@ -22,8 +27,6 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
   }
 
   function handleCartClick(e) {
-    let isInCart = e.target.classList.contains('added');
-
     if (isInCart) {
       onCartRemove(id);
       return;
@@ -40,22 +43,22 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
         </Link>
         <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
         <ul className="products-list__rating">
-          <li className="products-list__star"></li>
-          <li className="products-list__star"></li>
-          <li className="products-list__star"></li>
-          <li className="products-list__star"></li>
-          <li className="products-list__star"></li>
+          {
+            ratingStars.map((item) =>
+              <li key={item} className={`products-list__star ${item <= starsColored ? 'products-list__star_full' : ''}`} />
+            )
+          }
         </ul>
       </div>
       <div className="products-list__info">
-        <Link to={pathname + id} className="products-list__link products-list__link_type_name">
+        <Link to={path} className="products-list__link products-list__link_type_name">
           <h3 className="products-list__name">{productName}</h3>
         </Link>
         <div className="product-list__cost-info">
           <span className="products-list__cost">{productCost} &#8381;</span>
           <span className="products-list__cost last-cost">{sale}</span>
           <div className="products-list__add-form">
-            <button className={`products-list__add-btn ${cart.find((item) => item.id === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+            <button className={`products-list__add-btn ${isInCart ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
             {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>
@@ -68,13 +71,13 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
     :
     <li className="wide-list__card">
       <div className="wide-list__img-container">
-        <Link to={pathname + '/' + id} className="wide-list__link wide-list__link_type_image">
+        <Link to={path} className="wide-list__link wide-list__link_type_image">
           <img className="wide-list__product-img" src={image} alt={productName} />
         </Link>
         <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
       </div>
       <div className="wide-list__info">
-        <Link to={pathname + '/' + id} className="wide-list__link wide-list__link_type_name" >
+        <Link to={path} className="wide-list__link wide-list__link_type_name" >
           <h3 className="wide-list__name">{productName}</h3>
         </Link>
         <p className="wide-list__description">
@@ -95,7 +98,7 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
           <span className="wide-list__cost">{`${productCost} &#8381;`}</span>
           <span className="wide-list__cost last-cost">{sale}</span>
           <div className="products-list__add-form">
-            <button className={`products-list__add-btn ${cart.find((item) => item === id) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+            <button className={`products-list__add-btn ${isInCart ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
             {/* <div className="products-list__add-multiple">
               <button className="products-list__decrease-btn" type="submit">-</button>
               <span className="products-list__quantity">1</span>

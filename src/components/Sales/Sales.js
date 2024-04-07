@@ -1,6 +1,6 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './Sales.css';
-import comp from '../../images/giorgio-trovato-v_bri4iVuiM-unsplash.jpg';
+import comp from '../../images/giorgio-trovato.jpg';
 import { Link } from 'react-router-dom';
 
 export default function Sales() {

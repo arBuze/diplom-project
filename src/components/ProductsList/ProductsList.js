@@ -101,8 +101,11 @@ export default function ProductsList({ cards, width, display, isReversed, pathna
   }
 
   return(
-    <div className={`products ${pathname.includes('sales') ? 'products_sales' : ''}`}>
-      <ul className={`products__list ${display === 'grid' ? 'products__list_type_grid' : 'products__list_type_list'}`}>
+    <div className={`products ${pathname.includes('sales') ? 'products_sales' : ''} ${cards.length === 0 ? 'products_void' : ''}`}>
+      { cards.length === 0 ?
+        <p className="products__void-text">Ничего не найдено</p>
+        :
+        <ul className={`products__list ${display === 'grid' ? 'products__list_type_grid' : 'products__list_type_list'}`}>
         {
           cardsVisible.map((item) => {
             return (<ProductCard key={item.id} card={item} type={display} pathname={pathname}
@@ -112,6 +115,7 @@ export default function ProductsList({ cards, width, display, isReversed, pathna
           })
         }
       </ul>
+      }
       { cards.length > (cardsVisible.length + numberOfHiddenCards) &&
         <button className="products__more-btn" type="button" onClick={handleShowMoreClick}>
           показать еще

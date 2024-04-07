@@ -1,13 +1,17 @@
 import './Orders.css';
 import { Link } from 'react-router-dom';
-import comp from '../../images/giorgio-trovato-v_bri4iVuiM-unsplash.jpg';
 
 export default function Orders({ orders }) {
   const maxCardsShown = 4;
 
   return(
     <div className="orders">
-      <ul className="orders__list">
+      { orders.length === 0 ?
+        <div className="orders__void">
+          <p className="orders__void-text">Вы ещё не сделали ни одного заказа</p>
+        </div>
+        :
+        <ul className="orders__list">
         {
           orders.map((item) => {
             const cardsToShow = item.products.slice(0, maxCardsShown);
@@ -45,6 +49,7 @@ export default function Orders({ orders }) {
           })
         }
       </ul>
+      }
     </div>
   );
 }

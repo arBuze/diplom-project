@@ -109,10 +109,10 @@ export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, 
             </Link>
           </li>
           <li className="catalog-preview__item">
-            <Link to="/catalog/monitors" className="catalog-preview__link">
+            <Link to="/catalog/peripheral" className="catalog-preview__link">
               <img className="catalog-preview__image" src={oneComp} alt="" />
               <h3 className="catalog-preview__item-name">
-                Мониторы
+                Периферия
               </h3>
             </Link>
           </li>
