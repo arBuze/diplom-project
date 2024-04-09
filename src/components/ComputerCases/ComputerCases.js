@@ -8,8 +8,9 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
   const [shownCards, setShowCards] = useState([]);
-  const [filters, setFilters] = useState({});
+  const [priceFilter, setPriceFilter] = useState(null);
   const [characteristics, setCharacteristics] = useState([]);
+  const [checks, setChecks] = useState([]);
 
   const limits = cards.reduce(({min, max}, item) => {
     if (min > item.productCost) {
@@ -21,18 +22,25 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     return({ min, max });
   }, { min: cards[0].productCost, max: cards[0].productCost });
 
+  /* достаем фильтры из локального хранилища */
   useEffect(() => {
-    let fils = JSON.parse(localStorage.getItem('filter'));
-    if (fils) {
-      if (fils.path.includes(pathname)) {
-        setFilters(fils);
-      } else {
-        localStorage.removeItem('filter');
+    const filters = JSON.parse(localStorage.getItem('filter'));
+    if (filters && filters.path.includes(pathname)) {
+      if (filters.price) {
+        console.log('777');
+        setPriceFilter(filters.price);
       }
+      if (filters.chars && filters.chars.length !== 0) {
+        setChecks(filters.chars);
+      }
+    } else {
+      localStorage.removeItem('filter');
     }
   }, [])
 
+  /* задает список характеристик */
   useEffect(() => {
+    /* сделать сортировку характеристик по возрастанию */
     setShowCards(cards);
     const arr = [];
     cards.forEach((card) =>
@@ -61,6 +69,29 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     }
   }, [])
 
+  /* фильтр карточек */
+  useEffect(() => {
+    let filteredCards = cards;
+    console.log(checks);
+    if ((checks && checks.length !== 0) || priceFilter !== null) {
+      if (priceFilter !== null) {
+        console.log('111');
+        filteredCards = filteredCards.filter((item) => item.productCost >= priceFilter.min && item.productCost <= priceFilter.max);
+      }
+      if (checks && checks.length !== 0) {
+        console.log('222');
+        filteredCards = filterChars(filteredCards);
+      }
+
+      localStorage.setItem('filter', JSON.stringify({
+        path: pathname,
+        price: priceFilter,
+        chars: checks
+      }));
+      setShowCards(filteredCards);
+    }
+  }, [priceFilter, checks])
+
   function onViewChange(e) {
     setDisplaytype(e.target.name);
   }
@@ -70,90 +101,58 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     setShowCards(shownCards.slice().reverse());
   }
 
-  function filterPrice(parameters) {
-    const { min, max } = parameters;
-    let filtered = cards.filter((item) => item.productCost >= min && item.productCost <= max);
-
-    return filtered;
-  }
-
-  function filterChars(parameters, cards) {
-    let filtered = cards.filter((item) => {
+  function filterChars(cardsArray) {
+    let filtered = cardsArray.filter((item) => {
       const arr = [];
-      parameters.forEach((par) => {
-        item.characteristics.find((char) => char.name === par.name && char.value === par.value)
-    })
-    }
-    );
+      checks.forEach((par) => {
+        const temp = item.characteristics.find((char) => char.name === par.name && par.values.includes(char.value));
+        if (temp) {
+          arr.push(temp);
+        }
+      });
+      return (arr.length === checks.length);
+    });
 
     return filtered;
-  }
-
-  function handleFilter(type, chars) {
-    let filteredCards = cards;
-    if (type) {
-      if (type === 'price') {
-        filteredCards = filterPrice(chars);
-        if (filters.chars && filters.chars.length !== 0) {
-          filteredCards = filterChars(filters.chars, filteredCards);
-        }
-      } else {
-        if (filters.price) {
-          filteredCards = filterPrice(filters.price);
-        }
-        if (chars.length !== 0)
-          filteredCards = filterChars(chars, filteredCards);
-      }
-    } else {
-      if (filters.price) {
-        filteredCards = filterPrice(filters.price);
-      }
-      if (filters.chars && filters.chars.length !== 0) {
-        filteredCards = filterChars(filters.chars, filteredCards);
-      }
-    }
-    setShowCards(filteredCards);
   }
 
   function handlePriceFilterChange(minCost, maxCost) {
     const minPrice = minCost ? minCost : limits.min;
     const maxPrice = maxCost ? maxCost : limits.max;
-    setFilters({
-      ...filters,
-      price: {
-        min: minPrice,
-        max: maxPrice,
-      }
-    });
-    localStorage.setItem('filter', JSON.stringify({
-      path: pathname,
-      pars: {
-        ...filters,
-        price: {
-          min: minPrice,
-          max: maxPrice,
-        }
-      }
-    }));
-    handleFilter('price', {
+    setPriceFilter({
       min: minPrice,
       max: maxPrice,
     });
   }
 
-  function handleCharsChange(array) {
-      setFilters({
-        ...filters,
-        chars: array
-      });
-      localStorage.setItem('filter', JSON.stringify({
-        path: pathname,
-        pars: {
-          ...filters,
-          chars: array
-        }
-      }));
-    handleFilter('chars', array);
+  function handleCharsChange(e) {
+    console.log('fbvwegfhiWJE');
+    const { name, value } = e.target;
+    console.log(e.target);
+    const isChecked = checks.find((item) => item.name === name && item.values.includes(value));
+
+    if (isChecked) {
+      const temp = isChecked.values;
+      temp.splice(temp.indexOf(value), 1);
+      if (temp.length === 0) {
+        setChecks(checks.filter((item) => !(item.name === name)));
+      } else {
+        setChecks(state => state.map((item) => item.name === name ? { name: name, values: temp } : item));
+      }
+    } else {
+      const index = checks.find((item) => item.name === name);
+      if (index) {
+        setChecks(state => state.map((item) => item.name === name ? { name: index.name, values: [...index.values, value] } : item))
+      } else {
+        setChecks([
+          ...checks,
+          {
+            name: name,
+            values: [value]
+          }
+        ]);
+      }
+    }
   }
 
   return(
@@ -162,7 +161,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       <Breadcrumps />
       <div className="computer-cases__container">
         { width >= 1024 &&
-          <Filters width={width} limits={limits}
+          <Filters width={width} limits={limits} checks={checks}
             characteristics={characteristics} pathname={pathname}
             onCostChange={handlePriceFilterChange} onCharsChange={handleCharsChange} />
         }

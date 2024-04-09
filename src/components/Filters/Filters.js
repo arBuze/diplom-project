@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import './Filters.css';
 
-export default function Filters({ width, limits, characteristics, pathname, onCostChange, onCharsChange }) {
+export default function Filters({ width, limits, characteristics, checks, pathname, onCostChange, onCharsChange }) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   const [isVisible, setIsVisible] = useState(true);
   const [values, setValues] = useState({});
-  const [checks, setChecks] = useState([]);
+
   const percent = (limits.max - limits.min) / 100;
 
   /* useState(() => {
@@ -99,31 +99,6 @@ export default function Filters({ width, limits, characteristics, pathname, onCo
     setIsVisible(!isVisible);
   }
 
-  function handleCheckbox(e) {
-    const { name, value } = e.target;
-    const isChecked = checks.find((item) => item.name === name && item.value === value);
-    if (isChecked) {
-      /* const filtered = checks.filter((item) => !(item.name === name && item.value === value));
-      console.log(filtered, 'aa');
-      setChecks(filtered);
-      onCharsChange(filtered); */
-    } else {
-      console.log([...checks, { name, value }]);
-      const c = [{name: 'Производитель', values: ['Soool']}];
-      const index = c.indexOf(c.find((item) => item.name === name));
-      console.log(index);
-      if (index !== -1) {
-        c[index].values.push(value);
-        console.log(c);
-      } else {
-        c.push({name: name, values: [value]});
-      }
-      /* setChecks([...checks, { name, value }]);
-      onCharsChange([...checks, { name, value }]); */
-    }
-
-  }
-
   return(
     <form className="filters" name="filters">
       <fieldset className="filters__field filters__search-field" name="category-search">
@@ -186,7 +161,7 @@ export default function Filters({ width, limits, characteristics, pathname, onCo
                 item.value.map((elem) =>
                   <label className="filters__check-name">
                     <input type="checkbox" className="filters__check" name={item.name} value={elem}
-                      checked={checks.find((c) => c.name === item.name && c.value === elem)}  onChange={handleCheckbox} />
+                      checked={checks.find((c) => c.name === item.name && (c.values.indexOf(elem) !== -1))} onChange={onCharsChange} />
                     <span className="filters__pseudo-check" />
                     {elem}
                   </label>
