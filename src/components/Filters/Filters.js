@@ -1,12 +1,32 @@
 import { useState } from 'react';
 import './Filters.css';
 
-export default function Filters({ width, limits, onCostChange }) {
+export default function Filters({ width, limits, characteristics, pathname, onCostChange, onCharsChange }) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   const [isVisible, setIsVisible] = useState(true);
   const [values, setValues] = useState({});
+  const [checks, setChecks] = useState([]);
   const percent = (limits.max - limits.min) / 100;
+
+  /* useState(() => {
+    let fils = JSON.parse(localStorage.getItem('filter'));
+    if (fils) {
+      if (fils.path.includes(pathname) && fils.pars.chars && fils.pars.chars.length !== 0) {
+        console.log(fils.pars.chars, 'awda');
+        setChecks(fils.pars.chars);
+      }
+      if (fils.path.includes(pathname) && fils.pars.price) {
+        const { min, max } = fils.pars.price;
+        setValues({
+          min,
+          max
+        });
+        setMinPrice(Math.round((min - limits.min)/percent));
+        setMaxPrice(Math.round((max - limits.min)/percent));
+      }
+    }
+  }, []) */
 
   function onPriceInputChange(e) {
     const { name, value } = e.target;
@@ -29,7 +49,6 @@ export default function Filters({ width, limits, onCostChange }) {
         setMinPrice(Math.round((valueNum - limits.min)/percent));
         onCostChange(valueNum, values.max);
     } else {
-        console.log(valueNum, 'AS');
         setValues({
           ...values,
           max: valueNum
@@ -80,6 +99,31 @@ export default function Filters({ width, limits, onCostChange }) {
     setIsVisible(!isVisible);
   }
 
+  function handleCheckbox(e) {
+    const { name, value } = e.target;
+    const isChecked = checks.find((item) => item.name === name && item.value === value);
+    if (isChecked) {
+      /* const filtered = checks.filter((item) => !(item.name === name && item.value === value));
+      console.log(filtered, 'aa');
+      setChecks(filtered);
+      onCharsChange(filtered); */
+    } else {
+      console.log([...checks, { name, value }]);
+      const c = [{name: 'Производитель', values: ['Soool']}];
+      const index = c.indexOf(c.find((item) => item.name === name));
+      console.log(index);
+      if (index !== -1) {
+        c[index].values.push(value);
+        console.log(c);
+      } else {
+        c.push({name: name, values: [value]});
+      }
+      /* setChecks([...checks, { name, value }]);
+      onCharsChange([...checks, { name, value }]); */
+    }
+
+  }
+
   return(
     <form className="filters" name="filters">
       <fieldset className="filters__field filters__search-field" name="category-search">
@@ -125,49 +169,34 @@ export default function Filters({ width, limits, onCostChange }) {
           </div>
         }
       </fieldset>
-      <fieldset className="filters__field filters__field_type_producer">
-        <div className="filters__filter-name">
-          <span className="filters__filter-title">Производители</span>
-          <button className={`filters__hide-btn ${!isVisible ? 'filters__hide-btn_active' : ''}`} type="button" onClick={onHideClick} />
-        </div>
-        <div className="filters__checks-container">
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-          <label className="filters__check-name">
-            <input type="checkbox" className="filters__check" name="producer" />
-            <span className="filters__pseudo-check" />
-            Выбрать все
-          </label>
-        </div>
-      </fieldset>
+      {
+        characteristics.map((item) =>
+          <fieldset key={item.id} className="filters__field filters__field_type_producer">
+            <div className="filters__filter-name">
+              <span className="filters__filter-title">{item.name}</span>
+              <button className={`filters__hide-btn ${!isVisible ? 'filters__hide-btn_active' : ''}`} type="button" onClick={onHideClick} />
+            </div>
+            <div className="filters__checks-container">
+              <label className="filters__check-name">
+                <input type="checkbox" className="filters__check" name={item.name} value={'all'} />
+                <span className="filters__pseudo-check" />
+                Выбрать все
+              </label>
+              {
+                item.value.map((elem) =>
+                  <label className="filters__check-name">
+                    <input type="checkbox" className="filters__check" name={item.name} value={elem}
+                      checked={checks.find((c) => c.name === item.name && c.value === elem)}  onChange={handleCheckbox} />
+                    <span className="filters__pseudo-check" />
+                    {elem}
+                  </label>
+                )
+              }
+
+            </div>
+          </fieldset>
+        )
+      }
       {/* <fieldset className="filters__field filters__field_type_factor">
         <div className="filters__filter-name">
           <span className="filters__filter-title">Форм-фактор материнских плат</span>

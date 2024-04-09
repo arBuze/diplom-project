@@ -8,6 +8,8 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
   const [shownCards, setShowCards] = useState([]);
+  const [filters, setFilters] = useState({});
+  const [characteristics, setCharacteristics] = useState([]);
 
   const limits = cards.reduce(({min, max}, item) => {
     if (min > item.productCost) {
@@ -16,19 +18,48 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     if (max < item.productCost) {
       max = item.productCost;
     }
-    return({min, max});
-  }, {min: cards[0].productCost, max: cards[0].productCost});
+    return({ min, max });
+  }, { min: cards[0].productCost, max: cards[0].productCost });
+
+  useEffect(() => {
+    let fils = JSON.parse(localStorage.getItem('filter'));
+    if (fils) {
+      if (fils.path.includes(pathname)) {
+        setFilters(fils);
+      } else {
+        localStorage.removeItem('filter');
+      }
+    }
+  }, [])
 
   useEffect(() => {
     setShowCards(cards);
+    const arr = [];
+    cards.forEach((card) =>
+      card.characteristics.forEach((item) => {
+        const el = arr.find((elem) => elem.name === item.name);
+        if (el) {
+          arr[el.id].value.indexOf(item.value) === -1 && arr[el.id].value.push(item.value);
+        } else {
+          arr.push({
+            id: arr.length,
+            name: item.name,
+            value: [item.value]
+          });
+        }
+      })
+    );
+    setCharacteristics(arr);
+  }, [])
+
+  useEffect(() => {
     if (scroll > 0) {
       window.scrollTo({
         top: 0,
         left: 0
       });
     }
-    console.log(limits);
-  },[])
+  }, [])
 
   function onViewChange(e) {
     setDisplaytype(e.target.name);
@@ -39,11 +70,90 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     setShowCards(shownCards.slice().reverse());
   }
 
+  function filterPrice(parameters) {
+    const { min, max } = parameters;
+    let filtered = cards.filter((item) => item.productCost >= min && item.productCost <= max);
+
+    return filtered;
+  }
+
+  function filterChars(parameters, cards) {
+    let filtered = cards.filter((item) => {
+      const arr = [];
+      parameters.forEach((par) => {
+        item.characteristics.find((char) => char.name === par.name && char.value === par.value)
+    })
+    }
+    );
+
+    return filtered;
+  }
+
+  function handleFilter(type, chars) {
+    let filteredCards = cards;
+    if (type) {
+      if (type === 'price') {
+        filteredCards = filterPrice(chars);
+        if (filters.chars && filters.chars.length !== 0) {
+          filteredCards = filterChars(filters.chars, filteredCards);
+        }
+      } else {
+        if (filters.price) {
+          filteredCards = filterPrice(filters.price);
+        }
+        if (chars.length !== 0)
+          filteredCards = filterChars(chars, filteredCards);
+      }
+    } else {
+      if (filters.price) {
+        filteredCards = filterPrice(filters.price);
+      }
+      if (filters.chars && filters.chars.length !== 0) {
+        filteredCards = filterChars(filters.chars, filteredCards);
+      }
+    }
+    setShowCards(filteredCards);
+  }
+
   function handlePriceFilterChange(minCost, maxCost) {
     const minPrice = minCost ? minCost : limits.min;
     const maxPrice = maxCost ? maxCost : limits.max;
-    const filteredCards = cards.filter((item) => item.productCost >= minPrice && item.productCost <= maxPrice);
-    setShowCards(filteredCards);
+    setFilters({
+      ...filters,
+      price: {
+        min: minPrice,
+        max: maxPrice,
+      }
+    });
+    localStorage.setItem('filter', JSON.stringify({
+      path: pathname,
+      pars: {
+        ...filters,
+        price: {
+          min: minPrice,
+          max: maxPrice,
+        }
+      }
+    }));
+    handleFilter('price', {
+      min: minPrice,
+      max: maxPrice,
+    });
+  }
+
+  function handleCharsChange(array) {
+      setFilters({
+        ...filters,
+        chars: array
+      });
+      localStorage.setItem('filter', JSON.stringify({
+        path: pathname,
+        pars: {
+          ...filters,
+          chars: array
+        }
+      }));
+    handleFilter('chars', array);
   }
 
   return(
@@ -53,7 +163,8 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       <div className="computer-cases__container">
         { width >= 1024 &&
           <Filters width={width} limits={limits}
-            onCostChange={handlePriceFilterChange} />
+            characteristics={characteristics} pathname={pathname}
+            onCostChange={handlePriceFilterChange} onCharsChange={handleCharsChange} />
         }
         <div className="computer-cases__list-container">
           <div className="computer-cases__filters-container">
