@@ -30,6 +30,9 @@ import OrderCreate from '../OrderCreate/OrderCreate';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [cart, setCart] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
   const [buildMode, setBuildMode] = useState(false);
   const [productsToBuild, setProductsToBuild] = useState([]);
@@ -39,11 +42,6 @@ function App() {
   const { pathname } = useLocation();
   const scroll = useVerticalScroll();
   const navigate = useNavigate();
-  /* temp */
-  const [cart, setCart] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [orders, setOrders] = useState([]);
-  /* const { cart, favorites, orders } = currentUser; */
 
   /* useEffect(() => {
     setCurrentUser()
@@ -93,7 +91,7 @@ function App() {
     /* setCart(state => state.map((item) => item.id === id ? newCard : item)); */
     const { quantity } = cart.find((item) => item.id === id);
     const newQuantity = e.target.name === 'increase' ? quantity + 1 : quantity - 1;
-    setCart(state => state.map((item) => item.id === id ? { quantity: newQuantity, ...item } : item));
+    setCart(state => state.map((item) => item.id === id ? { ...item, quantity: newQuantity } : item));
   }
 
   function handleOrderCreate() {
@@ -101,6 +99,7 @@ function App() {
 
     setOrders([{
       id: orders.length + 1,
+      owner: 1,
       products: cart, createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
       status: 'в сборке'
     }, ...orders]);
@@ -119,7 +118,7 @@ function App() {
       { (pathname !== '/signin' && pathname !== '/signup') &&
         <Header width={width} cart={cart} faves={favorites} />
       }
-      <main className="main">
+      <main className={`main ${pathname === '/' ? 'main_type_white' : ''}`}>
         <CurrentUserContext.Provider value={currentUser}>
           <Routes>
             <Route path='/' element={<Main cards={cards.slice(0, 15)} pathname={pathname}

@@ -58,7 +58,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       })
     );
     setCharacteristics(arr);
-  }, [])
+  }, [cards])
 
   useEffect(() => {
     if (scroll > 0) {
@@ -90,7 +90,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       }));
       setShowCards(filteredCards);
     }
-  }, [priceFilter, checks])
+  }, [priceFilter, checks, cards])
 
   function onViewChange(e) {
     setDisplaytype(e.target.name);

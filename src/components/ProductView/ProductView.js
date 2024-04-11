@@ -30,7 +30,7 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
     onLike(currentCard.id);
   }
 
-  function handleCartClick(e) {
+  function handleCartClick() {
     if (isInCart) {
       onCartRemove(currentCard.id);
       return;
@@ -109,78 +109,25 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
           </div>
           <div className="product-view__description">
             <h3 className="product-view__description-title">Описание</h3>
-            <p className="product-view__paragraph">
-              Глянцевый тинт для губ в приглушённом персиковом оттенке придаст губам яркий цвет и сочный сияющий финиш.
-            </p>
-            <p className="product-view__paragraph">
-              Объём: 4гр.
-            </p>
-            <p className="product-view__paragraph">
-            Преимущества:
-              Имеет глянцевую текстуру, которая ровным слоем ложится на кожу, не забиваясь в складочки губ.
-              Стойкий пигмент оставляет натуральный оттенок на губах, даже когда тинт полностью впитается.
-              Имеет среднюю насыщенность пигмента, благодаря чему его удобно наслаивать и регулировать оттенок, а также создавать эффект градиента.
-            </p>
-            <p className="product-view__paragraph">
-            Вспомогательный компонент:
-              Гиалуроновая кислота активно увлажняет кожу губ, устраняя сухость и препятствуя шелушениям.
-            </p>
+            {
+              currentCard?.description?.map((item) =>
+                <p className="product-view__paragraph">
+                  {item}
+                </p>
+              )
+            }
           </div>
           <div className="product-view__properties">
             <h3 className="product-view__properties-title">Характеристики</h3>
             <ul className="product-view__properties-list">
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм 360 мм</span>
-              </li>
-              <li className="product-view__item">
-                <span className="product-view__property-name">Длина</span>
-                <span className="product-view__property-value">360 мм</span>
-              </li>
+              {
+                currentCard?.characteristics?.map((item) =>
+                  <li className="product-view__item">
+                    <span className="product-view__property-name">{item.name}</span>
+                    <span className="product-view__property-value">{item.value}</span>
+                  </li>
+                )
+              }
             </ul>
           </div>
         </div>
@@ -194,13 +141,13 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
             <option className="product-view__option">Сначала полезные</option>
           </select>
           <ul className="products-list__rating products-list__rating_place_product">
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
-            <li className="products-list__star"></li>
+            {
+              ratingStars.map((item) =>
+                <li key={item} className={`products-list__star ${item <= starsColored ? 'products-list__star_full' : ''}`} />
+              )
+            }
           </ul>
-          <span className="product-view__feed-rating">4.7 / 5.0</span>
+          <span className="product-view__feed-rating">{currentCard?.rating?.toFixed(1)} / 5.0</span>
           <button className="product-view__add-feedback-btn" type="button">оставить отзыв</button>
         </div>
         <ul className="product-view__feed-list" id="feedback">
@@ -209,11 +156,11 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
               <img className="product-view__user-photo" src={photo} alt='аватар' />
               <span className="product-view__user-name">Иванов И.</span>
               <ul className="products-list__rating products-list__rating_place_product">
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
              </ul>
              <span className="product-view__feed-data">10.02.24 13:02</span>
             </div>
@@ -240,11 +187,11 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
               <img className="product-view__user-photo" src={photo} alt='аватар' />
               <span className="product-view__user-name">Иванов И.</span>
               <ul className="products-list__rating products-list__rating_place_product">
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
-                <li className="products-list__star"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star products-list__star_full"></li>
              </ul>
              <span className="product-view__feed-data">10.02.24 13:02</span>
             </div>

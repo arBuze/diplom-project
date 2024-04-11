@@ -31,7 +31,7 @@ export default function Sales() {
           <li className="sales__item">
             <img className="sales__image" src={comp} alt='' />
             <div className="sales__info">
-              <Link to='/sales/1' className="sales__name">Скидки на корпуса 1233452</Link>
+              <Link to='/sales/1' className="sales__name">Скидки на корпуса Helix</Link>
               <span className="sales__duration">с 12 марта по 12 апреля 2024</span>
               <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
             </div>
@@ -39,7 +39,7 @@ export default function Sales() {
           <li className="sales__item">
             <img className="sales__image" src={comp} alt='' />
             <div className="sales__info">
-              <p className="sales__name">Скидки на корпуса 1233452</p>
+              <p className="sales__name">Скидки на корпуса Helix</p>
               <span className="sales__duration">с 12 марта по 12 апреля 2024</span>
               <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
             </div>
@@ -47,7 +47,7 @@ export default function Sales() {
           <li className="sales__item">
             <img className="sales__image" src={comp} alt='' />
             <div className="sales__info">
-              <p className="sales__name">Скидки на корпуса 1233452</p>
+              <p className="sales__name">Скидки на корпуса Helix</p>
               <span className="sales__duration">с 12 марта по 12 апреля 2024</span>
               <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
             </div>

@@ -86,11 +86,11 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
         <div className="wide-list__cost-info">
           <div className="wide-list__rating-info">
             <ul className="products-list__rating wide-list__rating">
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
-              <li className="products-list__star"></li>
+              {
+                ratingStars.map((item) =>
+                  <li key={item} className={`products-list__star ${item <= starsColored ? 'products-list__star_full' : ''}`} />
+                )
+              }
             </ul>
             <span className="wide-list__rating-number">30</span>
           </div>

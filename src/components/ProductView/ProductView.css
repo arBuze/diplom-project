@@ -77,6 +77,11 @@
   height: 19vmin;
   object-fit: cover;
   object-position: center;
+  filter: brightness(70%);
+}
+
+.product-view__small-image:first-child {
+  filter: brightness(90%);
 }
 
 .product-view__info-container {

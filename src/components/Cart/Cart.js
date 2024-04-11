@@ -1,6 +1,5 @@
-import Breadcrumps from '../Breadcrumps/Breadcrumps';
-import prod from '../../images/gnider-tam-ge_ftrk7wDc-unsplash 3.jpg';
 import './Cart.css';
+import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, onCartClear, onQuantityChange }) {

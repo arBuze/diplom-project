@@ -55,7 +55,7 @@ export default function Header({ width, cart, faves }) {
             </div>
             <div className="header__profile">
               <button className="header__profile-button" type="button" onClick={handleProfileClick} />
-              <span className="header__notification"></span>
+              {/* <span className="header__notification"></span> */}
             </div>
           </div>
         </div>

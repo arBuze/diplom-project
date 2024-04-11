@@ -24,7 +24,6 @@ export default function Section({ title, cards, pathname, onLike, onCartAdd, fav
     } else {
       setNumberOfSwipes(numberOfSwipes - 1);
     }
-    /* console.log((document.querySelector('.new-products__list').clientWidth - 15*4 - 7)/5); */
   }
 
   function flip(e) {

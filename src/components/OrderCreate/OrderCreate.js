@@ -73,7 +73,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
               <tr className="order-view__row">
                 <td className="order-view__data">&nbsp;</td>
                 <td className="order-view__data">Итого:</td>
-                <td className="order-view__data">500 &#8381;</td>
+                <td className="order-view__data">{cards.reduce((sum, item) => sum + item.productCost * item.quantity, 0)} &#8381;</td>
               </tr>
             </tbody>
           </table>

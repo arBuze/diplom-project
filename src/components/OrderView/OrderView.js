@@ -7,9 +7,9 @@ export default function OrderView({ cards, pathname }) {
 
   useEffect(() => {
     const id = pathname.slice(pathname.lastIndexOf('/') + 1,);
-    const order = cards.find((item) => item.id === id);
+    const order = cards.find((item) => item.id === Number(id));
     setCurrentOrder(order);
-  })
+  }, [])
 
   return(
     <div className="order-view">
@@ -47,7 +47,7 @@ export default function OrderView({ cards, pathname }) {
           <tr className="order-view__row">
             <td className="order-view__data">&nbsp;</td>
             <td className="order-view__data">Итого:</td>
-            <td className="order-view__data">{currentOrder?.products?.reduce((sum, item) => sum + item.productCost, 0)} &#8381;</td>
+            <td className="order-view__data">{currentOrder?.products?.reduce((sum, item) => sum + item.productCost*item.quantity, 0)} &#8381;</td>
           </tr>
         </tbody>
       </table>
