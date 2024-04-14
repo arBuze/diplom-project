@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Filters.css';
 
-export default function Filters({ width, limits, characteristics, checks, pathname, onCostChange, onCharsChange }) {
+export default function Filters({ width, limits, characteristics, checks, pathname, onCostChange, onCharsChange, onAllClick, onRatingClick }) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   const [isVisible, setIsVisible] = useState(true);
@@ -112,7 +112,7 @@ export default function Filters({ width, limits, characteristics, checks, pathna
           В наличии
         </label>
         <label className="filters__check-name">
-          <input type="checkbox" className="filters__check" name="rating" />
+          <input type="checkbox" className="filters__check" name="rating" onChange={onRatingClick} />
           <span className="filters__pseudo-check" />
           Рейтинг 4 и выше
         </label>
@@ -153,7 +153,9 @@ export default function Filters({ width, limits, characteristics, checks, pathna
             </div>
             <div className="filters__checks-container">
               <label className="filters__check-name">
-                <input type="checkbox" className="filters__check" name={item.name} value={'all'} />
+                <input type="checkbox" className="filters__check" name={item.name}
+                  value={'all'} onChange={onAllClick}
+                  checked={checks.find((elem) => elem.name === item.name)?.values.length === characteristics.find((elem) => elem.name === item.name).value.length} />
                 <span className="filters__pseudo-check" />
                 Выбрать все
               </label>

@@ -8,9 +8,10 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
   const [shownCards, setShowCards] = useState([]);
-  const [priceFilter, setPriceFilter] = useState(null);
   const [characteristics, setCharacteristics] = useState([]);
+  const [priceFilter, setPriceFilter] = useState(null);
   const [checks, setChecks] = useState([]);
+  const [ratingFilter, setRatingFilter] = useState(false);
 
   const limits = cards.reduce(({min, max}, item) => {
     if (min > item.productCost) {
@@ -32,6 +33,9 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       }
       if (filters.chars && filters.chars.length !== 0) {
         setChecks(filters.chars);
+      }
+      if (filters.rating) {
+        setRatingFilter(filters.rating);
       }
     } else {
       localStorage.removeItem('filter');
@@ -73,24 +77,25 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
   useEffect(() => {
     let filteredCards = cards;
     console.log(checks);
-    if ((checks && checks.length !== 0) || priceFilter !== null) {
-      if (priceFilter !== null) {
-        console.log('111');
-        filteredCards = filteredCards.filter((item) => item.productCost >= priceFilter.min && item.productCost <= priceFilter.max);
-      }
-      if (checks && checks.length !== 0) {
-        console.log('222');
-        filteredCards = filterChars(filteredCards);
-      }
-
-      localStorage.setItem('filter', JSON.stringify({
-        path: pathname,
-        price: priceFilter,
-        chars: checks
-      }));
-      setShowCards(filteredCards);
+    if (priceFilter !== null) {
+      console.log('111', filteredCards);
+      filteredCards = filteredCards.filter((item) => item.productCost >= priceFilter.min && item.productCost <= priceFilter.max);
     }
-  }, [priceFilter, checks, cards])
+    if (checks && checks.length !== 0) {
+      console.log('222', filteredCards);
+      filteredCards = filterChars(filteredCards);
+    }
+    if (ratingFilter) {
+      filteredCards = filteredCards.filter((item) => item.rating >= 4);
+    }
+    localStorage.setItem('filter', JSON.stringify({
+      path: pathname,
+      price: priceFilter,
+      chars: checks,
+      rating: ratingFilter
+    }));
+    setShowCards(filteredCards);
+  }, [priceFilter, checks, ratingFilter, cards])
 
   function onViewChange(e) {
     setDisplaytype(e.target.name);
@@ -125,6 +130,10 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     });
   }
 
+  function handleRatingCheckClick() {
+    setRatingFilter(!ratingFilter);
+  }
+
   function handleCharsChange(e) {
     console.log('fbvwegfhiWJE');
     const { name, value } = e.target;
@@ -155,6 +164,29 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     }
   }
 
+  function handleAllCheckClick(e) {
+    const { name } = e.target;
+    const { value } = characteristics.find((item) => item.name === name);
+    const isChecked = checks.find((item) => item.name === name);
+
+    console.log('is', isChecked);
+    if (isChecked) {
+      if (isChecked.values.length === value.length) {
+        setChecks(checks.filter((item) => !(item.name === name)));
+      } else {
+        setChecks(state => state.map((item) => item.name === name ? { name: name, values: [...value] } : item));
+      }
+    } else {
+      setChecks([
+        ...checks,
+        {
+          name: name,
+          values: [...value]
+        }
+      ]);
+    }
+  }
+
   return(
     <section className="computer-cases">
       <h2 className="computer-cases__title">{name}</h2>
@@ -163,7 +195,8 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
         { width >= 1024 &&
           <Filters width={width} limits={limits} checks={checks}
             characteristics={characteristics} pathname={pathname}
-            onCostChange={handlePriceFilterChange} onCharsChange={handleCharsChange} />
+            onCostChange={handlePriceFilterChange} onCharsChange={handleCharsChange}
+            onAllClick={handleAllCheckClick} onRatingClick={handleRatingCheckClick} />
         }
         <div className="computer-cases__list-container">
           <div className="computer-cases__filters-container">
