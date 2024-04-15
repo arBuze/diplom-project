@@ -1,6 +1,6 @@
 import image from '../images/computer.jpg';
 
-export const BASE_IMAGE_URL = 'http://localhost:3000/uploads/';
+export const BASE_IMAGE_URL = 'http://localhost:3000/uploads/temp/';
 
 export const NAME_REG = "[A-Za-zА-Яа-яЁё\\s\\-]{1,30}";
 export const EMAIL_REG = "[a-zA-Z0-9\\.'+_`\\-]+@[a-zA-Z0-9.]+\\.[a-zA-Z0-9]{2,}";

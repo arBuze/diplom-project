@@ -81,7 +81,7 @@
   border-radius: 3px;
 }
 
-.repair__file-cover:hover {
+.repair__file-cover:not(.disabled):hover {
   cursor: pointer;
 }
 
