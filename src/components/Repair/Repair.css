@@ -124,6 +124,22 @@
 .repair__photo-item {
   width: 160px;
   height: 160px;
+  position: relative;
+  border: 1px solid #000;
+}
+
+.repair__delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background: #313131 url(../../images/close-btn-small.svg) no-repeat center/cover;
+  border: none;
+}
+
+.repair__delete-btn:hover {
+  cursor: pointer;
 }
 
 .repair__photo {

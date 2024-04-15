@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './Repair.css';
+import { BASE_IMAGE_URL } from '../../utils/constants';
 
 export default function Repair({ onRepairSubmit }) {
   const [fileNames, setFileNames] = useState([]);
@@ -57,6 +58,12 @@ export default function Repair({ onRepairSubmit }) {
       });
   }
 
+  function onDeletePhotoClick(e) {
+    const { name } = e.target;
+
+    setFileNames(fileNames.filter(item => !(item === name)));
+  }
+
   return(
     <section className="repair">
       <h2 className="repair__title">Ремонт</h2>
@@ -78,7 +85,7 @@ export default function Repair({ onRepairSubmit }) {
               <input type="text" className="repair__input repair__input_type_contact" id="contact" required />
             </li>
             <li className="repair__form-item">
-              <span className="repair__name">Приложите фото</span>
+              <span className="repair__name">Приложите фото (максимум 10)</span>
               <div className="repair__input-container">
                 <label className="repair__file-cover" htmlFor='images'>
                   <span className="repair__empty">выбрать файлы</span>
@@ -94,7 +101,8 @@ export default function Repair({ onRepairSubmit }) {
           {
             fileNames.map((item) =>
               <li className="repair__photo-item">
-                <img className="repair__photo" src={'../src/images/uploads/' + item} alt='' />
+                <button className="repair__delete-btn" type="button" name={item} onClick={onDeletePhotoClick} />
+                <img className="repair__photo" crossorigin="true" src={BASE_IMAGE_URL + item} alt='' />
               </li>
             )
           }
