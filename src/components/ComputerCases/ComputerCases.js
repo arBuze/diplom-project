@@ -28,7 +28,6 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     const filters = JSON.parse(localStorage.getItem('filter'));
     if (filters && filters.path.includes(pathname)) {
       if (filters.price) {
-        console.log('777');
         setPriceFilter(filters.price);
       }
       if (filters.chars && filters.chars.length !== 0) {
@@ -76,7 +75,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
   /* фильтр карточек */
   useEffect(() => {
     let filteredCards = cards;
-    console.log(checks);
+
     if (priceFilter !== null) {
       console.log('111', filteredCards);
       filteredCards = filteredCards.filter((item) => item.productCost >= priceFilter.min && item.productCost <= priceFilter.max);
@@ -88,12 +87,14 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     if (ratingFilter) {
       filteredCards = filteredCards.filter((item) => item.rating >= 4);
     }
+
     localStorage.setItem('filter', JSON.stringify({
       path: pathname,
       price: priceFilter,
       chars: checks,
       rating: ratingFilter
     }));
+    
     setShowCards(filteredCards);
   }, [priceFilter, checks, ratingFilter, cards])
 

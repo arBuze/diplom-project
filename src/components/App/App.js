@@ -110,7 +110,8 @@ function App() {
     setOrders([{
       id: orders.length + 1,
       owner: 1,
-      products: cart, createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
+      products: cart,
+      createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
       status: 'в сборке'
     }, ...orders]);
 
@@ -276,7 +277,7 @@ function App() {
                 <Profile title='Заявки на ремонт' pathname={pathname}>
                   <Applications apps={applications} />
                 </Profile>
-              }
+              } />
             </Route>
             <Route path='/signin' element={<Login />} />
             <Route path='/signup' element={<Register />} />

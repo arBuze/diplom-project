@@ -1491,6 +1491,10 @@ export const linkMatches = [
     path: '/profile/orders',
   },
   {
+    name: 'Заявки на ремонт',
+    path: '/profile/applications',
+  },
+  {
     name: 'Оформление заказа',
     path: '/order-create',
   },

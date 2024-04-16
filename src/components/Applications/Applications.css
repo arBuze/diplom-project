@@ -1,0 +1,54 @@
+.applications {
+  width: 100%;
+  height: 100%;
+}
+
+.applications__void {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+}
+
+.applications__void-text {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 0;
+}
+
+.applications__list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  list-style-image: url(../../images/octogram.svg);
+  padding-left: 20px;
+  margin: 0;
+}
+
+.applications__item {
+  border-bottom: 1px solid #94BFFF;
+  padding-bottom: 15px;
+}
+
+.applications__title {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 500;
+  margin: 0 0 15px;
+}
+
+.applications__link {
+  font-size: 18px;
+  color: #346CC2;
+  text-decoration: none;
+  border-bottom: 1px solid #346CC2;
+  transition: opacity .2s ease-in-out;
+}
+
+.applications__link:hover {
+  opacity: .8;
+}
