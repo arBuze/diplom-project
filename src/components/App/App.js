@@ -27,12 +27,15 @@ import OrderView from '../OrderView/OrderView';
 import Build from '../Build/Build';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import OrderCreate from '../OrderCreate/OrderCreate';
+import { api } from '../../utils/Api';
+import Applications from '../Applications/Applications';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [applications, setApplications] = useState([]);
   const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
   const [buildMode, setBuildMode] = useState(false);
   const [productsToBuild, setProductsToBuild] = useState([]);
@@ -47,8 +50,15 @@ function App() {
     setCurrentUser()
   }) */
 
-  function handleRepairSubmit() {
-    setIsPopupRepairOpened(true);
+  function handleRepairSubmit({ description, contact, fileNames }) {
+    api.createApplication(description, contact, fileNames)
+      .then(res => {
+        setIsPopupRepairOpened(true);
+        setApplications([...applications, { ...res, id: applications.length + 1 }]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleAllPopupsClose() {
@@ -227,7 +237,9 @@ function App() {
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
             </Route>
-            <Route path='/repair' element={<Repair onRepairSubmit={handleRepairSubmit} />} />
+            <Route path='/repair' element={
+              <Repair onRepairSubmit={handleRepairSubmit} />
+            } />
             <Route path='/build' element={
               <Build cards={cards} width={width} scroll={scroll} pathname={pathname}
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
@@ -260,6 +272,11 @@ function App() {
                 <Profile title='Заказы' pathname={pathname}>
                   <OrderView cards={orders} pathname={pathname} />
                 </Profile>} />
+              <Route path='applications' element={
+                <Profile title='Заявки на ремонт' pathname={pathname}>
+                  <Applications apps={applications} />
+                </Profile>
+              }
             </Route>
             <Route path='/signin' element={<Login />} />
             <Route path='/signup' element={<Register />} />

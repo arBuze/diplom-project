@@ -28,6 +28,11 @@ export default function Profile({ children, title, pathname }) {
               </NavLink>
             </li>
             <li className="profile__item">
+              <NavLink to='/profile/applications' className={({ isActive }) => `profile__link ${isActive ? 'profile__link_active' : ''}`}>
+                Заявки на ремонт
+              </NavLink>
+            </li>
+            <li className="profile__item">
               <Link to='/cart' className="profile__link">Корзина</Link>
             </li>
             <li className="profile__item">

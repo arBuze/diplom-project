@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './Repair.css';
 import { BASE_IMAGE_URL } from '../../utils/constants';
+import { api } from '../../utils/Api';
 
 export default function Repair({ onRepairSubmit }) {
   const [formValues, setFormValues] = useState({});
@@ -11,30 +12,11 @@ export default function Repair({ onRepairSubmit }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch('http://localhost:3000/repair', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        description: formValues.description,
-        contact: formValues.contact,
-        fileNames,
-      })
-    })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
-    .then(res => {
-      console.log(res);
-      onRepairSubmit();
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    onRepairSubmit({
+      description: formValues.description,
+      contact: formValues.contact,
+      fileNames,
+    });
   }
 
   function handleInputChange(e) {
@@ -49,18 +31,9 @@ export default function Repair({ onRepairSubmit }) {
   function handleChange(e) {
     const form = document.querySelector('.repair__form');
     const formData = new FormData(form);
-    const fetchOptions = {
-      method: 'POST',
-      body: formData,
-    };
+
     setFileDisabled(true);
-    fetch(url, fetchOptions)
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
+    api.addApplicationPhoto(form)
       .then(res => {
         setFileNames([...fileNames, ...res.imageNames]);
       })
@@ -75,23 +48,9 @@ export default function Repair({ onRepairSubmit }) {
   function onDeletePhotoClick(e) {
     const { name } = e.target;
 
-    fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fileName: name
-      }),
-    })
+    api.deleteApplicationPhoto(name)
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res.status);
-      })
-      .then(res => {
-        console.log(res);
+        console.log(res.message);
         setFileNames(fileNames.filter(item => !(item === name)));
       })
       .catch(err => {

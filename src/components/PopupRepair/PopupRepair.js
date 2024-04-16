@@ -3,11 +3,6 @@ import success from '../../images/success.svg';
 import { Link } from 'react-router-dom';
 
 export default function PopupRepair({ isOpened, onClose }) {
-
-  function handleClose() {
-    onClose();
-  }
-
   return(
     <div className={`popup popup-repair ${isOpened ? 'popup_opened' : ''}`}>
       <div className="popup-repair__container">
@@ -26,7 +21,7 @@ export default function PopupRepair({ isOpened, onClose }) {
         <p className="popup-repair__description">
           Если вас все устраивает, он подскажет адрес, куда можно подъехать и сдать технику на ремонт.
         </p>
-        <Link to="/" className="popup-repair__link" onClick={handleClose}>На главную</Link>
+        <Link to="/" className="popup-repair__link" onClick={onClose}>На главную</Link>
       </div>
     </div>
   );
