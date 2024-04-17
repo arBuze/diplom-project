@@ -31,9 +31,10 @@ export default function Repair({ onRepairSubmit }) {
   function handleChange(e) {
     const form = document.querySelector('.repair__form');
     const formData = new FormData(form);
+    formData.append('maxFiles', 10 - fileNames.length);
 
     setFileDisabled(true);
-    api.addApplicationPhoto(form)
+    api.addApplicationPhoto(formData)
       .then(res => {
         setFileNames([...fileNames, ...res.imageNames]);
       })
