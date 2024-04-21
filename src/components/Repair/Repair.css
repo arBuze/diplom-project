@@ -99,6 +99,15 @@
   display: none;
 }
 
+.repair__error {
+  display: inline-block;
+  min-height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+  color: #CF1124;
+  margin-top: 5px;
+}
+
 .repair__selected-files {
   font-size: 14px;
   line-height: 18px;
@@ -149,6 +158,18 @@
   object-position: center;
 }
 
+.repair__clear-btn {
+  width: calc(100% - 215px);
+  background-color: #28325c;
+  color: #FFF;
+  font-size: 18px;
+  line-height: 22px;
+  border: none;
+  padding: 7px;
+  margin: 10px 0 0 auto;
+  transition: opacity .2s ease-in-out;
+}
+
 .repair__submit-btn {
   width: calc(100% - 215px);
   background-color: #313131;
@@ -158,10 +179,12 @@
   border: none;
   padding: 7px;
   margin: 20px 0 0 auto;
+  transition: opacity .2s ease-in-out;
 }
 
-.repair__submit-btn:not(:disabled):hover {
+.repair__submit-btn:not(:disabled):hover, .repair__clear-btn:not(:disabled):hover {
   cursor: pointer;
+  opacity: .9;
 }
 
 .repair__submit-btn:disabled {

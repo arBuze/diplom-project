@@ -8,7 +8,7 @@ export default function Repair({ onRepairSubmit }) {
   const [formValues, setFormValues] = useState({});
   const [fileNames, setFileNames] = useState([]);
   const [fileDisabled, setFileDisabled] = useState(false);
-  const url = 'http://localhost:3000/images';
+  const [fileError, setFileError] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,9 +29,15 @@ export default function Repair({ onRepairSubmit }) {
   }
 
   function handleChange(e) {
+    setFileError('');
+    if (e.target.files.length > 10) {
+      setFileError('Выбрано больше 10 файлов.')
+      return;
+    }
     const form = document.querySelector('.repair__form');
     const formData = new FormData(form);
     formData.append('maxFiles', 10 - fileNames.length);
+    console.log(10 - fileNames.length);
 
     setFileDisabled(true);
     api.addApplicationPhoto(formData)
@@ -46,8 +52,9 @@ export default function Repair({ onRepairSubmit }) {
       });
   }
 
-  function onDeletePhotoClick(e) {
-    const { name } = e.target;
+  function handleDeletePhotoClick(name) {
+    /* const { name } = e.target; */
+    console.log('awda');
 
     api.deleteApplicationPhoto(name)
       .then(res => {
@@ -57,6 +64,18 @@ export default function Repair({ onRepairSubmit }) {
       .catch(err => {
         console.log(err);
       })
+  }
+
+  function handleClearClick() {
+    setFormValues({description: '', contact: ''});
+    fileNames.forEach((item) => {
+      api.deleteApplicationPhoto(item)
+      .catch(err => {
+        console.log(err);
+      });
+    });
+    setFileNames([]);
+
   }
 
   return(
@@ -84,13 +103,13 @@ export default function Repair({ onRepairSubmit }) {
             <li className="repair__form-item">
               <span className="repair__name">Приложите фото (максимум 10)</span>
               <div className="repair__input-container">
-                <label className={`repair__file-cover ${fileDisabled ? 'disabled' : ''}`} htmlFor='images'>
+                <label className={`repair__file-cover ${(fileDisabled || fileNames.length === 10) ? 'disabled' : ''}`} htmlFor='images'>
                   <span className="repair__empty">выбрать файлы</span>
                 </label>
                 <input type="file" className="repair__input repair__input_type_images" name='images' id="images"
                   accept="image/png, image/jpeg, image/jpg" multiple onChange={handleChange}
-                  disabled={fileDisabled} />
-                {/* <span className="repair__selected-files">{fileNames}</span> */}
+                  disabled={fileDisabled || fileNames.length === 10} />
+                <span className="repair__error">{fileError}</span>
               </div>
             </li>
           </ul>
@@ -99,12 +118,13 @@ export default function Repair({ onRepairSubmit }) {
           {
             fileNames.map((item) =>
               <li className="repair__photo-item">
-                <button className="repair__delete-btn" type="button" name={item} onClick={onDeletePhotoClick} />
+                <button className="repair__delete-btn" type="button" name={item} onClick={(e) => handleDeletePhotoClick(e.target.name)} />
                 <img className="repair__photo" crossOrigin="true" src={BASE_IMAGE_URL + item} alt='' />
               </li>
             )
           }
         </ul>
+        <button className="repair__clear-btn" type="button" onClick={handleClearClick}>очистить все</button>
         <button className="repair__submit-btn" form='repair' type="button" disabled={false} onClick={handleSubmit}>отправить заявку</button>
       </div>
     </section>

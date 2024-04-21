@@ -51,7 +51,7 @@ function App() {
   }) */
 
   function handleRepairSubmit({ description, contact, fileNames }) {
-    api.createApplication(description, contact, fileNames)
+    api.createApplication(description, contact, fileNames/* isGuest, token */)
       .then(res => {
         setIsPopupRepairOpened(true);
         setApplications([...applications, { ...res, id: applications.length + 1 }]);
@@ -75,37 +75,97 @@ function App() {
   }
 
   function handleLikeClick(newCard) {
-    setFavorites([...favorites, newCard]);
+    /* в бд добавить только идентификатор,
+    при загрузке страницы фильтровать все карточки
+    api.getUserData(token)
+      .then(userData => {
+        const arr = cards.filter((item) => userData.favorite.includes(item.id));
+        setFavorites([...arr]);
+      }) */
+    api.changeFavorite(newCard.id, false)
+      .then((userData) => {
+        setCurrentUser(userData);
+        setFavorites([...favorites, newCard]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleDislikeClick(card) {
-    setFavorites(favorites.filter((item) => !(item === card)));
+    api.changeFavorite(card.id, true)
+      .then((userData) => {
+        setCurrentUser(userData);
+        setFavorites(favorites.filter((item) => !(item === card)));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleAddToCartClick(newCard) {
-    setCart([...cart, { ...newCard, quantity: 1 }]);
+    api.addToCart(newCard)
+      .then((userData) => {
+        setCurrentUser(userData);
+        const card = userData.cart.find((item) => item.cardId === newCard.id);
+        setCart([...cart, card]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
-  function handleRemoveFromCart(card) {
-    setCart(cart.filter((item) => !(item.id === card)));
+  function handleRemoveFromCart(cardId) {
+    api.deleteFromCart(cardId)
+      .then((userData) => {
+        setCurrentUser(userData);
+        setCart(cart.filter((item) => !(item.productId === cardId)));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleCartClear() {
-    setCart([]);
+    api.clearCart()
+      .then((userData) => {
+        setCurrentUser(userData);
+        setCart([]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleQuantityChange(e) {
     const id = Number(e.target.id);
     /* будет полное обновление корзины, передать id пользователя и новое значение количества */
-    /* const newCard = user.cart.find((item) => item.id === id) */
-    /* setCart(state => state.map((item) => item.id === id ? newCard : item)); */
-    const { quantity } = cart.find((item) => item.id === id);
+    const { quantity } = cart.find((item) => item.productId === id);
     const newQuantity = e.target.name === 'increase' ? quantity + 1 : quantity - 1;
-    setCart(state => state.map((item) => item.id === id ? { ...item, quantity: newQuantity } : item));
+
+    api.changeProductQuantity(id, newQuantity)
+      .then((userData) => {
+        setCurrentUser(userData);
+        const newCard = userData.cart.find((item) => item.productId === id)
+        setCart(state => state.map((item) => item.id === id ? newCard : item));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   function handleOrderCreate() {
-    const date = new Date();
+    api.createOrder(cart)
+      .then(newOrder => {
+        setOrders([...orders, newOrder]);
+        handleCartClear();
+        navigate('/profile/orders');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    /* const date = new Date();
 
     setOrders([{
       id: orders.length + 1,
@@ -116,7 +176,7 @@ function App() {
     }, ...orders]);
 
     handleCartClear();
-    navigate('/profile/orders');
+    navigate('/profile/orders'); */
   }
 
   function handleEditClick() {

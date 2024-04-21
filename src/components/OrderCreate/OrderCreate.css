@@ -62,7 +62,7 @@
   font-size: 16px;
   line-height: 20px;
   border: 1px solid #adadad;
-  padding: 5px;
+  padding: 8px 5px;
   margin-left: auto;
 }
 
@@ -77,10 +77,31 @@
 }
 
 .order-create__data-input::placeholder {
-  font-size: 14px;
+  font-size: 16px;
+  color: #979797;
 }
 
 .order-create__or {
   font-weight: 300;
   margin: 0 10px;
+}
+
+
+.order-create__number-container {
+  position: relative;
+}
+
+.order-create__fake-num {
+  position: absolute;
+  top: 9px;
+  left: 6px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #979797;
+  letter-spacing: .4px;
+  z-index: 3;
+}
+
+.order-create__fake-ploceholder {
+  color: transparent;
 }
