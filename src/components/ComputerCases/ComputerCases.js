@@ -94,7 +94,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
       chars: checks,
       rating: ratingFilter
     }));
-    
+
     setShowCards(filteredCards);
   }, [priceFilter, checks, ratingFilter, cards])
 

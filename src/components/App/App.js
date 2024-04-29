@@ -32,13 +32,16 @@ import Applications from '../Applications/Applications';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [orders, setOrders] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [foundCards, setFoundCards] = useState([]);
   const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
   const [buildMode, setBuildMode] = useState(false);
   const [productsToBuild, setProductsToBuild] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [isUpdateResponseLoading, setIsUpdateResponseLoading] = useState(false);
   const { width } = useWindowDimensions();
@@ -49,6 +52,28 @@ function App() {
   /* useEffect(() => {
     setCurrentUser()
   }) */
+
+  function handleSearchClick(searchValue) {
+    const wordsArray = searchValue.split(' ');
+    const tempCards = [];
+
+    cards.forEach((item) => {
+      let numberOfMatches = 0;
+
+      wordsArray.forEach((word) => {
+        if (item.productName.includes(word)) {
+          numberOfMatches += 1;
+        }
+      });
+
+      if (numberOfMatches > 0) {
+        tempCards.push(item);
+      }
+    });
+
+    setFoundCards(tempCards);
+    navigate('/search');
+  }
 
   function handleRepairSubmit({ description, contact, fileNames }) {
     api.createApplication(description, contact, fileNames/* isGuest, token */)
@@ -187,7 +212,7 @@ function App() {
   return (
     <div className="page">
       { (pathname !== '/signin' && pathname !== '/signup') &&
-        <Header width={width} cart={cart} faves={favorites} />
+        <Header width={width} cart={cart} faves={favorites} onSearch={handleSearchClick} />
       }
       <main className={`main ${pathname === '/' ? 'main_type_white' : ''}`}>
         <CurrentUserContext.Provider value={currentUser}>
@@ -324,6 +349,7 @@ function App() {
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} cart={cart}
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
+            <Route path='/search' element={} />
             <Route path='/profile' >
               <Route index element={<Profile title='Профиль' pathname={pathname}>
                 <UserData isEdit={isEdit} isLoading={isUpdateResponseLoading} onEditClick={handleEditClick} />

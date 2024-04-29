@@ -5,7 +5,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import { Link, useNavigate } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-export default function Header({ width, cart, faves }) {
+export default function Header({ width, cart, faves, onSearch }) {
   const navigate = useNavigate();
 
   function handleFavClick() {
@@ -38,12 +38,12 @@ export default function Header({ width, cart, faves }) {
           </div>
           {
             width < 1440
-            ? <SearchForm additional="search-form_type_header" />
+            ? <SearchForm additional="search-form_type_header" onSearch={onSearch} />
             : <Navigation />
           }
           <div className="header__profile-buttons">
             { width >= 1440 &&
-              <SearchForm additional="search-form_type_header" />
+              <SearchForm additional="search-form_type_header" onSearch={onSearch} />
             }
             <div className="header__favorites">
               <button className="header__fav-button" type="button" onClick={handleFavClick} />
