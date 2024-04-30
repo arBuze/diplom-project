@@ -37,6 +37,7 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [orders, setOrders] = useState([]);
   const [applications, setApplications] = useState([]);
+  const [sales, setSales] = useState([]);
   const [foundCards, setFoundCards] = useState([]);
   const [isPopupRepairOpened, setIsPopupRepairOpened] = useState(false);
   const [buildMode, setBuildMode] = useState(false);
@@ -49,9 +50,34 @@ function App() {
   const scroll = useVerticalScroll();
   const navigate = useNavigate();
 
-  /* useEffect(() => {
-    setCurrentUser()
-  }) */
+  useEffect(() => {
+    Promise.all([api.getProducts(), api.getSales()])
+      .then(([salesData, productData]) => {
+        setSales(salesData);
+        setCards(productData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      Promise.all([api.getUserData(token), api.getUserOrders(token), api.getUserApplications(token)])
+        .then(([userData, ordersData, applicationsData]) => {
+          setCurrentUser(userData);
+          setOrders(ordersData);
+          setApplications(applicationsData);
+          setCart(userData.cart);
+          setFavorites(userData.favorites);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [])
 
   function handleSearchClick(searchValue) {
     const wordsArray = searchValue.split(' ');
@@ -100,14 +126,10 @@ function App() {
   }
 
   function handleLikeClick(newCard) {
-    /* в бд добавить только идентификатор,
-    при загрузке страницы фильтровать все карточки
-    api.getUserData(token)
-      .then(userData => {
-        const arr = cards.filter((item) => userData.favorite.includes(item.id));
-        setFavorites([...arr]);
-      }) */
-    api.changeFavorite(newCard.id, false)
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      api.changeFavorite(newCard.id, false, token)
       .then((userData) => {
         setCurrentUser(userData);
         setFavorites([...favorites, newCard]);
@@ -115,6 +137,7 @@ function App() {
       .catch(err => {
         console.log(err);
       });
+    }
   }
 
   function handleDislikeClick(card) {
@@ -189,19 +212,6 @@ function App() {
       .catch(err => {
         console.log(err);
       });
-
-    /* const date = new Date();
-
-    setOrders([{
-      id: orders.length + 1,
-      owner: 1,
-      products: cart,
-      createdAt: String(date.getDate()) + '.' + String(date.getMonth()) + '.' + String(date.getFullYear()),
-      status: 'в сборке'
-    }, ...orders]);
-
-    handleCartClear();
-    navigate('/profile/orders'); */
   }
 
   function handleEditClick() {

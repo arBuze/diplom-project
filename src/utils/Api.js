@@ -12,6 +12,16 @@ class Api {
     return Promise.reject(res.status);
   }
 
+  getProducts() {
+    return fetch(`${this._baseUrl}/products`, {
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   /* создание пользователя */
   createUser(email, phone, password) {
     return fetch(`${this._baseUrl}/signup`, {
@@ -42,10 +52,13 @@ class Api {
 
   }
 
-  changeFavorite(cardId, isLiked) {
+  changeFavorite(cardId, isLiked, token) {
     return fetch(`${this._baseUrl}/users/me/favorite/${cardId}`, {
       method: isLiked ? 'DELETE' : 'PATCH',
-      headers: this._headers,
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        ...this._headers,
+      },
     })
       .then(res => this._getResponseData(res));
   }
@@ -119,6 +132,16 @@ class Api {
       .then(res => this._getResponseData(res));
   }
 
+  getUserApplications(token) {
+    return fetch(`${this._baseUrl}/repair/me`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        ...this._headers,
+      },
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
   createApplication(description, contact, fileNames, isGuest, token) {
     return fetch(`${this._baseUrl}/repair`, {
       method: 'POST',
@@ -152,6 +175,17 @@ class Api {
     })
       .then(res => this._getResponseData(res));
   }
+
+  getSales() {
+    return fetch(`${this._baseUrl}/sales`, {
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res))
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
 }
 
 export const api = new Api({
