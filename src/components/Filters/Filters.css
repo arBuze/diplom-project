@@ -172,6 +172,12 @@
   border: none;
   padding: 0;
   margin: 10px auto 6px;
+  transition: opacity .2s ease-in-out;
+}
+
+.filters__reset-btn:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 /* .filters__price {

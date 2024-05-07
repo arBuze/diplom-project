@@ -1,3 +1,4 @@
+import { wordEnd } from '../../utils/constants';
 import './Orders.css';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +21,7 @@ export default function Orders({ orders }) {
                 <p className="orders__title">Заказ №1283 от {item.createdAt}</p>
                 <div className="orders__container">
                   <div className="orders__info">
-                    <span className="orders__quantity">{`${item.products.length} товар${[11, 12, 13, 14].indexOf(item.products.length % 100) !== -1 ? 'ов' : item.products.length % 10 === 1 ? '' : [2, 3, 4].indexOf(item.products.length % 10) !== -1 ? 'а' : 'ов'}`} на сумму <span className="orders__cost">
+                    <span className="orders__quantity">{`${item.products.length} товар${wordEnd(item.products.length)}`} на сумму <span className="orders__cost">
                        {item.products.reduce((sum, card) => sum + card.productCost * card.quantity, 0)} &#8381;
                     </span></span>
                     <span className="orders__status">Статус: {item.status}</span>
@@ -39,7 +40,7 @@ export default function Orders({ orders }) {
                     {
                       item.products.length > 4 &&
                       <li className="orders__product orders__product_other">
-                        <span className="orders__other-products">+ еще {item.products.length - 4}&nbsp;товар{[11, 12, 13, 14].indexOf((item.products.length - 4) % 100) !== -1 ? 'ов' : (item.products.length - 4) % 10 === 1 ? '' : [2, 3, 4].indexOf((item.products.length - 4) % 10) !== -1 ? 'а' : 'ов'}</span>
+                        <span className="orders__other-products">+ еще {item.products.length - 4}&nbsp;товар{wordEnd(item.products.length - 4)}</span>
                       </li>
                     }
                   </ul>

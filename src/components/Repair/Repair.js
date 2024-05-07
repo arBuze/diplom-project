@@ -37,7 +37,6 @@ export default function Repair({ onRepairSubmit }) {
     const form = document.querySelector('.repair__form');
     const formData = new FormData(form);
     formData.append('maxFiles', 10 - fileNames.length);
-    console.log(10 - fileNames.length);
 
     setFileDisabled(true);
     api.addApplicationPhoto(formData)
@@ -53,9 +52,6 @@ export default function Repair({ onRepairSubmit }) {
   }
 
   function handleDeletePhotoClick(name) {
-    /* const { name } = e.target; */
-    console.log('awda');
-
     api.deleteApplicationPhoto(name)
       .then(res => {
         console.log(res.message);
@@ -63,7 +59,7 @@ export default function Repair({ onRepairSubmit }) {
       })
       .catch(err => {
         console.log(err);
-      })
+      });
   }
 
   function handleClearClick() {
@@ -75,7 +71,6 @@ export default function Repair({ onRepairSubmit }) {
       });
     });
     setFileNames([]);
-
   }
 
   return(

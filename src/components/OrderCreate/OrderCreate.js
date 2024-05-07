@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './OrderCreate.css';
 import { Link, useNavigate } from 'react-router-dom';
-import image from '../../images/computer.jpg';
+/* import image from '../../images/computer.jpg'; */
 import { CurrentUserContext } from '../../contexts/CurrentUserContexts';
+import { phoneTransform, wordEnd } from '../../utils/constants';
 
 export default function OrderCreate({ cards, onOrderCreate }) {
   const currentUser = useContext(CurrentUserContext);
   const placeholderNumber = '+7 000 000-00-00';
-  const digits = '1234567890';
   const [values, setValues] = useState({});
   const navigate = useNavigate();
 
@@ -17,6 +17,23 @@ export default function OrderCreate({ cards, onOrderCreate }) {
       navigate('/cart');
     }
   },[cards.length]) */
+
+  useEffect(() => {
+    const { phone, email } = currentUser;
+    if (phone) {
+      const number = '+7 ' + phone.slice(0,3) + '' + phone.slice(3,6) + '-' + phone.slice(6,8) + '-' + phone.slice(8,);
+      setValues({
+        ...values,
+        phone: number,
+      });
+    }
+    if (email) {
+      setValues({
+        ...values,
+        email: email,
+      });
+    }
+  }, [currentUser])
 
   function handleFocus(e) {
     if (e.target.value === '') {
@@ -31,38 +48,31 @@ export default function OrderCreate({ cards, onOrderCreate }) {
     const { name, value } = e.target;
 
     if (name === 'phone') {
-      let tempValue = value;
-      const lastDigit = value[value.length - 1];
-      if (value.length > values.phone.length) {
-        if (digits.includes(lastDigit)) {
-          if (value.length === 7) {
-            tempValue = value.slice(0, 6) + ' ' + lastDigit;
-          } else if (value.length === 11 || value.length === 14) {
-            tempValue = value.slice(0, value.length - 1) + '-' + lastDigit;
-          }
-          setValues({
-            ...values,
-            [name]: tempValue,
-          });
-        }
-      } else {
-        console.log(value, value.length);
-        if ((lastDigit === ' ' && value.length !== 3) || lastDigit === '-') {
-          tempValue = value.slice(0, value.length - 1);
-        }
-        if (value.length !== 2) {
-          setValues({
-            ...values,
-            [name]: tempValue,
-          });
-        }
-      }
+      const a = phoneTransform(value, values.phone);
+      console.log(a);
+      setValues({
+        ...values,
+        [name]: a,
+      });
     } else {
       setValues({
         ...values,
         [name]: value,
       });
     }
+  }
+
+  function handleSubmit() {
+    const { phone, email } = values;
+
+    if (!phone || phone.length !== 16) {
+      return;
+    }
+
+    phone.replace(/-/g, '');
+    phone.replace(/\s/g, '');
+    console.log(phone, phone.split(4,));
+    onOrderCreate(phone.split(4,), email);
   }
 
   return(
@@ -85,8 +95,8 @@ export default function OrderCreate({ cards, onOrderCreate }) {
                     </span>
                     {values?.phone ? placeholderNumber.slice(values.phone.length, ) : placeholderNumber}
                   </span>
-                  <input type="tel" className="order-create__data-input" name='phone'
-                    /* placeholder='+7 000 000-00-00' */ maxLength='16'
+                  <input type="tel" className="order-create__data-input"
+                    name='phone' maxLength='16'
                     value={values?.phone} onFocus={handleFocus} onChange={handleChange} />
                 </div>
               </label>
@@ -142,7 +152,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
           </table>
         </div>
         <div className="cart__form">
-          <button className="cart__form-btn" onClick={onOrderCreate}>оформить заказ</button>
+          <button className="cart__form-btn" onClick={handleSubmit}>оформить заказ</button>
           <div className="cart__form-info">
             <span className="cart__form-all">Итого:</span>
             <div className="cart__sale-info">
@@ -150,7 +160,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
               <span className="cart__sale-value">0 &#8381;</span>
             </div>
             <div className="cart__cost-info">
-              <span className="cart__cost-label">{`${cards.length} товар${[11, 12, 13, 14].indexOf(cards.length % 100) !== -1 ? 'ов' : cards.length % 10 === 1 ? '' : [2, 3, 4].indexOf(cards.length % 10) !== -1 ? 'а' : 'ов'}`}</span>
+              <span className="cart__cost-label">{`${cards.length} товар${wordEnd(cards.length)}`}</span>
               <span className="cart__cost-value">{cards.reduce((sum, item) => sum + item.productCost * item.quantity, 0)} &#8381;</span>
             </div>
           </div>

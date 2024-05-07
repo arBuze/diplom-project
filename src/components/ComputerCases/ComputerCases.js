@@ -3,17 +3,20 @@ import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import Filters from '../Filters/Filters';
 import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
+import { wordEnd, wordEnd1 } from '../../utils/constants';
 
-export default function ComputerCases({ name, cards, width, scroll, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
+export default function ComputerCases({ name, cards, width, scroll, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick }) {
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
   const [shownCards, setShowCards] = useState([]);
   const [characteristics, setCharacteristics] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [priceFilter, setPriceFilter] = useState(null);
   const [checks, setChecks] = useState([]);
   const [ratingFilter, setRatingFilter] = useState(false);
+  const isShown = pathname === '/search' || pathname === '/oper/products';
 
-  const limits = cards.reduce(({min, max}, item) => {
+  const limits = cards.length !== 0 && cards.reduce(({min, max}, item) => {
     if (min > item.productCost) {
       min = item.productCost;
     }
@@ -41,12 +44,23 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     }
   }, [])
 
+  useEffect(() => {
+    console.log('asdawf');
+  }, [])
+
   /* задает список характеристик */
   useEffect(() => {
     /* сделать сортировку характеристик по возрастанию */
     setShowCards(cards);
     const arr = [];
-    cards.forEach((card) =>
+    const cats = [];
+    cards.forEach((card) => {
+      if (isShown) {
+        const el = cats.find((elem) => elem === card.category);
+        if (!el) {
+          cats.push(card.category);
+        }
+      }
       card.characteristics.forEach((item) => {
         const el = arr.find((elem) => elem.name === item.name);
         if (el) {
@@ -59,7 +73,10 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
           });
         }
       })
-    );
+    });
+    if (cats.length !== 0) {
+      setCategories(cats);
+    }
     setCharacteristics(arr);
   }, [cards])
 
@@ -111,7 +128,12 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     let filtered = cardsArray.filter((item) => {
       const arr = [];
       checks.forEach((par) => {
-        const temp = item.characteristics.find((char) => char.name === par.name && par.values.includes(char.value));
+        let temp;
+        if (par.name === 'категория') {
+          temp = par.values.includes(item.category);
+        } else {
+          temp = item.characteristics.find((char) => char.name === par.name && par.values.includes(char.value));
+        }
         if (temp) {
           arr.push(temp);
         }
@@ -167,8 +189,15 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
 
   function handleAllCheckClick(e) {
     const { name } = e.target;
-    const { value } = characteristics.find((item) => item.name === name);
     const isChecked = checks.find((item) => item.name === name);
+    let value;
+
+    if (name === 'категория') {
+      value = categories;
+    } else {
+      const char = characteristics.find((item) => item.name === name);
+      value = char.value;
+    }
 
     console.log('is', isChecked);
     if (isChecked) {
@@ -188,16 +217,30 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
     }
   }
 
+  function handleFormReset() {
+    localStorage.removeItem('filter');
+    setChecks([]);
+    setPriceFilter({
+      min: limits.min,
+      max: limits.max,
+    });
+    setRatingFilter(false);
+  }
+
   return(
     <section className="computer-cases">
-      <h2 className="computer-cases__title">{name}</h2>
-      <Breadcrumps />
+      <h2 className={`computer-cases__title ${isShown ? 'computer-cases__title_type_search' : ''}`}>
+        {pathname === '/search' ? `Найден${wordEnd1(cards.length)} ${cards.length} товар${wordEnd(cards.length)}` : name}
+      </h2>
+      {!isShown && <Breadcrumps />}
       <div className="computer-cases__container">
         { width >= 1024 &&
           <Filters width={width} limits={limits} checks={checks}
-            characteristics={characteristics} pathname={pathname}
+            characteristics={characteristics} categories={categories}
+            pathname={pathname} isShown={isShown}
             onCostChange={handlePriceFilterChange} onCharsChange={handleCharsChange}
-            onAllClick={handleAllCheckClick} onRatingClick={handleRatingCheckClick} />
+            onAllClick={handleAllCheckClick} onRatingClick={handleRatingCheckClick}
+            onResetClick={handleFormReset} />
         }
         <div className="computer-cases__list-container">
           <div className="computer-cases__filters-container">
@@ -230,7 +273,8 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
             isReversed={isReversed} pathname={pathname}
             faves={faves} cart={cart}
             onLike={onLike} onDislike={onDislike}
-            onCartAdd={onCartAdd} onCartRemove={onCartRemove} />
+            onCartAdd={onCartAdd} onCartRemove={onCartRemove}
+            onChangeClick={onChangeClick} />
         </div>
       </div>
     </section>

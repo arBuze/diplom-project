@@ -13,7 +13,7 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
     const id = pathname.slice(pathname.lastIndexOf('/') + 1,);
     const card = cards.find((item) => item.id === Number(id));
     setCurrentCard(card);
-  },[])
+  }, [])
 
   function onLinkClick(e) {
     e.preventDefault();

@@ -1,6 +1,7 @@
 import './Cart.css';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import { Link, useNavigate } from 'react-router-dom';
+import { wordEnd } from '../../utils/constants';
 
 export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, onCartClear, onQuantityChange }) {
   const navigate = useNavigate();
@@ -84,7 +85,7 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, on
                 <span className="cart__sale-value">0 &#8381;</span>
               </div>
               <div className="cart__cost-info">
-                <span className="cart__cost-label">{`${cards.length} товар${[11, 12, 13, 14].indexOf(cards.length % 100) !== -1 ? 'ов' : cards.length % 10 === 1 ? '' : [2, 3, 4].indexOf(cards.length % 10) !== -1 ? 'а' : 'ов'}`}</span>
+                <span className="cart__cost-label">{`${cards.length} товар${wordEnd(cards.length)}`}</span>
                 <span className="cart__cost-value">{cards.reduce((sum, item) => sum + item.productCost * item.quantity, 0)} &#8381;</span>
               </div>
             </div>

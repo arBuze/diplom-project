@@ -3,7 +3,7 @@ import './Sales.css';
 import comp from '../../images/giorgio-trovato.jpg';
 import { Link } from 'react-router-dom';
 
-export default function Sales() {
+export default function Sales({ sales }) {
   return(
     <section className="sales">
       <h2 className="sales__title">Акции</h2>

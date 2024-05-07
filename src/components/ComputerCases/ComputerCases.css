@@ -8,6 +8,10 @@
   margin: 0;
 }
 
+.computer-cases__title_type_search {
+  margin: 0 0 15px;
+}
+
 .computer-cases__container {
   display: flex;
   gap: 10px;

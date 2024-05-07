@@ -4,7 +4,7 @@ import Section from "../Section/Section";
 import oneComp from '../../images/one-computer.jpg';
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
+export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onSearch }) {
   const navigate = useNavigate();
 
   function handleFormBtnClick() {
@@ -17,7 +17,7 @@ export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, 
         <div className="intro__container">
           <h1 className="intro__title">собери свою мечту</h1>
           <h2 className="intro__subtitle">ремонт и сборка компьютеров</h2>
-          <SearchForm />
+          <SearchForm onSearch={onSearch} pathname={pathname} />
         </div>
       </section>
       <Section title='Новинки' cards={cards} pathname={pathname}

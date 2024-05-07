@@ -63,6 +63,7 @@
   max-height: 180px;
   min-height: 180px;
   height: 180px;
+  resize: none;
 }
 
 .repair__input-container {

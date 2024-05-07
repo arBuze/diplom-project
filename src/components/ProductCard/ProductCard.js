@@ -1,7 +1,7 @@
 import './ProductCard.css';
 import { Link } from 'react-router-dom';
 
-export default function ProductCard({ card, type = 'grid', pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
+export default function ProductCard({ card, type = 'grid', pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick }) {
   const {
     productName,
     image,
@@ -15,6 +15,7 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
   const ratingStars = [1, 2, 3, 4, 5];
   const starsColored = Math.round(rating);
   const isInCart = cart.find((item) => item.id === id);
+  const isForOper = pathname === '/oper/products';
 
   function handleLikeClick(e) {
     let isFave = e.target.classList.contains('liked');
@@ -26,12 +27,16 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
     onLike(id);
   }
 
-  function handleCartClick(e) {
+  function handleCartClick() {
     if (isInCart) {
       onCartRemove(id);
       return;
     }
     onCartAdd(card);
+  }
+
+  function changeClick() {
+    onChangeClick(id);
   }
 
   return(
@@ -41,7 +46,10 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
         <Link to={path} className="products-list__link products-list__link_type_image">
           <img className="products-list__product-img" src={image} alt={productName} />
         </Link>
-        <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
+        { isForOper
+          ? <button className="product-list__change" type="button" onClick={changeClick} />
+          : <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
+        }
         <ul className="products-list__rating">
           {
             ratingStars.map((item) =>
@@ -57,14 +65,11 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
         <div className="product-list__cost-info">
           <span className="products-list__cost">{productCost} &#8381;</span>
           <span className="products-list__cost last-cost">{sale}</span>
-          <div className="products-list__add-form">
-            <button className={`products-list__add-btn ${isInCart ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
-            {/* <div className="products-list__add-multiple">
-              <button className="products-list__decrease-btn" type="submit">-</button>
-              <span className="products-list__quantity">1</span>
-              <button className="products-list__increase-btn" type="submit">+</button>
-            </div> */}
-          </div>
+          { !isForOper &&
+            <div className="products-list__add-form">
+              <button className={`products-list__add-btn ${isInCart ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+            </div>
+          }
         </div>
       </div>
     </li>
@@ -74,7 +79,10 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
         <Link to={path} className="wide-list__link wide-list__link_type_image">
           <img className="wide-list__product-img" src={image} alt={productName} />
         </Link>
-        <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
+        { isForOper
+          ? <button className="product-list__change" type="button" onClick={changeClick} />
+          : <button className={`products-list__like ${faves.find((item) => item === id) ? 'liked' : ''}`} type="button" onClick={handleLikeClick}></button>
+        }
       </div>
       <div className="wide-list__info">
         <Link to={path} className="wide-list__link wide-list__link_type_name" >
@@ -97,14 +105,11 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
           <span className="wide-list__status">нет в наличии</span>
           <span className="wide-list__cost">{`${productCost} &#8381;`}</span>
           <span className="wide-list__cost last-cost">{sale}</span>
-          <div className="products-list__add-form">
-            <button className={`products-list__add-btn ${isInCart ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
-            {/* <div className="products-list__add-multiple">
-              <button className="products-list__decrease-btn" type="submit">-</button>
-              <span className="products-list__quantity">1</span>
-              <button className="products-list__increase-btn" type="submit">+</button>
-            </div> */}
-          </div>
+          { !isForOper &&
+            <div className="products-list__add-form">
+              <button className={`products-list__add-btn ${isInCart ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+            </div>
+          }
         </div>
       </div>
     </li>

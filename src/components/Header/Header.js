@@ -1,11 +1,11 @@
 import './Header.css';
-import { useState } from 'react';
+/* import { useState } from 'react'; */
 import logo from '../../images/LOGO1.svg'
 import SearchForm from '../SearchForm/SearchForm';
 import { Link, useNavigate } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-export default function Header({ width, cart, faves, onSearch }) {
+export default function Header({ width, pathname, cart, faves, onSearch, isLoggedIn }) {
   const navigate = useNavigate();
 
   function handleFavClick() {
@@ -17,7 +17,12 @@ export default function Header({ width, cart, faves, onSearch }) {
   }
 
   function handleProfileClick() {
-    navigate('/profile');
+    if (isLoggedIn) {
+      navigate('/profile');
+    }
+    else {
+      navigate('/signin');
+    }
   }
 
   return(
@@ -38,7 +43,8 @@ export default function Header({ width, cart, faves, onSearch }) {
           </div>
           {
             width < 1440
-            ? <SearchForm additional="search-form_type_header" onSearch={onSearch} />
+            ? <SearchForm additional="search-form_type_header" onSearch={onSearch}
+                pathname={pathname} />
             : <Navigation />
           }
           <div className="header__profile-buttons">

@@ -12,6 +12,7 @@ class Api {
     return Promise.reject(res.status);
   }
 
+  /* получение товаров */
   getProducts() {
     return fetch(`${this._baseUrl}/products`, {
       headers: this._headers,
@@ -23,7 +24,7 @@ class Api {
   }
 
   /* создание пользователя */
-  createUser(email, phone, password) {
+ /*  createUser(email, phone, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: this._headers,
@@ -34,131 +35,171 @@ class Api {
       },
     })
       .then(res => this._getResponseData(res));
-  }
+  } */
 
   /* получение данных пользователя */
-  getUserData(token) {
+  getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        ...this._headers,
-      },
+      credentials: 'include',
+      headers: this._headers,
     })
       .then(res => this._getResponseData(res));
   }
 
   /* изменение данных пользователя */
-  updateUserData() {
-
-  }
-
-  changeFavorite(cardId, isLiked, token) {
-    return fetch(`${this._baseUrl}/users/me/favorite/${cardId}`, {
-      method: isLiked ? 'DELETE' : 'PATCH',
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        ...this._headers,
-      },
+  updateUserData(email, phone, name, lastName) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        email,
+        phone,
+        name,
+        lastName,
+      }),
     })
       .then(res => this._getResponseData(res));
   }
 
+  /* изменение пароля */
+  updateUserPassword(oldPas, newPas) {
+    return fetch(`${this._baseUrl}/users/me/pas`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        oldPas,
+        newPas,
+      }),
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
+  /* удаление профиля */
+  deleteProfile() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
+  /* изменение избранных товаров */
+  changeFavorite(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/users/me/favorite/${cardId}`, {
+      method: isLiked ? 'DELETE' : 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then(res => this._getResponseData(res));
+  }
+
+  /* добавление в корзину */
   addToCart(card) {
     const { id, category, image, productName, productCost } = card; /* позже будет images[0] */
     return fetch(`${this._baseUrl}/users/me/cart`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
-      body: {
+      body: JSON.stringify({
         productId: id,
         category,
         image: image,
         productName,
         productCost,
         quantity: 1,
-      }
+      })
     })
       .then(res => this._getResponseData(res));
   }
 
+  /* изменение количества товара */
   changeProductQuantity(cardId, newQuantity) {
     return fetch(`${this._baseUrl}/users/me/cart/${cardId}`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
-      body: { newQuantity }
+      body: JSON.stringify({ newQuantity }),
     })
       .then(res => this._getResponseData(res));
   }
 
+  /* удаление товара из корзины */
   deleteFromCart(cardId) {
     return fetch(`${this._baseUrl}/users/me/cart/${cardId}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: this._headers,
     })
       .then(res => this._getResponseData(res));
   }
 
+  /* очистка корзины */
   clearCart() {
     return fetch(`${this._baseUrl}/users/me/cart`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: this._headers,
     })
       .then(res => this._getResponseData(res));
   }
 
   /* получение товаров пользователя */
-  getUserOrders(token) {
+  getUserOrders() {
     return fetch(`${this._baseUrl}/orders`, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        ...this._headers,
-      },
+      credentials: 'include',
+      headers: this._headers,
     })
       .then(res => this._getResponseData(res));
   }
 
-  createOrder(isGuest, cart, token) {
+  /* создание заказа */
+  createOrder(cart, phone, email, isGuest) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        ...this._headers,
-      },
-      body: {
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
         isGuest,
         products: cart,
+        contacts: {
+          phone,
+          email,
+        },
         status: 'в сборке',
-      }
+      }),
     })
       .then(res => this._getResponseData(res));
   }
 
-  getUserApplications(token) {
+  /* получение заявок пользвателя */
+  getUserApplications() {
     return fetch(`${this._baseUrl}/repair/me`, {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        ...this._headers,
-      },
+      credentials: 'include',
+      headers: this._headers,
     })
       .then((res) => this._getResponseData(res));
   }
 
-  createApplication(description, contact, fileNames, isGuest, token) {
+  /* создание заявки */
+  createApplication(description, contact, fileNames/* , isGuest */) {
     return fetch(`${this._baseUrl}/repair`, {
       method: 'POST',
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        ...this._headers,
-      },
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         description,
         contact,
-        isGuest,
+        /* isGuest, */
         fileNames,
       }),
     })
       .then(res => this._getResponseData(res));
   }
 
+  /* добавление фото к заявке */
   addApplicationPhoto(form) {
     return fetch(`${this._baseUrl}/repair/images`, {
       method: 'POST',
@@ -167,6 +208,7 @@ class Api {
       .then(res => this._getResponseData(res));
   }
 
+  /* удаление фото */
   deleteApplicationPhoto(fileName) {
     return fetch(`${this._baseUrl}/repair/images`, {
       method: 'DELETE',
@@ -176,6 +218,7 @@ class Api {
       .then(res => this._getResponseData(res));
   }
 
+  /* получение всех акций */
   getSales() {
     return fetch(`${this._baseUrl}/sales`, {
       headers: this._headers,

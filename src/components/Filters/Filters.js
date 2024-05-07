@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import './Filters.css';
+import { linkMatches } from '../../utils/constants';
 
-export default function Filters({ width, limits, characteristics, checks, pathname, onCostChange, onCharsChange, onAllClick, onRatingClick }) {
+export default function Filters({ width, limits, characteristics, categories, checks, pathname, isShown, onCostChange, onCharsChange, onAllClick, onRatingClick, onResetClick }) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   const [isVisible, setIsVisible] = useState(true);
   const [values, setValues] = useState({});
 
   const percent = (limits.max - limits.min) / 100;
+  const rename = (element) => {
+    const { name } = linkMatches.find((link) => link.path.includes(element));
+    return name;
+  }
 
   /* useState(() => {
     let fils = JSON.parse(localStorage.getItem('filter'));
@@ -101,10 +106,12 @@ export default function Filters({ width, limits, characteristics, checks, pathna
 
   return(
     <form className="filters" name="filters">
-      <fieldset className="filters__field filters__search-field" name="category-search">
-        <input className="filters__search-input" type="text" placeholder="Поиск по категории..." />
-        <button className="filters__search-btn" />
-      </fieldset>
+      { !isShown &&
+        <fieldset className="filters__field filters__search-field" name="category-search">
+          <input className="filters__search-input" type="text" placeholder="Поиск по категории..." />
+          <button className="filters__search-btn" />
+        </fieldset>
+      }
       <fieldset className="filters__field filters__main-check" name="main">
         <label className="filters__check-name">
           <input type="checkbox" className="filters__check" name="in-stock" />
@@ -144,6 +151,34 @@ export default function Filters({ width, limits, characteristics, checks, pathna
           </div>
         }
       </fieldset>
+      {
+        isShown &&
+        <fieldset className="filters__field filters__field_type_producer">
+          <div className="filters__filter-name">
+            <span className="filters__filter-title">Категория</span>
+            <button className={`filters__hide-btn ${!isVisible ? 'filters__hide-btn_active' : ''}`} type="button" onClick={onHideClick} />
+          </div>
+          <div className="filters__checks-container">
+            <label className="filters__check-name">
+              <input type="checkbox" className="filters__check" name={'категория'}
+                value={'all'} onChange={onAllClick}
+                checked={checks.find((elem) => elem.name === 'категория')?.values.length === categories.length} />
+              <span className="filters__pseudo-check" />
+              Выбрать все
+            </label>
+            {
+              categories.map((elem) =>
+                <label className="filters__check-name">
+                  <input type="checkbox" className="filters__check" name={'категория'} value={elem}
+                    checked={checks.find((c) => c.name === 'категория' && (c.values.indexOf(elem) !== -1))} onChange={onCharsChange} />
+                  <span className="filters__pseudo-check" />
+                  {rename(elem)}
+                </label>
+              )
+            }
+          </div>
+        </fieldset>
+      }
       {
         characteristics.map((item) =>
           <fieldset key={item.id} className="filters__field filters__field_type_producer">
@@ -202,7 +237,7 @@ export default function Filters({ width, limits, characteristics, checks, pathna
           </label>
         </div>
       </fieldset> */}
-      <button type="reset" className="filters__reset-btn">Сбросить</button>
+      <button type="button" className="filters__reset-btn" onClick={onResetClick}>Сбросить</button>
     </form>
   );
 };
