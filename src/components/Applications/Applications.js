@@ -12,14 +12,17 @@ export default function Applications({ apps }) {
         :
         <ul className="applications__list">
           {
-            apps.map((item) =>
-              <li key={item.id} className="applications__item">
-                <p className="applications__title">Заявка № 1233 от 13.09.2024</p>
-                <Link to={'/profile/applications/' + 123123} className="applications__link">
+            apps?.map((item) =>{
+              const time = [item.createdAt.slice(8,10), item.createdAt.slice(5,7), item.createdAt.slice(0,4)].join('.');
+              return(
+                <li key={item._id} className="applications__item">
+                <p className="applications__title">Заявка №{item._id?.slice(0,5)?.toUpperCase() + item.createdAt?.slice(item.createdAt?.indexOf('.') + 1, item.createdAt?.indexOf('.') + 4)} от {time}</p>
+                <Link to={'/profile/applications/' + item._id} className="applications__link">
                   Подробнее
                 </Link>
               </li>
-            )
+              )
+            })
           }
         </ul>
       }

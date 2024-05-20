@@ -10,13 +10,17 @@
   background-color: #FFF;
 }
 
+.main_type_admin {
+  min-height: calc(100vh - 70px);
+}
+
 .intro {
   width: 100%;
 }
 
 .intro__container {
   width: 100%;
-  height: calc((100vw - 96px)/3.2);
+  height: calc((80vw - 96px)/3.2);
   display: flex;
   flex-direction: column;
   justify-content: center;

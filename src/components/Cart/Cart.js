@@ -1,7 +1,7 @@
 import './Cart.css';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import { Link, useNavigate } from 'react-router-dom';
-import { wordEnd } from '../../utils/constants';
+import { BASE_PROD_URL, wordEnd } from '../../utils/constants';
 
 export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, onCartClear, onQuantityChange }) {
   const navigate = useNavigate();
@@ -10,14 +10,14 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, on
     let isLiked = e.target.classList.contains('liked');
 
     if (isLiked) {
-      onDislike(Number(e.target.id));
+      onDislike(e.target.id);
       return;
     }
-    onLike(Number(e.target.id));
+    onLike(e.target.id);
   }
 
   function handleCartRemove(e) {
-    onCartRemove(Number(e.target.id));
+    onCartRemove(e.target.id);
   }
 
   function handleOrderCreate() {
@@ -47,15 +47,15 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, on
               cards.map((card) => {
                 /* let quan = cart.find((item) => item.cardId === card.id).quantity; */
                 return(
-                <li key={card.id} className="cart__product">
-                  <Link to={'/catalog/' + card.category + '/' + card.id} className="cart__image-container">
-                    <img className="cart__product-img" src={card.image} alt="" />
+                <li key={card.productId} className="cart__product">
+                  <Link to={'/catalog/' + card.category + '/' + card.productId} className="cart__image-container">
+                    <img className="cart__product-img" crossOrigin='true' src={BASE_PROD_URL + card.image} alt="" />
                   </Link>
-                  <button className={`cart__like-btn ${faves.find((item) => item === card.id) ? 'liked' : ''}`} type="button"
-                    onClick={handleLikeClick} id={card.id} />
+                  <button className={`cart__like-btn ${faves.find((item) => item === card.productId) ? 'liked' : ''}`} type="button"
+                    onClick={handleLikeClick} id={card.productId} />
                   <div className="cart__product-info">
-                    <Link to={'/catalog/' + card.category + '/' + card.id} className="cart__product-name">{card.productName}</Link>
-                    <button className="cart__remove-btn" type="button" id={card.id}
+                    <Link to={'/catalog/' + card.category + '/' + card.productId} className="cart__product-name">{card.productName}</Link>
+                    <button className="cart__remove-btn" type="button" id={card.productId}
                       onClick={handleCartRemove} />
                     <div className="cart__product-cost-info">
                       <div className="cart__one-product-cost">
@@ -63,9 +63,9 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, on
                         <span className="cart__one-cost-label">цена за 1 шт</span>
                       </div>
                       <div className="cart__quantity">
-                        <button className="cart__decrease-btn" type="button" name='decrease' id={card.id} onClick={onQuantityChange}>-</button>
+                        <button className="cart__decrease-btn" type="button" name='decrease' id={card.productId} onClick={onQuantityChange}>-</button>
                         <input className="cart__quantity-input" value={card.quantity}  type="text" readOnly />
-                        <button className="cart__increase-btn" type="button" name='increase' id={card.id} onClick={onQuantityChange}>+</button>
+                        <button className="cart__increase-btn" type="button" name='increase' id={card.productId} onClick={onQuantityChange}>+</button>
                       </div>
                       <span className="cart__all-cost">{card.quantity * card.productCost} &#8381;</span>
                     </div>
@@ -77,7 +77,7 @@ export default function Cart({ cards, onLike, onDislike, onCartRemove, faves, on
           </ul>
           }
           <div className="cart__form">
-            <button className="cart__form-btn" onClick={handleOrderCreate}>оформить заказ</button>
+            <button className="cart__form-btn" disabled={cards.length === 0} onClick={handleOrderCreate}>оформить заказ</button>
             <div className="cart__form-info">
               <span className="cart__form-all">Итого:</span>
               <div className="cart__sale-info">

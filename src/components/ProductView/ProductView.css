@@ -27,7 +27,7 @@
 .product-view__image {
   width: 57vmin;
   height: 70vmin;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -75,7 +75,7 @@
 .product-view__small-image {
   width: 19vmin;
   height: 19vmin;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   filter: brightness(70%);
 }
@@ -102,6 +102,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 10px;
 }
 
 .products-list__rating_place_product {
@@ -357,6 +358,10 @@
   line-height: 20px;
   padding-left: 20px;
   margin-bottom: 15px;
+}
+
+.comm_pad {
+  padding: 0;
 }
 
 .product-view__part-name {

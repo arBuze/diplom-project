@@ -1,0 +1,88 @@
+.admin-app__head-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 25px;
+}
+
+.admin-app__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.admin-app__check-label {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.admin-app__seen-input {
+  margin-left: 5px;
+}
+
+.admin-app__app-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-app__app-item {
+  border: 1px solid #290b6d;
+  padding: 10px 15px;
+}
+
+.admin-app__item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.admin-app__app-title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  margin: 0;
+}
+
+.admin-app__seen-app-input {
+  margin-left: 5px;
+}
+
+.admin-app__contact {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.admin-app__prob-title {
+  display: inline-block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.admin-app__problem {
+  margin: 0 0 5px;
+}
+
+.admin-app__img-list {
+  display: flex;
+  gap: 7px;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.admin-app__img-item {
+  width: 200px;
+  height: 160px;
+}
+
+.admin-app__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}

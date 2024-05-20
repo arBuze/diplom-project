@@ -89,6 +89,7 @@
 
 .order-create__number-container {
   position: relative;
+  margin-left: 21px;
 }
 
 .order-create__fake-num {
@@ -104,4 +105,42 @@
 
 .order-create__fake-ploceholder {
   color: transparent;
+}
+
+.order-create__pay-container {
+  display: flex;
+  gap: 15px;
+  margin: 12px 0 15px;
+}
+
+.order-create__pay-label {
+  position: relative;
+}
+
+.order-create__pay-input {
+  position: absolute;
+  inset: 50% 0 0 0;
+  width: 1px;
+  height: 1px;
+}
+
+.order-create__pseudo-pay-input {
+  background-color: #eae2fd;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid #eae2fd;
+  padding: 7px;
+}
+
+.order-create__pay-input:checked + .order-create__pseudo-pay-input {
+  border: 1px solid #310694;
+}
+
+.order-create__check-label {
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.order-create__check {
+  margin-right: 5px;
 }

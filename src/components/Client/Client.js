@@ -30,11 +30,12 @@ import PopupPassword from '../PopupPassword/PopupPassword';
 import { api } from '../../utils/Api';
 import { auth } from '../../utils/AuthApi';
 import { cards, linkMatches } from '../../utils/constants';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 export default function Client() {
   const [loggedIn, setLoggedIn] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
-  /* const [cards, setCards] = useState([]); */
+  const [cards, setCards] = useState([]);
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -53,46 +54,16 @@ export default function Client() {
   const scroll = useVerticalScroll();
   const navigate = useNavigate();
 
-  /* получение товаров и акций */
-/*   useEffect(() => {
-    Promise.all([api.getProducts(), api.getSales()])
-      .then(([productData, salesData]) => {
-        setSales(salesData);
-        setCards(productData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []) */
-
-  /* проверка токена */
-  useEffect(() => {
-    const token = localStorage.getItem('user');
-
-    if (token) {
-      auth.checkToken()
-        .then((res) => {
-          if (res) {
-            if (!res.isGuest) {
-              setLoggedIn(true);
-            }
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          localStorage.clear();
-        })
-    }
-  }, [])
-
   /* получение данных пользователя */
   useEffect(() => {
     const token = localStorage.getItem('user');
-
+    console.log('in', token);
     if (token) {
+      console.log('ini');
       Promise.all([api.getUserData(), api.getUserOrders(), api.getUserApplications()])
         .then(([userData, ordersData, applicationsData]) => {
           setCurrentUser(userData);
+          console.log(ordersData, userData);
           setOrders(ordersData);
           setApplications(applicationsData);
           setCart(userData.cart);
@@ -104,10 +75,42 @@ export default function Client() {
     }
   }, [loggedIn])
 
+  /* получение товаров и акций */
+  useEffect(() => {
+    Promise.all([api.getProducts()/* , api.getSales() */])
+      .then(([productData, salesData]) => {
+        /* setSales(salesData); */
+        setCards(productData.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [])
+
+    /* проверка токена */
+    useEffect(() => {
+      const token = localStorage.getItem('user');
+
+      if (token) {
+        auth.checkToken()
+          .then((res) => {
+            if (res) {
+              if (!res.isGuest) {
+                setLoggedIn(true);
+              }
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            localStorage.clear();
+          })
+      }
+    }, [])
+
   useEffect(() => {
     const search = localStorage.getItem('founds');
 
-    if (search) {
+    if (search && pathname === '/search') {
       console.log(search);
       handleSearchClick(search);
     }
@@ -150,9 +153,9 @@ export default function Client() {
 
   function handleRepairSubmit({ description, contact, fileNames }) {
     api.createApplication(description, contact, fileNames)
-      .then(res => {
+      .then(app => {
         setIsPopupRepairOpened(true);
-        setApplications([...applications, { ...res, id: applications.length + 1 }]);
+        setApplications([app, ...applications]);
       })
       .catch(err => {
         console.log(err);
@@ -197,11 +200,11 @@ export default function Client() {
     }
   }
 
-  function handleLike(newCard) {
-    api.changeFavorite(newCard.id, false)
+  function handleLike(id) {
+    api.changeFavorite(id, false)
       .then((userData) => {
         setCurrentUser(userData);
-        setFavorites([...favorites, newCard]);
+        setFavorites([id, ...favorites]);
       })
       .catch(err => {
         console.log(err);
@@ -209,17 +212,17 @@ export default function Client() {
   }
 
   /* добавление в избранное */
-  function handleLikeClick(newCard) {
+  function handleLikeClick(id) {
     const token = localStorage.getItem('user');
 
     if (token) {
-      handleLike(newCard);
+      handleLike(id);
     } else {
       auth.register({ isGuest: true })
         .then((user) => {
           setCurrentUser(user);
           handleAuthorize(user);
-          handleLike(newCard);
+          handleLike(id);
         })
         .catch(err => {
           console.log(err);
@@ -228,14 +231,14 @@ export default function Client() {
   }
 
   /* удаление из избранного */
-  function handleDislikeClick(card) {
+  function handleDislikeClick(id) {
     const token = localStorage.getItem('user');
 
     if (token) {
-      api.changeFavorite(card.id, true)
+      api.changeFavorite(id, true)
       .then((userData) => {
         setCurrentUser(userData);
-        setFavorites(favorites.filter((item) => !(item === card)));
+        setFavorites(favorites.filter((item) => !(item === id)));
       })
       .catch(err => {
         console.log(err);
@@ -247,7 +250,7 @@ export default function Client() {
     api.addToCart(newCard)
       .then((userData) => {
         setCurrentUser(userData);
-        const card = userData.cart.find((item) => item.cardId === newCard.id);
+        const card = userData.cart.find((item) => item.productId === newCard._id);
         setCart([...cart, card]);
       })
       .catch(err => {
@@ -279,7 +282,7 @@ export default function Client() {
     const token = localStorage.getItem('user');
 
     if (token) {
-      api.deleteFromCart(cardId)
+      api.deleteFromCart(cart.find((item) => item.productId === cardId))
       .then((userData) => {
         setCurrentUser(userData);
         setCart(cart.filter((item) => !(item.productId === cardId)));
@@ -311,7 +314,7 @@ export default function Client() {
     const token = localStorage.getItem('user');
 
     if (token) {
-      const id = Number(e.target.id);
+      const id = e.target.id;
       const { quantity } = cart.find((item) => item.productId === id);
       const newQuantity = e.target.name === 'increase' ? quantity + 1 : quantity - 1;
 
@@ -327,8 +330,8 @@ export default function Client() {
     }
   }
 
-  function handleOrderCreate(phone, email) {
-    api.createOrder(cart, phone, email, currentUser.isGuest)
+  function handleOrderCreate(phone, email, payment) {
+    api.createOrder(cart, phone, email, currentUser.isGuest, payment)
       .then(newOrder => {
         setOrders([...orders, newOrder]);
         handleCartClear();
@@ -340,17 +343,17 @@ export default function Client() {
   }
 
   /* создание заказа */
-  function handleOrderCheck(phone, email) {
+  function handleOrderCheck(phone, email, payment) {
     const token = localStorage.getItem('user');
 
     if (token) {
-      handleOrderCreate(phone, email);
+      handleOrderCreate(phone, email, payment);
     } else {
       auth.register({ isGuest: true })
         .then((user) => {
           setCurrentUser(user);
           handleAuthorize(user);
-          handleOrderCreate(phone, email);
+          handleOrderCreate(phone, email, payment);
         })
         .catch(err => {
           console.log(err);
@@ -363,12 +366,12 @@ export default function Client() {
   }
 
   function handleAuthorize(data) {
-    localStorage.setItem('user',
-      JSON.stringify({
-        id: data._id,
-        isGuest: data.isGuest,
-      })
-    );
+    console.log(data);
+    const userData = {
+      id: data.user._id,
+      isGuest: data.user.isGuest,
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
     if (!data.isGuest) {
       setLoggedIn(true);
     }
@@ -377,7 +380,7 @@ export default function Client() {
   /* выход из профиля */
   function handleSignOut() {
     setLoggedIn(false);
-    localStorage.clear();
+    localStorage.removeItem('user');
     setCurrentUser({});
     setCart([]);
     setOrders([]);
@@ -403,102 +406,102 @@ export default function Client() {
             <Route path='/catalog'>
               <Route index element={<Catalog />} />
               <Route path='computer-cases' element={
-                <ComputerCases name='Корпуса' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Корпуса' cards={cards.filter((item) => item.category === 'computer-cases')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='computer-cases/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'computer-cases')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='processors' element={
-                <ComputerCases name='Процессоры' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Процессоры' cards={cards.filter((item) => item.category === 'processors')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='processors/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'processors')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='motherboards' element={
-                <ComputerCases name='Материнские платы' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Материнские платы' cards={cards.filter((item) => item.category === 'motherboards')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='motherboards/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'motherboards')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='video-cards' element={
-                <ComputerCases name='Видеокарты' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Видеокарты' cards={cards.filter((item) => item.category === 'video-cards')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='video-cards/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'video-cards')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='coolers' element={
-                <ComputerCases name='Кулеры' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Кулеры' cards={cards.filter((item) => item.category === 'coolers')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='coolers/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'coolers')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='rams' element={
-                <ComputerCases name='Оперативная память' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Оперативная память' cards={cards.filter((item) => item.category === 'rams')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='rams/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'rams')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='power-units' element={
-                <ComputerCases name='Блок питания' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Блок питания' cards={cards.filter((item) => item.category === 'power-units')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='power-units/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'power-units')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='storages' element={
-                <ComputerCases name='Хранение данных' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Хранение данных' cards={cards.filter((item) => item.category === 'storages')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='storages/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'storages')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='sound-boards' element={
-                <ComputerCases name='Звуковые карты' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Звуковые карты' cards={cards.filter((item) => item.category === 'sound-boards')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='sound-boards/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'sound-boards')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='peripheral' element={
-                <ComputerCases name='Периферия' cards={cards} width={width} scroll={scroll} pathname={pathname}
+                <ComputerCases name='Периферия' cards={cards.filter((item) => item.category === 'peripheral')} width={width} scroll={scroll} pathname={pathname}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
               <Route path='peripheral/:id' element={
-                <ProductView pathname={pathname} cards={cards} faves={favorites} cart={cart}
+                <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'peripheral')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
               } />
@@ -511,9 +514,9 @@ export default function Client() {
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
-            <Route path='/sales' element={<Sales sales={sales} />} />
+            <Route path='/sales' element={<Sales sales={sales} pathname={pathname} />} />
             <Route path='/sales/:id' element={
-              <SaleView cards={cards} width={width} pathname={pathname}
+              <SaleView cards={cards.filter((item) => item.category === 'video-cards')} width={width} pathname={pathname}
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} faves={favorites} cart={cart}
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
@@ -525,7 +528,7 @@ export default function Client() {
             } />
             <Route path='/order-create' element={<OrderCreate cards={cart} onOrderCreate={handleOrderCheck} />} />
             <Route path='/favorite' element={
-              <Favorite cards={favorites.map((item) => cards.find((card) => card.id === item))} faves={favorites} width={width} pathname={pathname}
+              <Favorite cards={favorites.map((item) => cards.find((card) => card._id === item))} faves={favorites} width={width} pathname={pathname}
                 onLike={handleLikeClick} onCartAdd={handleAddToCartClick} cart={cart}
                 onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
@@ -535,26 +538,31 @@ export default function Client() {
               onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart} />
             } />
             <Route path='/profile' >
-              <Route index element={<Profile title='Профиль' pathname={pathname} onSignOut={handleSignOut}>
-                <UserData isEdit={isEdit} isLoading={isUpdateResponseLoading}
+              <Route index element={
+                <ProtectedRoute element={Profile} loggedIn={loggedIn} path={'/signin'}
+                  title='Профиль' pathname={pathname} onSignOut={handleSignOut}
+                  children={<UserData isEdit={isEdit} isLoading={isUpdateResponseLoading}
                   onEditClick={handleEditClick} onDataUpdate={handleUserUpdate}
-                  onPasswordChangeClick={handlePopupPasOpen} />
-              </Profile>} />
-              <Route path='orders' element={<Profile title='Заказы' pathname={pathname} onSignOut={handleSignOut}>
-                <Orders orders={orders} />
-              </Profile>} />
+                  onPasswordChangeClick={handlePopupPasOpen} />} />
+              } />
+              <Route path='orders' element={
+                <ProtectedRoute element={Profile} loggedIn={loggedIn} path={'/signin'}
+                  title='Заказы' pathname={pathname} onSignOut={handleSignOut}
+                  children={<Orders orders={orders} />} />
+              } />
               <Route path='orders/:id' element={
-                <Profile title='Заказы' pathname={pathname} onSignOut={handleSignOut}>
-                  <OrderView cards={orders} pathname={pathname} />
-                </Profile>} />
+                <ProtectedRoute element={Profile} loggedIn={loggedIn} path={'/signin'}
+                  title='Заказы' pathname={pathname} onSignOut={handleSignOut}
+                  children={<OrderView cards={orders} pathname={pathname} />} />
+              } />
               <Route path='applications' element={
-                <Profile title='Заявки на ремонт' pathname={pathname} onSignOut={handleSignOut}>
-                  <Applications apps={applications} />
-                </Profile>
+                <ProtectedRoute element={Profile} loggedIn={loggedIn} path={'/signin'}
+                  title='Заявки на ремонт' pathname={pathname} onSignOut={handleSignOut}
+                  children={<Applications apps={applications} />} />
               } />
             </Route>
-            <Route path='/signin' element={<Login onAuth={handleAuthorize} />} />
-            <Route path='/signup' element={<Register onAuth={handleAuthorize} />} />
+            <Route path='/signin' element={<Login onAuth={handleAuthorize} navigate={navigate} />} />
+            <Route path='/signup' element={<Register onAuth={handleAuthorize} navigate={navigate} />} />
             <Route path='*' element={<PageNotFound />} />
           </Routes>
         </CurrentUserContext.Provider>

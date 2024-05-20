@@ -145,7 +145,7 @@
 .cart__product-img {
   width: 230px;
   height: 230px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -289,9 +289,13 @@
   transition: opacity .2s ease-in-out;
 }
 
-.cart__form-btn:hover {
+.cart__form-btn:not(:disabled):hover {
   cursor: pointer;
   opacity: .8;
+}
+
+.cart__form-btn:disabled {
+  opacity: .6;
 }
 
 .cart__form-info {

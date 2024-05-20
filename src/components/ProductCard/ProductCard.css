@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   border-radius: 20px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, .3);
   display: flex;
   flex-direction: column;
 }
@@ -46,7 +46,7 @@
 .products-list__product-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   border-radius: 20px 20px 0 0;
 }
@@ -60,10 +60,25 @@
   left: 19px;
   border-radius: 50%;
   border: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .5);
   padding: 0;
 }
 
-.products-list__like:hover {
+.product-list__change {
+  width: 30px;
+  height: 30px;
+  background: #FFF url('../../images/pencil-small.svg') no-repeat center;
+  position: absolute;
+  top: 13px;
+  left: 19px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .5);
+  padding: 0;
+}
+
+.products-list__like:hover,
+.product-list__change:hover {
   background-color: #CCC;
   cursor: pointer;
 }
@@ -139,8 +154,9 @@
 }
 
 .last-cost {
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
+  text-decoration: line-through;
 }
 
 .products-list__add-btn {
@@ -239,7 +255,7 @@
 .wide-list__product-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -270,6 +286,7 @@
 .wide-list__description {
   display: inline-block;
   height: 80px;
+  overflow: hidden;
   font-size: 16px;
   line-height: 20px;
 }

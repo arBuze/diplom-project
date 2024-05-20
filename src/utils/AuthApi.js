@@ -31,6 +31,7 @@ class AuthApi {
   authorize({ email, phone, password }) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         email,

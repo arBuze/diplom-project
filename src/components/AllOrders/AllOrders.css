@@ -1,0 +1,109 @@
+.all-orders__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 10px 0 25px;
+}
+
+.all-orders__inputs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #cddefd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 15px;
+}
+
+.all-orders__radio-container {
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.all-orders__status-text {
+  font-weight: 500;
+  margin: 0;
+}
+
+.all-orders__label {
+  position: relative;
+  font-size: 16px;
+}
+
+.all-orders__status-input {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  inset: 50% 0 0 0;
+  z-index: -1;
+}
+
+.all-orders__pseudo-radio {
+  background-color: #FFF;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+.all-orders__status-input:checked + .all-orders__pseudo-radio {
+  box-shadow: #173A7C 1px 1px 3px;
+}
+
+.all-orders__search-container {
+  width: 100%;
+  align-self: center;
+  display: flex;
+  background-color: #FFF;
+  padding-right: 3px;
+}
+
+.all-orders__search {
+  width: calc(100% - 43px);
+  border: none;
+  line-height: inherit;
+  padding: 3px;
+}
+
+.all-orders__search:focus {
+  outline: none;
+  box-shadow: 0 1px 1px #000;
+}
+
+.all-orders__search-cancel,
+.all-orders__search-btn {
+  width: 20px;
+  height: 30px;
+  border: none;
+  background-color: #FFF;
+  padding: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.all-orders__search-cancel:not(:disabled) {
+  background: #FFF url(../../images/close-btn.svg) no-repeat center/contain;
+}
+
+.all-orders__search-btn {
+  background: #FFF url(../../images/search-black.svg) no-repeat center/contain;
+}
+
+.all-orders__search-cancel:not(:disabled):hover,
+.all-orders__search-btn:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.all-orders__orders-list {
+/*   display: grid;
+  grid-template-columns: repeat(2, 1fr); */
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0;
+}

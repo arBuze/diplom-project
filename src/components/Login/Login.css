@@ -21,7 +21,7 @@
 }
 
 .login__container {
-  width: 420px;
+  width: 460px;
   background-color: #FFF;
   border-radius: 15px;
   box-sizing: border-box;
@@ -93,8 +93,7 @@
   display: inline-block;
   font-size: 12px;
   line-height: 12px;
-  color: #FFF;
-  /* color: #AB091E; */
+  color: #AB091E;
 }
 
 .login__auth-error  {

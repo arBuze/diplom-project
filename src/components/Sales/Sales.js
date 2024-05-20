@@ -1,13 +1,14 @@
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './Sales.css';
 import comp from '../../images/giorgio-trovato.jpg';
+import vcard from '../../images/daniel-hatcher-zPHftoPajis-unsplash.jpg';
 import { Link } from 'react-router-dom';
 
-export default function Sales({ sales }) {
+export default function Sales({ sales, pathname }) {
   return(
     <section className="sales">
       <h2 className="sales__title">Акции</h2>
-      <Breadcrumps />
+      {!pathname.includes('admin') && <Breadcrumps />}
       <div className="sales__container">
         <div className="sales__additives">
           <label className="sales__label">
@@ -26,21 +27,25 @@ export default function Sales({ sales }) {
             <input className='sales__radio' type='radio' name='time' id="over" />
             <span className="sales__pseudo-radio">Скоро закончатся</span>
           </label>
+          { pathname.includes('admin') && <button type="button" className="sales__add-btn">Добавить новую акцию</button> }
         </div>
         <ul className="sales__list">
           <li className="sales__item">
-            <img className="sales__image" src={comp} alt='' />
+            <img className="sales__image" src={vcard} alt='' />
             <div className="sales__info">
-              <Link to='/sales/1' className="sales__name">Скидки на корпуса Helix</Link>
-              <span className="sales__duration">с 12 марта по 12 апреля 2024</span>
-              <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
+              <Link to='/sales/1' className="sales__name">Скидки на видеокарты MSI</Link>
+              <span className="sales__duration">с 12 мая по 2 июня 2024</span>
+              { pathname.includes('admin') ?
+                <Link to='/admin/sales/1' className="sales__link">Изменить</Link>
+                : <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
+              }
             </div>
           </li>
           <li className="sales__item">
             <img className="sales__image" src={comp} alt='' />
             <div className="sales__info">
-              <p className="sales__name">Скидки на корпуса Helix</p>
-              <span className="sales__duration">с 12 марта по 12 апреля 2024</span>
+              <p className="sales__name">Скидки на корпуса DEEPCOOL</p>
+              <span className="sales__duration">с 5 марта по 19 марта 2024</span>
               <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
             </div>
           </li>

@@ -1,0 +1,35 @@
+.feed__list {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feed__item {
+  padding: 10px 15px;
+  border: 1px solid #000;
+}
+
+.feed__item-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.feed__ok-btn,
+.feed__delete-btn {
+  border: none;
+  padding: 5px 8px;
+  font-size: 18px;
+}
+
+.feed__ok-btn {
+  background-color: #0ba087;
+  color: #FFF;
+  margin-right: 8px;
+}
+
+.feed__delete-btn {
+  background-color: #FFBDBD;
+}

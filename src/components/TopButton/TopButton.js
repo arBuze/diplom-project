@@ -10,6 +10,9 @@ export default function TopButton({ scroll }) {
   }
 
   return(
-    <button className={`top-button ${scroll <= 250 ? 'hidden' : ''}`} type="button" onClick={scrollToTop} />
+    <div className='cont'>
+      <button className={`top-button ${scroll <= 250 ? 'hidden' : ''}`} type="button" onClick={scrollToTop} />
+      <button className="top-button btn" />
+    </div>
   );
 };

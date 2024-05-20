@@ -7,6 +7,10 @@
   width: 60%;
 }
 
+.search-form_type_admin {
+  
+}
+
 @media (min-width: 1440px) {
   .search-form_type_header {
     width: 420px;

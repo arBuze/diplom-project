@@ -1,17 +1,23 @@
 .top-button {
   position: fixed;
-  bottom: 20px;
+  bottom: 74px;
   right: 20px;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #FF9B9B url(../../images/arrow-up.svg) no-repeat center;
+  background: #9ba5ff url(../../images/arrow-up.svg) no-repeat center;
   border: none;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
 }
 
 .top-button:hover {
   cursor: pointer;
+}
+
+.btn {
+  right: 20px;
+  bottom: 20px;
+  background: #6976ee url(../../images/fi-sr-comments.svg) no-repeat center;
 }
 
 .hidden {

@@ -131,6 +131,11 @@
   margin: 20px 0 20px auto;
 }
 
+.repair__photo-list_type_product {
+  width: 100%;
+  margin: 15px 0;
+}
+
 .repair__photo-item {
   width: 160px;
   height: 160px;

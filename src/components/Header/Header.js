@@ -27,10 +27,11 @@ export default function Header({ width, pathname, cart, faves, onSearch, isLogge
 
   return(
     <header className="header">
-      <div className="header__container">
+      { !pathname.includes('admin') ?
+        <div className="header__container">
         { width < 1440 &&
           <div className="header__top">
-            <Navigation />
+            <Navigation pathname={pathname} />
           </div>
         }
         <div className="header__bottom">
@@ -45,7 +46,7 @@ export default function Header({ width, pathname, cart, faves, onSearch, isLogge
             width < 1440
             ? <SearchForm additional="search-form_type_header" onSearch={onSearch}
                 pathname={pathname} />
-            : <Navigation />
+            : <Navigation pathname={pathname} />
           }
           <div className="header__profile-buttons">
             { width >= 1440 &&
@@ -65,10 +66,13 @@ export default function Header({ width, pathname, cart, faves, onSearch, isLogge
             </div>
           </div>
         </div>
-
-
-
       </div>
+      :
+      <div className="header__container header__container_admin">
+        <Navigation pathname={pathname} />
+        <SearchForm additional="search-form_type_admin" onSearch={onSearch} />
+      </div>
+    }
     </header>
   );
 };

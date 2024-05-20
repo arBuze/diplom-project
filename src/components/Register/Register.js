@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { isEmail, isMobilePhone } from 'validator';
 
-export default function Register({ onAuth }) {
+export default function Register({ onAuth, navigate }) {
+  const [checked, setChecked] = useState(false);
   const { values, handleChange } = useFormValidation();
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -16,21 +17,22 @@ export default function Register({ onAuth }) {
     handleChange(e);
     setErrors({
       ...errors,
-      [e.name]: '',
+      [e.target.name]: '',
     });
+    setIsValid(true);
 
-    if (e.value === '') {
+    if (e.target.value === '') {
       setErrors({
         ...errors,
-        [e.name]: 'Поле не может быть пустым',
+        [e.target.name]: 'Поле не может быть пустым',
       });
-    } else if (e.name === 'login') {
-      const isValidInput = isEmail(e.value) || isMobilePhone(e.value, ['ru-RU']);
+    } else if (e.target.name === 'login') {
+      const isValidInput = isEmail(e.target.value) || isMobilePhone(e.target.value, ['ru-RU']);
       if (!isValidInput) {
         setIsValid(false);
         setErrors({
           ...errors,
-          [e.name]: 'E-mail или телефон указан неверно',
+          [e.target.name]: 'E-mail или телефон указан неверно',
         });
       }
     }
@@ -39,6 +41,7 @@ export default function Register({ onAuth }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    console.log(values);
     if (!values.login || !values.password) {
       return;
     }
@@ -52,6 +55,7 @@ export default function Register({ onAuth }) {
         })
         .then((user) => {
           onAuth(user);
+          navigate('/');
         })
         .catch((err) => {
           const errorText = err === ERROR_CODES.conflict ? ERROR_TEXTS.sameLoginError : ERROR_TEXTS.registerError;
@@ -61,12 +65,14 @@ export default function Register({ onAuth }) {
           });
         });
     } else {
-      auth.register({phone: login, password})
+      const number = login.includes('+7') ? login.slice(2,) : login.slice(1,);
+      auth.register({phone: number, password})
         .then((res) => {
-          return auth.authorize({phone: login, password})
+          return auth.authorize({phone: number, password})
         })
         .then((data) => {
           onAuth(data);
+          navigate('/');
         })
         .catch((err) => {
           const errorText = err === ERROR_CODES.conflict ? ERROR_TEXTS.sameLoginError : ERROR_TEXTS.registerError;
@@ -76,6 +82,10 @@ export default function Register({ onAuth }) {
           });
         });
     }
+  }
+
+  function handleCheck() {
+    setChecked(!checked);
   }
 
   return(
@@ -99,9 +109,12 @@ export default function Register({ onAuth }) {
             </div>
           </label>
           <span className="login__input-error">{errors?.password}</span>
-
+          <label className="register__check-label">
+            <input type="checkbox" className="register__check" checked={checked} onChange={handleCheck} />
+            Я согласен(-на) на обработку персональных данных
+          </label>
           <span className="login__auth-error">{errors?.register}</span>
-          <button className="login__auth-btn" type="submit" disabled={!isValid}>Зарегистрироваться</button>
+          <button className="login__auth-btn" type="submit" disabled={!isValid || !checked}>Зарегистрироваться</button>
           <p className="login__question">
             Уже зарегистрированы? <Link to='/signin' className="login__link">Войти</Link>
           </p>

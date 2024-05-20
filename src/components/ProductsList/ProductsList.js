@@ -108,7 +108,7 @@ export default function ProductsList({ cards, width, display, isReversed, pathna
         <ul className={`products__list ${display === 'grid' ? 'products__list_type_grid' : 'products__list_type_list'}`}>
         {
           cardsVisible.map((item) => {
-            return (<ProductCard key={item.id} card={item} type={display} pathname={pathname}
+            return (<ProductCard key={pathname === '/cart' ? item.productId : item._id} card={item} type={display} pathname={pathname}
               faves={faves} cart={cart}
               onLike={onLike} onDislike={onDislike}
               onCartAdd={onCartAdd} onCartRemove={onCartRemove}

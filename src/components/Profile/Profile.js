@@ -13,7 +13,7 @@ export default function Profile({ children, title, pathname }) {
   return(
     <section className="profile">
       <h2 className="profile__title">{title}</h2>
-      <Breadcrumps productName={'Заказ №' + pathname.slice(pathname.lastIndexOf('/') + 1,)} />
+      <Breadcrumps productName={'Заказ' } /> {/* + pathname.slice(pathname.lastIndexOf('/') + 1,) */}
       <div className="profile__container">
         <div className="profile__links-container">
           <ul className="profile__links">

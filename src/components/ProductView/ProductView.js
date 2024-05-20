@@ -2,18 +2,19 @@ import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import './ProductView.css';
 import photo from '../../images/user.svg';
 import { useEffect, useState } from 'react';
+import { BASE_PROD_URL } from '../../utils/constants';
 
 export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove }) {
   const [currentCard, setCurrentCard] = useState({});
   const ratingStars = [1, 2, 3, 4, 5];
-  const starsColored = Math.round(currentCard?.rating);
-  const isInCart = cart.find((item) => item.id === currentCard.id);
+  const starsColored = Math.round(4.4);
+  const isInCart = cart.find((item) => item.id === currentCard?._id);
 
   useEffect(() => {
     const id = pathname.slice(pathname.lastIndexOf('/') + 1,);
-    const card = cards.find((item) => item.id === Number(id));
+    const card = cards.find((item) => item._id === id);
     setCurrentCard(card);
-  }, [])
+  }, [cards, pathname])
 
   function onLinkClick(e) {
     e.preventDefault();
@@ -24,15 +25,15 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
     let isFave = e.target.classList.contains('liked');
 
     if (isFave) {
-      onDislike(currentCard.id);
+      onDislike(currentCard._id);
       return;
     }
-    onLike(currentCard.id);
+    onLike(currentCard._id);
   }
 
   function handleCartClick() {
     if (isInCart) {
-      onCartRemove(currentCard.id);
+      onCartRemove(currentCard._id);
       return;
     }
     onCartAdd(currentCard);
@@ -40,23 +41,24 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
 
   return(
     <section className="product-view">
-      <Breadcrumps productName={currentCard?.productName} />
+      <Breadcrumps productName={currentCard?.name} />
       <div className="product-view__container">
         <div className="product-view__images-container">
           <div className="product-view__image-container">
-            <img className="product-view__image" src={currentCard?.image} alt="" />
+            <img className="product-view__image" crossOrigin="true" src={BASE_PROD_URL + 'images_1715782692643_388418672.jpg'} alt="" />
             <button className="product-view__arrow product-view__arrow_left" type="button" />
             <button className="product-view__arrow product-view__arrow_right" type="button" />
           </div>
           <div className="product-view__all-images">
-            <img className="product-view__small-image" src={currentCard?.image} alt="" />
-            <img className="product-view__small-image" src={currentCard?.image} alt="" />
-            <img className="product-view__small-image" src={currentCard?.image} alt="" />
-            <img className="product-view__small-image" src={currentCard?.image} alt="" />
+            {
+              currentCard?.images?.map((img) =>
+                <img className="product-view__small-image" crossOrigin="true" src={BASE_PROD_URL + img} alt="" />
+              )
+            }
           </div>
         </div>
         <div className="product-view__info-container">
-          <h2 className="product-view__title">{currentCard?.productName}</h2>
+          <h2 className="product-view__title">{currentCard?.name}</h2>
           <div className="product-view__rating-info">
             <ul className="products-list__rating products-list__rating_place_product">
               {
@@ -65,12 +67,12 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
                 )
               }
             </ul>
-            <span className="product-view__rating-value">{currentCard?.rating?.toFixed(1)}</span>
+            <span className="product-view__rating-value">{/* currentCard?.rating?.toFixed(1) */4.4}</span>
             <a className="product-view__feedback-link" href="#feedback" onClick={onLinkClick}>Отзывы:
               {/* <span className="product-view__feedback-number"> */} 3{/* </span> */}
             </a>
           </div>
-          <div className="product-view__colors">
+          {/* <div className="product-view__colors">
             <span className="product-view__name">Цвета:</span>
             <div className="product-view__colors-container">
               <label className="product-view__color product-view__color_active">
@@ -86,9 +88,9 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
                 <span className="product-view__pseudo-input">красный</span>
               </label>
             </div>
-          </div>
+          </div> */}
           <div className="product-view__cost-info">
-            <span className="product-view__price">{currentCard?.productCost} &#8381;</span>
+            <span className="product-view__price">{currentCard?.price} &#8381;</span>
             <div className="product-view__add-form">
               <button className={`product-view__add-btn ${isInCart ? 'view-added' : ''}`} type="button"
                 onClick={handleCartClick}>
@@ -100,17 +102,17 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
               <button className="products-list__increase-btn" type="submit">+</button>
               </div> */}
             </div>
-            <button className={`product-view__like-btn ${faves.find((item) => item === currentCard.id) ? 'liked' : ''}`} type="button"
+            <button className={`product-view__like-btn ${faves.find((item) => item === currentCard?._id) ? 'liked' : ''}`} type="button"
               onClick={handleLikeClick} />
           </div>
           <div className="product-view__other-info">
-            <span className="product-view__code">Артикул: 123123</span>
-            <span className="product-view__in-stock">в наличии</span>
+            <span className="product-view__code">Артикул: {currentCard?.articule}</span>
+            <span className="product-view__in-stock">{currentCard?.quantity > 0 ? '' : 'нет '}в наличии</span>
           </div>
           <div className="product-view__description">
             <h3 className="product-view__description-title">Описание</h3>
             {
-              currentCard?.description?.map((item) =>
+              currentCard?.description?.split('\n').map((item) =>
                 <p className="product-view__paragraph">
                   {item}
                 </p>
@@ -147,34 +149,36 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
               )
             }
           </ul>
-          <span className="product-view__feed-rating">{currentCard?.rating?.toFixed(1)} / 5.0</span>
+          <span className="product-view__feed-rating">{/* currentCard?.rating?.toFixed(1) */4.4} / 5.0</span>
           <button className="product-view__add-feedback-btn" type="button">оставить отзыв</button>
         </div>
         <ul className="product-view__feed-list" id="feedback">
           <li className="product-view__feed-item">
             <div className="product-view__user-info">
-              <img className="product-view__user-photo" src={photo} alt='аватар' />
+              <img className="product-view__user-photo" crossOrigin="true" src={photo} alt='аватар' />
               <span className="product-view__user-name">Иванов И.</span>
               <ul className="products-list__rating products-list__rating_place_product">
                 <li className="products-list__star products-list__star_full"></li>
                 <li className="products-list__star products-list__star_full"></li>
                 <li className="products-list__star products-list__star_full"></li>
                 <li className="products-list__star products-list__star_full"></li>
-                <li className="products-list__star products-list__star_full"></li>
+                <li className="products-list__star "></li>
              </ul>
-             <span className="product-view__feed-data">10.02.24 13:02</span>
+             <span className="product-view__feed-data">10.05.24 13:02</span>
             </div>
             <div className="product-view__comment-container">
               <span className="product-view__part-name">Достоинства</span>
-              <p className="product-view__comment">Очень красивый, прочный, легкий, мощный, стильный, цвет приятный, хорошая подстветка, гладкий, все помещается, хорошее качество</p>
+              <p className="product-view__comment">
+                Подойдет под длинную видеокарту, есть место для кабель менеджмента
+              </p>
             </div>
             <div className="product-view__comment-container">
               <span className="product-view__part-name">Недостатки</span>
-              <p className="product-view__comment">Очень красивый, прочный, легкий, мощный, стильный, цвет приятный, хорошая подстветка, гладкий, все помещается, хорошее качество</p>
+              <p className="product-view__comment">Очень тонкий металл. Нет USB 3.0</p>
             </div>
             <div className="product-view__comment-container">
               <span className="product-view__part-name">Комментарий</span>
-              <p className="product-view__comment">Очень красивый, прочный, легкий, мощный, стильный, цвет приятный, хорошая подстветка, гладкий, все помещается, хорошее качество</p>
+              <p className="product-view__comment">Передняя панель фактурная - не маркая и не глянцевая, возле кнопок глянцевая вставка, кнопки и разъемы рабочие</p>
             </div>
             <div className="product-view__feed-rating">
               <button className="product-view__up-vote" type="button" />

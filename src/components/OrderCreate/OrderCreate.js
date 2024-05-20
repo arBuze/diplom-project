@@ -4,12 +4,13 @@ import './OrderCreate.css';
 import { Link, useNavigate } from 'react-router-dom';
 /* import image from '../../images/computer.jpg'; */
 import { CurrentUserContext } from '../../contexts/CurrentUserContexts';
-import { phoneTransform, wordEnd } from '../../utils/constants';
+import { BASE_PROD_URL, phoneTransform, wordEnd } from '../../utils/constants';
 
 export default function OrderCreate({ cards, onOrderCreate }) {
   const currentUser = useContext(CurrentUserContext);
   const placeholderNumber = '+7 000 000-00-00';
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({ payment: 'СБП' });
+  const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
   /* useEffect(() => {
@@ -21,7 +22,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
   useEffect(() => {
     const { phone, email } = currentUser;
     if (phone) {
-      const number = '+7 ' + phone.slice(0,3) + '' + phone.slice(3,6) + '-' + phone.slice(6,8) + '-' + phone.slice(8,);
+      const number = '+7 ' + phone.slice(0,3) + ' ' + phone.slice(3,6) + '-' + phone.slice(6,8) + '-' + phone.slice(8,);
       setValues({
         ...values,
         phone: number,
@@ -63,16 +64,20 @@ export default function OrderCreate({ cards, onOrderCreate }) {
   }
 
   function handleSubmit() {
-    const { phone, email } = values;
+    const { phone, email, payment } = values;
 
     if (!phone || phone.length !== 16) {
       return;
     }
 
-    phone.replace(/-/g, '');
+    /* phone.replace(/-/g, '');
     phone.replace(/\s/g, '');
-    console.log(phone, phone.split(4,));
-    onOrderCreate(phone.split(4,), email);
+    console.log(phone, phone.slice(3,6) + phone.slice(7,10) + phone.slice(11,13) + phone.slice(13,)); */
+    onOrderCreate(phone.slice(3,6) + phone.slice(7,10) + phone.slice(11,13) + phone.slice(13,), email, payment);
+  }
+
+  function handleCheck() {
+    setChecked(!checked);
   }
 
   return(
@@ -117,6 +122,19 @@ export default function OrderCreate({ cards, onOrderCreate }) {
               <input type="text" className="order-create__data-input" name='lastName'></input>
             </label> */}
           </div>
+          <span className="order-view__list-title">Способ оплаты</span>
+          <div className="order-create__pay-container">
+            <label className="order-create__pay-label">
+              <input type="radio" className="order-create__pay-input" name='payment'
+                value={'СБП'} onChange={handleChange} checked={values.payment === 'СБП'} />
+              <span className="order-create__pseudo-pay-input">Онлайн через СБП</span>
+            </label>
+            <label className="order-create__pay-label">
+              <input type="radio" className="order-create__pay-input" name='payment'
+                value={'при получении'} onChange={handleChange} checked={values.payment === 'при получении'} />
+              <span className="order-create__pseudo-pay-input">При получении</span>
+            </label>
+          </div>
           <span className="order-view__list-title">Содержимое заказа</span>
           <table className="order-view__table">
             <thead className="order-view__head">
@@ -132,7 +150,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
                   <tr className="order-view__row">
                     <td className="order-view__data">
                       <Link to='/' className="order-view__link order-view__link_type_image">
-                        <img className="order-view__image" src={item.image} alt='' />
+                        <img className="order-view__image" crossOrigin='true' src={BASE_PROD_URL + item.image} alt='' />
                       </Link>
                       <Link to='/' className="order-view__link order-view__link_type_name">
                         <span className="order-view__name">{item.productName}</span>
@@ -152,7 +170,11 @@ export default function OrderCreate({ cards, onOrderCreate }) {
           </table>
         </div>
         <div className="cart__form">
-          <button className="cart__form-btn" onClick={handleSubmit}>оформить заказ</button>
+          <button className="cart__form-btn" disabled={!checked} onClick={handleSubmit}>оформить заказ</button>
+          <label className="order-create__check-label">
+            <input type="checkbox" className="order-create__check" checked={checked} onChange={handleCheck} />
+            Я согласен(-на) на обработку персональных данных
+          </label>
           <div className="cart__form-info">
             <span className="cart__form-all">Итого:</span>
             <div className="cart__sale-info">

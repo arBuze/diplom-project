@@ -14,6 +14,11 @@
   margin: 0 auto;
 }
 
+.header__container_admin {
+  display: flex;
+  align-items: center;
+}
+
 .header__bottom {
   width: 100%;
   display: flex;

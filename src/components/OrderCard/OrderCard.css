@@ -1,0 +1,73 @@
+.all-order__item {
+  /* width: 50%; */
+  /* box-shadow: 2px 2px 8px #8d8d8d; */
+  border: 1px solid #8d8d8d;
+  box-sizing: border-box;
+  flex-grow: 1;
+  padding: 10px 15px;
+}
+
+.all-order__item_more {
+  width: 100%;
+}
+
+.all-order__title {
+  font-size: 18px;
+  line-height: 22px;
+  margin: 0 0 8px;
+}
+
+.all-order__bold {
+  font-weight: 500;
+}
+
+.all-order__change-btn {
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: transparent url(../../images/pencil.svg) no-repeat center/cover;
+  padding: 0;
+  margin-left: 6px;
+  transition: opacity .2s ease-in-out;
+}
+
+.all-order__change-btn:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.all-orders__contact-title {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.all-order__contacts {
+  display: flex;
+  gap: 15px;
+}
+
+.all-order__contact {
+  font-weight: 400;
+  margin-top: 5px;
+}
+
+.all-order__more-btn {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2f1674;
+  border: none;
+  border-bottom: 1px solid #2f1674;
+  background-color: #FFF;
+  padding: 0 0 2px;
+  margin: 10px 0 0;
+}
+
+.all-order__more-btn:hover {
+  cursor: pointer;
+}
+
+.all-order__more-btn_more {
+  margin-bottom: 10px;
+}

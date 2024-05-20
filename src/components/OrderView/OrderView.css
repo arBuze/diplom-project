@@ -1,12 +1,25 @@
 .order-view {
+  position: relative;
   padding-bottom: 10px;
 }
 
 .order-view__title {
+  width: 100%;
+  display: inline-block;
   font-size: 20px;
   line-height: 24px;
   font-weight: 700;
   margin: 0 0 15px;
+}
+
+.order-view__cancel-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: none;
+  background-color: #000;
+  color: #FFF;
+  padding: 5px;
 }
 
 .order-view__cost {

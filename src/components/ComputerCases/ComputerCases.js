@@ -14,17 +14,17 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
   const [priceFilter, setPriceFilter] = useState(null);
   const [checks, setChecks] = useState([]);
   const [ratingFilter, setRatingFilter] = useState(false);
-  const isShown = pathname === '/search' || pathname === '/oper/products';
+  const isShown = pathname === '/search' || pathname === '/admin/products';
 
   const limits = cards.length !== 0 && cards.reduce(({min, max}, item) => {
-    if (min > item.productCost) {
-      min = item.productCost;
+    if (min > item.price) {
+      min = item.price;
     }
-    if (max < item.productCost) {
-      max = item.productCost;
+    if (max < item.price) {
+      max = item.price;
     }
     return({ min, max });
-  }, { min: cards[0].productCost, max: cards[0].productCost });
+  }, { min: cards[0].price, max: cards[0].price });
 
   /* достаем фильтры из локального хранилища */
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
         const el = arr.find((elem) => elem.name === item.name);
         if (el) {
           arr[el.id].value.indexOf(item.value) === -1 && arr[el.id].value.push(item.value);
-        } else {
+        } else if (!['длина', 'ширина', 'высота'].includes(item.name.toLowerCase())) {
           arr.push({
             id: arr.length,
             name: item.name,
@@ -95,7 +95,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
 
     if (priceFilter !== null) {
       console.log('111', filteredCards);
-      filteredCards = filteredCards.filter((item) => item.productCost >= priceFilter.min && item.productCost <= priceFilter.max);
+      filteredCards = filteredCards.filter((item) => item.price >= priceFilter.min && item.price <= priceFilter.max);
     }
     if (checks && checks.length !== 0) {
       console.log('222', filteredCards);

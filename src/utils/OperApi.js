@@ -12,11 +12,64 @@ class OperApi {
     return Promise.reject(res.status);
   }
 
+  authorize({ login, password }) {
+    return fetch(`${this._baseUrl}/admin/signin`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        login,
+        password,
+      }),
+    })
+      .then((res) => this._getResponseData(res))
+      .then((data) => {
+        if (data) {
+          console.log(data);
+          localStorage.setItem('adminId', data.admin._id);
+          return data;
+        }
+      });
+  }
+
+  checkToken() {
+    return fetch(`${this._baseUrl}/admin/me`, {
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
+  getAdminData() {
+    return fetch(`${this._baseUrl}/admin/me`, {
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
+  getOrders() {
+    return fetch(`${this._baseUrl}/orders`, {
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
+  getApplications() {
+    return fetch(`${this._baseUrl}/repair`, {
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
   /* добавление нового товара */
-  createProduct(name, description, price, category, chars, images) {
+  createProduct(name, description, price, category, chars, images, articule, quantity) {
     return fetch(`${this._baseUrl}/products`, {
       method: 'POST',
       credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         name,
         category,
@@ -24,16 +77,19 @@ class OperApi {
         characteristics: chars,
         price,
         description,
+        articule,
+        quantity,
       }),
     })
       .then((res) => this._getResponseData(res));
   }
 
   /* изменение товара */
-  updateProduct(id, name, description, price, category, chars, images) {
+  updateProduct(id, name, description, price, category, chars, images, articule, quantity) {
     return fetch(`${this._baseUrl}/products/${id}`, {
       method: 'PATCH',
       credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         name,
         category,
@@ -41,6 +97,8 @@ class OperApi {
         characteristics: chars,
         price,
         description,
+        articule,
+        quantity,
       }),
     })
       .then((res) => this._getResponseData(res));
@@ -50,6 +108,7 @@ class OperApi {
     return fetch(`${this._baseUrl}/products/${id}`, {
       method: 'DELETE',
       credentials: 'include',
+      headers: this._headers,
     })
       .then((res) => this._getResponseData(res));
   }
@@ -69,6 +128,18 @@ class OperApi {
       method: 'DELETE',
       headers: this._headers,
       body: JSON.stringify({ fileName }),
+    })
+      .then(res => this._getResponseData(res));
+  }
+
+  updateOrderStatus(status, orderId) {
+    return fetch(`${this._baseUrl}/orders/${orderId}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        status,
+      }),
     })
       .then(res => this._getResponseData(res));
   }

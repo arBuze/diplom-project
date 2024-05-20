@@ -1,3 +1,210 @@
+.product-upd__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-upd__form-title {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: 700;
+  margin: 15px 0 10px;
+}
+
+.product-upd__label {
+  display: flex;
+  align-items: center;
+}
+
+.product-upd__label_desc {
+  align-items: flex-start;
+}
+
+.product-upd__input {
+  flex-grow: 1;
+  padding: 5px;
+}
+
+.product-upd__field-name {
+  font-size: 18px;
+  line-height: 22px;
+  margin-right: 7px;
+}
+
+.product-upd__rubles {
+  margin-left: 5px;
+}
+
+.product-upd__error {
+  display: inline-block;
+  height: 14px;
+  font-size: 14px;
+  color: #AB091E;
+}
+
+.product-upd__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-upd__categories {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0 25px;
+}
+
+.product-upd__label_radio {
+  position: relative;
+}
+
+.product-upd__input_radio {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  inset: 50% 0 0 0;
+}
+
+.product-upd__pseudo-radio {
+  background-color: #FFF;
+  border: 1px solid #b597ff;
+  border-radius: 10px;
+  padding: 5px 7px;
+}
+
+.product-upd__pseudo-radio:hover {
+  cursor: pointer;
+}
+
+.product-upd__input_radio:checked + .product-upd__pseudo-radio {
+  background-color: #ebe3ff;
+  border: 1px solid #ebe3ff;
+}
+
 .product-upd__input_description {
+  height: 200px;
+  line-height: 22px;
   resize: none;
+}
+
+.product-upd__chars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+.product-upd__char-item {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+
+.product-upd__char-container {
+  display: flex;
+  flex-grow: 1;
+  gap: 10px;
+}
+
+.product-upd__input-btn-container {
+  flex-grow: 1;
+}
+
+.product-upd__input_char {
+  line-height: 8px;
+  margin-left: 5px;
+}
+
+.product-upd__delete-char-btn {
+  width: 34px;
+  height: 34px;
+  background: transparent url(../../images/trash.svg) no-repeat center;
+  border: none;
+  padding: none;
+  transition: opacity .2s ease-in-out;
+}
+
+.product-upd__delete-char-btn:hover,
+.product-upd__add-btn:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.product-upd__title {
+  display: none;
+  width: min-content;
+  position: absolute;
+  top: -40px;
+  right: -45px;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  outline: 1px solid #000;
+  background-color: #FFF;
+  padding: 5px;
+}
+
+.product-upd__delete-char-btn:hover + .product-upd__title {
+  display: block;
+}
+
+.product-upd__add-btn {
+  background-color: #e4dafd;
+  border: none;
+  padding: 6px;
+  margin-bottom: 15px;
+  transition: opacity .2s ease-in-out;
+}
+
+.repair__photo-list_type_product {
+  margin-bottom: 20px;
+}
+
+.product-upd__btn-container {
+  display: flex;
+  gap: 15px;
+
+}
+
+.product-upd__create-btn,
+.product-upd__reset-btn,
+.product-upd__save-btn,
+.product-upd__delete-btn {
+  font-size: 18px;
+  line-height: 22px;
+  border: none;
+  padding: 8px 10px;
+  transition: opacity .2s ease-in-out;
+}
+
+.product-upd__create-btn:not(:disabled):hover,
+.product-upd__reset-btn:hover,
+.product-upd__save-btn:not(:disabled):hover,
+.product-upd__delete-btn:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.product-upd__create-btn,
+.product-upd__save-btn {
+  background-color: #b597ff;
+}
+
+.product-upd__reset-btn {
+  background-color: #cecece;
+}
+
+.product-upd__delete-btn {
+  background-color: #ecb5bc;
+}
+
+.product-upd__create-btn:disabled,
+.product-upd__save-btn:disabled {
+  color: #000;
+  background-color: #979797;
 }

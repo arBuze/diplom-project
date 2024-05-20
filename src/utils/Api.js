@@ -23,20 +23,6 @@ class Api {
       });
   }
 
-  /* создание пользователя */
- /*  createUser(email, phone, password) {
-    return fetch(`${this._baseUrl}/signup`, {
-      method: 'POST',
-      headers: this._headers,
-      body: {
-        email,
-        phone,
-        password,
-      },
-    })
-      .then(res => this._getResponseData(res));
-  } */
-
   /* получение данных пользователя */
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
@@ -98,17 +84,17 @@ class Api {
 
   /* добавление в корзину */
   addToCart(card) {
-    const { id, category, image, productName, productCost } = card; /* позже будет images[0] */
+    const { _id, category, images, name, price } = card;
     return fetch(`${this._baseUrl}/users/me/cart`, {
       method: 'PATCH',
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
-        productId: id,
+        productId: _id,
         category,
-        image: image,
-        productName,
-        productCost,
+        image: images[0],
+        productName: name,
+        productCost: price,
         quantity: 1,
       })
     })
@@ -127,11 +113,14 @@ class Api {
   }
 
   /* удаление товара из корзины */
-  deleteFromCart(cardId) {
-    return fetch(`${this._baseUrl}/users/me/cart/${cardId}`, {
+  deleteFromCart(card) {
+    return fetch(`${this._baseUrl}/users/me/cart/${card.productId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: this._headers,
+      body: JSON.stringify({
+        card,
+      }),
     })
       .then(res => this._getResponseData(res));
   }
@@ -148,7 +137,7 @@ class Api {
 
   /* получение товаров пользователя */
   getUserOrders() {
-    return fetch(`${this._baseUrl}/orders`, {
+    return fetch(`${this._baseUrl}/orders/me`, {
       credentials: 'include',
       headers: this._headers,
     })
@@ -156,7 +145,7 @@ class Api {
   }
 
   /* создание заказа */
-  createOrder(cart, phone, email, isGuest) {
+  createOrder(cart, phone, email, isGuest, payment) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
       credentials: 'include',
@@ -168,7 +157,8 @@ class Api {
           phone,
           email,
         },
-        status: 'в сборке',
+        status: payment === 'СБП' ? 'ждет оплаты' : 'оплачен',
+        payment,
       }),
     })
       .then(res => this._getResponseData(res));
@@ -194,6 +184,7 @@ class Api {
         contact,
         /* isGuest, */
         fileNames,
+        status: false,
       }),
     })
       .then(res => this._getResponseData(res));

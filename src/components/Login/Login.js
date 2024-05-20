@@ -6,7 +6,7 @@ import { isEmail, isMobilePhone } from 'validator';
 import { auth } from '../../utils/AuthApi';
 import { ERROR_CODES, ERROR_TEXTS } from '../../utils/constants';
 
-export default function Login({ onAuth }) {
+export default function Login({ onAuth, navigate }) {
   const { values, handleChange } = useFormValidation();
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -15,21 +15,22 @@ export default function Login({ onAuth }) {
     handleChange(e);
     setErrors({
       ...errors,
-      [e.name]: '',
+      [e.target.name]: '',
     });
+    setIsValid(true);
 
-    if (e.value === '') {
+    if (e.target.value === '') {
       setErrors({
         ...errors,
-        [e.name]: 'Поле не может быть пустым',
+        [e.target.name]: 'Поле не может быть пустым',
       });
-    } else if (e.name === 'login') {
-      const isValidInput = isEmail(e.value) || isMobilePhone(e.value, ['ru-RU']);
+    } else if (e.target.name === 'login') {
+      const isValidInput = isEmail(e.target.value) || isMobilePhone(e.target.value, ['ru-RU']);
       if (!isValidInput) {
         setIsValid(false);
         setErrors({
           ...errors,
-          [e.name]: 'E-mail или телефон указан неверно',
+          [e.target.name]: 'E-mail или телефон указан неверно',
         });
       }
     }
@@ -37,7 +38,7 @@ export default function Login({ onAuth }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
+    console.log('123');
     if (!values.login || !values.password) {
       return;
     }
@@ -48,21 +49,25 @@ export default function Login({ onAuth }) {
       auth.authorize({email: login, password})
         .then((user) => {
           onAuth(user);
+          navigate('/');
         })
         .catch((err) => {
-          const errorText = err === ERROR_CODES.conflict ? ERROR_TEXTS.sameLoginError : ERROR_TEXTS.registerError;
+          const errorText = err === ERROR_CODES.conflict ? ERROR_TEXTS.sameLoginError : ERROR_TEXTS.authError;
           setErrors({
             ...errors,
-            register: errorText,
+            signin: errorText,
           });
         });
     } else {
-      auth.authorize({phone: login, password})
+      console.log('12345');
+      const number = login.includes('+7') ? login.slice(2,) : login.slice(1,);
+      auth.authorize({phone: number, password})
         .then((data) => {
           onAuth(data);
+          navigate('/');
         })
         .catch((err) => {
-          const errorText = err === ERROR_CODES.conflict ? ERROR_TEXTS.sameLoginError : ERROR_TEXTS.registerError;
+          const errorText = err === ERROR_CODES.conflict ? ERROR_TEXTS.sameLoginError : ERROR_TEXTS.authError;
           setErrors({
             ...errors,
             signin: errorText,

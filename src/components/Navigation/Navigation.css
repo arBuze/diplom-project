@@ -12,6 +12,10 @@
   margin: 0;
 }
 
+.menu__links_admin {
+  justify-content: flex-start;
+}
+
 .menu__item {
   font-size: 20px;
   line-height: 24px;
