@@ -32,7 +32,7 @@ export default function OrderCard({ order, onStatusChange }) {
       <p className="all-orders__contact-title">Контакты</p>
       <div className="all-order__contacts">
         { contacts.phone &&
-          <span className="all-order__contact">Телефон: 7 929 000-00-00</span>
+          <span className="all-order__contact">Телефон: {'+7 ' + contacts.phone.slice(0,3) + ' ' + contacts.phone.slice(3,6) + '-' + contacts.phone.slice(6,8) + '-' + contacts.phone.slice(8,)}</span>
         }
         { contacts.email &&
           <span className="all-order__contact">Email: {contacts.email}</span>

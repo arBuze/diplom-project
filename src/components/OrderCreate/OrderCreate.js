@@ -73,7 +73,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
     /* phone.replace(/-/g, '');
     phone.replace(/\s/g, '');
     console.log(phone, phone.slice(3,6) + phone.slice(7,10) + phone.slice(11,13) + phone.slice(13,)); */
-    onOrderCreate(phone.slice(3,6) + phone.slice(7,10) + phone.slice(11,13) + phone.slice(13,), email, payment);
+    onOrderCreate(phone.slice(3,6) + phone.slice(7,10) + phone.slice(11,13) + phone.slice(14,), email, payment);
   }
 
   function handleCheck() {
@@ -127,7 +127,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
             <label className="order-create__pay-label">
               <input type="radio" className="order-create__pay-input" name='payment'
                 value={'СБП'} onChange={handleChange} checked={values.payment === 'СБП'} />
-              <span className="order-create__pseudo-pay-input">Онлайн через СБП</span>
+              <span className="order-create__pseudo-pay-input">Онлайн</span>
             </label>
             <label className="order-create__pay-label">
               <input type="radio" className="order-create__pay-input" name='payment'
