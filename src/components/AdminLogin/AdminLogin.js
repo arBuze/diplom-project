@@ -7,6 +7,7 @@ import { ERROR_CODES, ERROR_TEXTS } from '../../utils/constants';
 export default function AdminLogin({ onAuth }) {
   const { values, handleChange, isValid } = useFormValidation();
   const [errors, setErrors] = useState({});
+  const [shown, setShown] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,6 +30,10 @@ export default function AdminLogin({ onAuth }) {
       });
   }
 
+  function show() {
+    setShown(!shown);
+  }
+
   return(
     <section className="login">
       <div className='login__container'>
@@ -43,9 +48,9 @@ export default function AdminLogin({ onAuth }) {
           <label className="login__label">
             Пароль
             <div className="login__input-container">
-              <input type="password" className="login__input login__input_type_password" name='password'
+              <input type={shown ? "text" : "password"} className="login__input login__input_type_password" name='password'
                 value={values?.password} onChange={handleChange} />
-              <button className="login__hide-btn" type="button" />
+              <button className={`login__hide-btn ${shown ? 'unhidden' : ''}`} type="button" onClick={show} />
             </div>
           </label>
           <span className="login__input-error">{errors?.password}</span>

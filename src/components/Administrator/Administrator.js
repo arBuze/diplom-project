@@ -9,8 +9,6 @@ import PopupStatus from '../PopupStatus/PopupStatus';
 import ProductForm from '../ProductForm/ProductForm';
 import { apir } from '../../utils/OperApi';
 import { api } from '../../utils/Api';
-
-/* import { cards, orders } from '../../utils/constants'; */
 import Header from '../Header/Header';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import TopButton from '../TopButton/TopButton';
@@ -152,6 +150,20 @@ export default function Administrator() {
     }
   }
 
+  function handleRepairStatusChange(status, id) {
+    const token = localStorage.getItem('adminId');
+
+    if (token) {
+      apir.updateRepairStatus(status, id)
+        .then((app) => {
+          setApplications(state => state.map((item) => item._id === app._id ? app : item));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+
   function handleAuth() {
     setIsAdministratorLogged(true);
     navigate('/admin/orders');
@@ -174,7 +186,7 @@ export default function Administrator() {
               } />
               <Route path='applications' element={
                 <ProtectedRoute element={AdminApps} loggedIn={isAdministratorLogged} path='/admin/signin'
-                  apps={applications} />
+                  apps={applications} onRepairStatusChange={handleRepairStatusChange} />
               } />
               <Route path='products' element={
                 <ProtectedRoute element={ComputerCases} loggedIn={isAdministratorLogged} path='/admin/signin'

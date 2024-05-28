@@ -68,6 +68,7 @@
 
 .login__input_type_password {
   width: calc(100% - 33px);
+  
 }
 
 .login__hide-btn {
@@ -78,6 +79,10 @@
   border-bottom: 1px solid #D8D8D8;
   padding: 0;
   margin-top: 5px;
+}
+
+.unhidden {
+  background: #F8F8F8 url(../../images/eye.svg) no-repeat center;
 }
 
 .login__hide-btn:hover {

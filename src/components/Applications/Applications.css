@@ -44,11 +44,27 @@
 .applications__link {
   font-size: 18px;
   color: #346CC2;
+  background-color: transparent;
+  border: none;
   text-decoration: none;
   border-bottom: 1px solid #346CC2;
   transition: opacity .2s ease-in-out;
+  padding: 0;
 }
 
 .applications__link:hover {
   opacity: .8;
+}
+
+.app__status {
+  margin: 15px 0 8px;
+}
+
+.app__desc-title {
+  margin: 0 0 8px;
+}
+
+.app__description {
+  font-size: 18px;
+  margin: 0 0 5px;
 }

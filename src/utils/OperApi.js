@@ -143,6 +143,18 @@ class OperApi {
     })
       .then(res => this._getResponseData(res));
   }
+
+  updateRepairStatus(status, repairId) {
+    return fetch(`${this._baseUrl}/repair/${repairId}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        status,
+      }),
+    })
+      .then(res => this._getResponseData(res));
+  }
 }
 
 export const apir = new OperApi({

@@ -214,12 +214,36 @@ class Api {
     return fetch(`${this._baseUrl}/sales`, {
       headers: this._headers,
     })
-      .then((res) => this._getResponseData(res))
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => this._getResponseData(res));
   }
 
+  updateProductRating(id, rating) {
+    return fetch(`${this._baseUrl}/products/${id}/rating`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        rating,
+      }),
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
+  createFeedback(id, rating, comment, name, pluses, minuses) {
+    return fetch(`${this._baseUrl}/products/${id}/feedbacks`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        rating,
+        comment,
+        name,
+        pluses,
+        minuses,
+      })
+    })
+    .then((res) => this._getResponseData(res));
+  }
 }
 
 export const api = new Api({

@@ -1,0 +1,67 @@
+.popup-feed__rating-container {
+  width: 490px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.popup-feed__rating-name {
+  font-size: 18px;
+}
+
+.rating-area {
+  display: flex;
+  gap: 3px;
+}
+
+.rating__label {
+  position: relative;
+}
+
+.rating__star {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  inset: 50% 50% 0 0;
+}
+
+.rating__pseudo-star {
+  width: 30px;
+  height: 30px;
+  display: block;
+  background: url('../../images/star-line.svg') no-repeat center/contain;
+}
+
+.rating__pseudo-star:hover {
+  cursor: pointer;
+}
+
+.full {
+  background: url('../../images/star-full.svg') no-repeat center/contain;
+}
+
+.popup-feed__label {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 10px;
+}
+
+.popup-feed__text {
+  width: 350px;
+  height: 70px;
+  resize: none;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.popup-feed__send-btn {
+  width: 100%;
+  background-color: #000;
+  color: #FFF;
+  font-size: 18px;
+  padding: 5px 0;
+  margin-top: 5px;
+}

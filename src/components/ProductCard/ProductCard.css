@@ -168,12 +168,27 @@
   /* display: none; */
 }
 
-.products-list__add-btn:hover {
+.products-list__add-btn:hover,
+.add-build:hover {
   cursor: pointer;
 }
 
 .added {
   background: #65D6AD url('../../images/shopping-cart-check.svg') no-repeat center;
+}
+
+.add-build {
+  width: 65px;
+  height: 28px;
+  border-radius: 18px;
+  border: none;
+  background: #94BFFF;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.added-build {
+  background: #65D6AD;
 }
 
 .products-list__add-multiple {

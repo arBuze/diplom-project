@@ -2,7 +2,7 @@ import { BASE_PROD_URL } from '../../utils/constants';
 import './ProductCard.css';
 import { Link } from 'react-router-dom';
 
-export default function ProductCard({ card, type = 'grid', pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick }) {
+export default function ProductCard({ card, type = 'grid', pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick, isBuild, onBuildAdd, buildProducts }) {
   const {
     name,
     images,
@@ -42,6 +42,14 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
     onChangeClick(_id);
   }
 
+  function handleAddBuild() {
+    if (buildProducts.find((item) => item._id === _id)) {
+      onBuildAdd(true, card);
+    } else {
+      onBuildAdd(false, card);
+    }
+  }
+
   return(
     type === 'grid' ?
     <li className={`products-list__card ${pathname === '/' ? 'products-list__card_type_slider' : ''}`}>
@@ -68,9 +76,17 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
         <div className="product-list__cost-info">
           <span className="products-list__cost">{category === 'video-cards' ? (price * 0.9).toFixed(0) : price} &#8381;</span>
           <span className="products-list__cost last-cost">{category === 'video-cards' && price}</span>
-          { !isForOper &&
+          { !isForOper && (isBuild && pathname.includes('catalog')) ?
             <div className="products-list__add-form">
-              <button className={`products-list__add-btn ${(!pathname.includes('admin') && cart?.find((item) => item.productId === _id)) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+              <button className={`add-build ${buildProducts?.find((item) => item._id === _id) ? 'added-build' : ''}`}
+                type="button" onClick={handleAddBuild}>{
+                  buildProducts?.find((item) => item._id === _id) ? '-' : '+'
+                }</button>
+            </div>
+            :
+            <div className="products-list__add-form">
+              <button className={`products-list__add-btn ${(!pathname.includes('admin') && cart?.find((item) => item.productId === _id)) ? 'added' : ''}`}
+                type="button" onClick={handleCartClick}></button>
             </div>
           }
         </div>
@@ -106,9 +122,17 @@ export default function ProductCard({ card, type = 'grid', pathname, onLike, onC
           <span className="wide-list__status">{quantity > 0 ? '' : 'нет '}в наличии</span>
           <span className="wide-list__cost">{price} &#8381;</span>
           <span className="wide-list__cost last-cost">{sale}</span>
-          { !isForOper &&
+          { !isForOper && (isBuild && pathname.includes('catalog')) ?
             <div className="products-list__add-form">
-              <button className={`products-list__add-btn ${(!pathname.includes('admin') && cart?.find((item) => item.productId === _id)) ? 'added' : ''}`} type="button" onClick={handleCartClick}></button>
+              <button className={`add-build ${buildProducts?.find((item) => item._id === _id) ? 'added-build' : ''}`}
+                type="button" onClick={handleAddBuild}>{
+                  buildProducts?.find((item) => item._id === _id) ? '-' : '+'
+                }</button>
+            </div>
+            :
+            <div className="products-list__add-form">
+              <button className={`products-list__add-btn ${(!pathname.includes('admin') && cart?.find((item) => item.productId === _id)) ? 'added' : ''}`}
+                type="button" onClick={handleCartClick}></button>
             </div>
           }
         </div>

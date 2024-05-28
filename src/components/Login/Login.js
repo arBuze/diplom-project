@@ -10,6 +10,7 @@ export default function Login({ onAuth, navigate }) {
   const { values, handleChange } = useFormValidation();
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
+  const [shown, setShown] = useState(false);
 
   function handleInputChange(e) {
     handleChange(e);
@@ -34,6 +35,10 @@ export default function Login({ onAuth, navigate }) {
         });
       }
     }
+  }
+
+  function show() {
+    setShown(!shown);
   }
 
   function handleSubmit(e) {
@@ -91,9 +96,9 @@ export default function Login({ onAuth, navigate }) {
           <label className="login__label">
             Пароль
             <div className="login__input-container">
-              <input type="password" className="login__input login__input_type_password" name='password'
+              <input type={shown ? "text" : "password"} className="login__input login__input_type_password" name='password'
                 value={values?.password} onChange={handleInputChange} />
-              <button className="login__hide-btn" type="button" />
+              <button className={`login__hide-btn ${shown ? 'unhidden' : ''}`} type="button" onClick={show} />
             </div>
           </label>
           <div className="login__other">

@@ -120,6 +120,69 @@
   z-index: 2;
 }
 
+.build-view {
+  height: 260px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #FFF url(../../images/gnider-tam-ge_ftrk7wDc-unsplash\ 3.jpg) no-repeat center;
+  margin-bottom: 35px;
+}
+
+.build-view__decor {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.build-view__decor_big {
+  width: 160px;
+  height: 160px;
+  top: 30px;
+  left: 240px;
+  background-color: #0080C5;
+}
+
+.build-view__decor_small {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(75, 252, 225, .3);
+  top: 130px;
+  left: 350px;
+}
+
+.build-view__comp {
+  width: 160px;
+  height: 120px;
+  right: 50px;
+  position: absolute;
+  background: transparent url(../../images/fi-ss-computer.svg) no-repeat center/contain;
+}
+
+.build-view__title {
+  display: inline-block;
+  width: 210px;
+  font-size: 30px;
+  line-height: 36px;
+  color: #FF00D6;
+  position: absolute;
+  top: 15px;
+  left: 90px;
+}
+
+.build-view__link {
+  position: absolute;
+  left: 110px;
+  bottom: 80px;
+  font-size: 26px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #FFF;
+}
+
+.build-view__text {
+  border-bottom: 1px solid #FFF;
+}
+
 .repair-view {
   width: 100%;
   display: flex;

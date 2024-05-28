@@ -49,14 +49,6 @@ export default function Sales({ sales, pathname }) {
               <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
             </div>
           </li>
-          <li className="sales__item">
-            <img className="sales__image" src={comp} alt='' />
-            <div className="sales__info">
-              <p className="sales__name">Скидки на корпуса Helix</p>
-              <span className="sales__duration">с 12 марта по 12 апреля 2024</span>
-              <Link to='/sales/1' className="sales__link">Связанные товары &rarr;</Link>
-            </div>
-          </li>
         </ul>
       </div>
     </section>

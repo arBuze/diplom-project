@@ -13,11 +13,11 @@ export default function OrderCreate({ cards, onOrderCreate }) {
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (cards.length === 0) {
       navigate('/cart');
     }
-  },[cards.length]) */
+  }, [cards.length])
 
   useEffect(() => {
     const { phone, email } = currentUser;

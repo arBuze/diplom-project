@@ -2,7 +2,7 @@ import './ProductsList.css';
 import ProductCard from '../ProductCard/ProductCard';
 import { useState, useEffect } from 'react';
 
-export default function ProductsList({ cards, width, display, isReversed, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick }) {
+export default function ProductsList({ cards, width, display, isReversed, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick, isBuild, onBuildAdd, buildProducts }) {
   const maxCards = width >= 1440 ? 24 : width >= 1280 ? 18 : width >= 768 ? 12 : 8;
   const [cardsVisible, setCardsVisible] = useState([]);
   const [numberOfCards, setNumberOfCards] = useState(0);
@@ -112,7 +112,8 @@ export default function ProductsList({ cards, width, display, isReversed, pathna
               faves={faves} cart={cart}
               onLike={onLike} onDislike={onDislike}
               onCartAdd={onCartAdd} onCartRemove={onCartRemove}
-              onChangeClick={onChangeClick} />);
+              onChangeClick={onChangeClick}
+              isBuild={isBuild} onBuildAdd={onBuildAdd} buildProducts={buildProducts} />);
           })
         }
       </ul>

@@ -29,7 +29,7 @@ export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, 
           <SearchForm onSearch={onSearch} pathname={pathname} />
         </div>
       </section>
-      <Section title='Новинки' cards={cards} pathname={pathname}
+      <Section title='Новинки' cards={cards.slice(0, 10)} pathname={pathname}
         faves={faves} cart={cart}
         onLike={onLike} onDislike={onDislike}
         onCartAdd={onCartAdd} onCartRemove={onCartRemove} />
@@ -128,10 +128,15 @@ export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, 
           </ol>
         </ul>
       </section>
-      {/* <section className="build">
-        <h2 className="build__title"></h2>
-        <a className="build__link" href="#"></a>
-      </section> */}
+      <section className="build-view">
+        <div className="build-view__decor build-view__decor_big"></div>
+        <div className="build-view__decor build-view__decor_small"></div>
+        <div className="build-view__comp"></div>
+        <h2 className="build-view__title">Собрать свой компьютер</h2>
+        <Link to="/build" className="build-view__link">
+          <span className="build-view__text">вперед</span><span className="build-view__arrow"> &#10230;</span>
+        </Link>
+      </section>
       <section className="repair-view">
         <h2 className="repair-view__title">Ремонт</h2>
         <ul className="repair-view__action-list">
@@ -145,10 +150,6 @@ export default function Main({ cards, pathname, onLike, onCartAdd, faves, cart, 
             <button className="repair-view__action-btn repair-view__action-btn_type_tel" type="button" />
           </li>
         </ul>
-      </section>
-      <section className="build__start">
-        {/* <img className="build__image" src={cover} alt='' /> */}
-        <button className="build__button" type="button">Начать сборку</button>
       </section>
     </>
   );

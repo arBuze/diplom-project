@@ -1,0 +1,75 @@
+.build-section {
+  display: flex;
+  align-items: center;
+  background: url(../../images/anthony-roberts.jpg) no-repeat center/cover;
+  box-sizing: border-box;
+  gap: 15px;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.build-section__label {
+  width: 130px;
+  text-align: center;
+  border-radius: 10px;
+  font-weight: 300;
+  background-color: #E7E7E7;
+  padding: 5px;
+
+}
+
+.build-section__link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.build-section__number {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #FFF;
+}
+
+.build-section__number:hover {
+  color: #c9ffb4;
+}
+
+.build-section__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+.build-section__btn-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.build-section__confirm-btn {
+  background-color: #FFF;
+  color: #000;
+  border: none;
+}
+
+.build-section__cancel-btn {
+  color: #FFF;
+  background-color: #000;
+  border: none;
+}
+
+.build-section__confirm-btn:disabled {
+  opacity: .8;
+}
+
+.build-section__confirm-btn:not(:disabled):hover,
+.build-section__cancel-btn:hover {
+  cursor: pointer;
+}

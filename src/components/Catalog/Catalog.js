@@ -10,10 +10,9 @@ import supply from '../../images/r4cu2iny6vqgsp49pfoawg.jpg';
 import stor from '../../images/marc-pezin-uJMfXAdDMyE-unsplash.jpg';
 import sound from '../../images/vitaly-sacred-SLbN0BLiadY-unsplash.jpg';
 import per from '../../images/amjith-s-NOY_FzRublM-unsplash.jpg';
-import { cards } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 
-export default function Catalog() {
+export default function Catalog({ cards }) {
   return(
       <section className="catalog">
         <h2 className="catalog__title">Каталог</h2>

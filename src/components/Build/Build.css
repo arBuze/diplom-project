@@ -1,25 +1,95 @@
-.build__start {
-  height: 140px;
+.build {
+  padding: 15px 0 20px;
+}
+
+.build__title {
+  font-size: 26px;
+  line-height: 30px;
+  margin: 0;
+}
+
+.build__container {
+  border-radius: 15px;
+  background-color: #FFF;
+  padding-bottom: 30px;
+}
+
+.build__start-container {
+  width: 100%;
   display: flex;
   align-items: center;
+  gap: 30px;
   border-radius: 15px;
-  background: #FFF url(../../images/anthony-roberts.jpg) no-repeat center/cover;
+  background: url(../../images/anthony-roberts.jpg) no-repeat center/cover;
+  box-sizing: border-box;
+  padding: 30px;
 }
 
-.build__button {
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 700;
+.build__input-container {
+  width: 250px;
+  border-radius: 10px;
+  background-color: #E7E7E7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.build__start-btn {
+  width: 100%;
   background-color: #FFF;
+  font-size: 20px;
+  font-weight: 500;
   border: none;
   border-radius: 10px;
-  padding: 10px;
-  margin-left: 30px;
+  padding: 10px 0;
 }
 
-/* .build__image {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  object-position: 0 -180px;
-} */
+.build__start-btn:hover {
+  cursor: pointer;
+}
+
+.build__label {
+  font-weight: 300;
+  margin: 5px 0;
+}
+
+.build__check {
+  margin-right: 5px;
+}
+
+.build__check:hover {
+  cursor: pointer;
+}
+
+.build__decor-list {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  flex-grow: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.build__decor-item {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: rgba(63, 209, 255, .6);
+}
+
+.dec {
+  background-color: rgba(63, 209, 255, .8);
+  width: 92px;
+}
+
+.build__text {
+  font-size: 18px;
+  line-height: 22px;
+  padding: 0 30px;
+  margin: 0 0 10px;
+}
+
+.build__text_title {
+  font-weight: 500;
+  margin-top: 30px;
+}

@@ -4,8 +4,11 @@ import Filters from '../Filters/Filters';
 import ProductsList from '../ProductsList/ProductsList';
 import './ComputerCases.css';
 import { wordEnd, wordEnd1 } from '../../utils/constants';
+import BuildSection from '../BuildSection/BuildSection';
 
-export default function ComputerCases({ name, cards, width, scroll, pathname, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick }) {
+export default function ComputerCases({ name, cards, width, scroll, pathname,
+  onLike, onCartAdd, faves, cart, onDislike, onCartRemove, onChangeClick,
+  isBuild, onBuildAdd, onBuildConfirm, onBuildCancel, buildProducts, onBuild }) {
   const [displayType, setDisplaytype] = useState('grid');
   const [isReversed, setIsReversed] = useState(false);
   const [shownCards, setShowCards] = useState([]);
@@ -233,6 +236,7 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
         {pathname === '/search' ? `Найден${wordEnd1(cards.length)} ${cards.length} товар${wordEnd(cards.length)}` : name}
       </h2>
       {!isShown && <Breadcrumps />}
+      { isBuild && <BuildSection buildProducts={buildProducts} onBuild={onBuild} onBuildConfirm={onBuildConfirm} onBuildCancel={onBuildCancel} /> }
       <div className="computer-cases__container">
         { width >= 1024 &&
           <Filters width={width} limits={limits} checks={checks}
@@ -274,7 +278,8 @@ export default function ComputerCases({ name, cards, width, scroll, pathname, on
             faves={faves} cart={cart}
             onLike={onLike} onDislike={onDislike}
             onCartAdd={onCartAdd} onCartRemove={onCartRemove}
-            onChangeClick={onChangeClick} />
+            onChangeClick={onChangeClick}
+            isBuild={isBuild} onBuildAdd={onBuildAdd} buildProducts={buildProducts} />
         </div>
       </div>
     </section>
