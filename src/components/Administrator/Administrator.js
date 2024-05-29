@@ -26,6 +26,7 @@ export default function Administrator() {
   const [orders, setOrders] = useState([]);
   const [applications, setApplications] = useState([]);
   const [sales, setSales] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   /* const [isStatusPopupOpen, setIsStatusPopupOpen] = useState(false); */
   const { width } = useWindowDimensions();
@@ -61,8 +62,8 @@ export default function Administrator() {
     const token = localStorage.getItem('adminId');
 
     if (token) {
-      Promise.all([apir.getAdminData(), api.getProducts(), /* api.getSales(), */ apir.getOrders(), apir.getApplications()])
-      .then(([adminData, productData, /* salesData, */ ordersData, repairsData]) => {
+      Promise.all([apir.getAdminData(), api.getProducts(), /* api.getSales(), */ apir.getOrders(), apir.getApplications(), api.getFeedbacks()])
+      .then(([adminData, productData, /* salesData, */ ordersData, repairsData, feedData]) => {
         console.log(productData);
         /* setAdmins(adminsData); */
         setCurrentAdmin(adminData);
@@ -70,6 +71,8 @@ export default function Administrator() {
        /*  setSales(salesData); */
         setOrders(ordersData.reverse());
         setApplications(repairsData);
+        console.log('ad',repairsData);
+        setFeedbacks(feedData);
       })
       .catch((err) => {
         console.log(err);
@@ -164,6 +167,28 @@ export default function Administrator() {
     }
   }
 
+  function handleUpdateFeedStatus(isApproved, productId, feedbackId) {
+    if (isApproved) {
+      apir.updateFeedbackStatus(feedbackId)
+        .then((feed) => {
+          setFeedbacks(state => state.map((item) => item._id === feed._id ? feed : item));
+          const productFeeds = feedbacks.filter((item) => item.productId === productId && item.approved);
+          const ratingSum = productFeeds.reduce((sum, item) => sum + item.rating, 0) + feed.rating;
+          const rating = ratingSum / (productFeeds.length + 1);
+          return apir.updateProductRating(productId, rating)
+        })
+        .then((product) => {
+          setCards(state => state.map((item) => item._id === product._id ? product : item));
+        })
+        .catch((err) => console.log(err));
+    } else {
+      apir.deleteFeedback(feedbackId)
+        .then(() => setFeedbacks.filter((item) => !(item._id === feedbackId)))
+        .catch((err) => console.log(err));
+    }
+
+  }
+
   function handleAuth() {
     setIsAdministratorLogged(true);
     navigate('/admin/orders');
@@ -206,7 +231,7 @@ export default function Administrator() {
               <Route path='sales' element={
                 <Sales sales={sales} pathname={pathname} />
               } />
-              <Route path='feedbacks' element={<Feedbacks />} />
+              <Route path='feedbacks' element={<Feedbacks feeds={feedbacks} onStatusChange={handleUpdateFeedStatus} cards={cards} />} />
             </>
             : <Route element={<Navigate to={'/admin/signin'} replace />} />
           }

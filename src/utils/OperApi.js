@@ -104,6 +104,18 @@ class OperApi {
       .then((res) => this._getResponseData(res));
   }
 
+  updateProductRating(id, rating) {
+    return fetch(`${this._baseUrl}/products/${id}/rating`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        rating,
+      }),
+    })
+      .then((res) => this._getResponseData(res));
+  }
+
   deleteProduct(id) {
     return fetch(`${this._baseUrl}/products/${id}`, {
       method: 'DELETE',
@@ -152,6 +164,24 @@ class OperApi {
       body: JSON.stringify({
         status,
       }),
+    })
+      .then(res => this._getResponseData(res));
+  }
+
+  updateFeedbackStatus(feedbackId) {
+    return fetch(`${this._baseUrl}/feedbacks/${feedbackId}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: this._headers,
+    })
+      .then(res => this._getResponseData(res));
+  }
+
+  deleteFeedback(feedbackId) {
+    return fetch(`${this._baseUrl}/feedbacks/${feedbackId}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this._headers,
     })
       .then(res => this._getResponseData(res));
   }

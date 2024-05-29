@@ -145,7 +145,7 @@ class Api {
   }
 
   /* создание заказа */
-  createOrder(cart, phone, email, isGuest, payment) {
+  createOrder(cart, phone, email, isGuest, payment, toBuild) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
       credentials: 'include',
@@ -157,8 +157,9 @@ class Api {
           phone,
           email,
         },
-        status: payment === 'СБП' ? 'ждет оплаты' : 'оплачен',
+        status: payment === 'онлайн' ? 'ждет оплаты' : 'оплачен',
         payment,
+        toBuild,
       }),
     })
       .then(res => this._getResponseData(res));
@@ -217,24 +218,20 @@ class Api {
       .then((res) => this._getResponseData(res));
   }
 
-  updateProductRating(id, rating) {
-    return fetch(`${this._baseUrl}/products/${id}/rating`, {
-      method: 'PATCH',
-      credentials: 'include',
+  getFeedbacks() {
+    return fetch(`${this._baseUrl}/feedbacks`, {
       headers: this._headers,
-      body: JSON.stringify({
-        rating,
-      }),
     })
       .then((res) => this._getResponseData(res));
   }
 
   createFeedback(id, rating, comment, name, pluses, minuses) {
-    return fetch(`${this._baseUrl}/products/${id}/feedbacks`, {
+    return fetch(`${this._baseUrl}/feedbacks`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
+        productId: id,
         rating,
         comment,
         name,

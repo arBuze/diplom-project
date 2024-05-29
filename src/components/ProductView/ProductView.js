@@ -4,7 +4,7 @@ import photo from '../../images/user.svg';
 import { useEffect, useState } from 'react';
 import { BASE_PROD_URL } from '../../utils/constants';
 
-export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, isLoggedIn }) {
+export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, isLoggedIn, onFeedOpen }) {
   const [currentCard, setCurrentCard] = useState({});
   const ratingStars = [1, 2, 3, 4, 5];
   const starsColored = Math.round(4.4);
@@ -150,7 +150,7 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
             }
           </ul>
           <span className="product-view__feed-rating">{/* currentCard?.rating?.toFixed(1) */4.4} / 5.0</span>
-          {isLoggedIn && <button className="product-view__add-feedback-btn" type="button">оставить отзыв</button>}
+          {isLoggedIn && <button className="product-view__add-feedback-btn" type="button" onClick={onFeedOpen}>оставить отзыв</button>}
         </div>
         <ul className="product-view__feed-list" id="feedback">
           <li className="product-view__feed-item">

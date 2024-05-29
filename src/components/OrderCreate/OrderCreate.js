@@ -9,7 +9,7 @@ import { BASE_PROD_URL, phoneTransform, wordEnd } from '../../utils/constants';
 export default function OrderCreate({ cards, onOrderCreate }) {
   const currentUser = useContext(CurrentUserContext);
   const placeholderNumber = '+7 000 000-00-00';
-  const [values, setValues] = useState({ payment: 'СБП' });
+  const [values, setValues] = useState({ payment: 'онлайн' });
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -126,7 +126,7 @@ export default function OrderCreate({ cards, onOrderCreate }) {
           <div className="order-create__pay-container">
             <label className="order-create__pay-label">
               <input type="radio" className="order-create__pay-input" name='payment'
-                value={'СБП'} onChange={handleChange} checked={values.payment === 'СБП'} />
+                value={'онлайн'} onChange={handleChange} checked={values.payment === 'онлайн'} />
               <span className="order-create__pseudo-pay-input">Онлайн</span>
             </label>
             <label className="order-create__pay-label">

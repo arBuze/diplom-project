@@ -7,7 +7,7 @@ export default function AdminApps({ apps, onRepairStatusChange }) {
   const [seenShown, setSeenShown] = useState(false);
 
   useState(() => {
-    setAppsShown(apps.reverse());
+    setAppsShown(apps);
   }, [apps])
 
   useState(() => {
