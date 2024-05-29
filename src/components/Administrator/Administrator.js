@@ -72,7 +72,7 @@ export default function Administrator() {
         setOrders(ordersData.reverse());
         setApplications(repairsData);
         console.log('ad',repairsData);
-        setFeedbacks(feedData);
+        setFeedbacks(feedData.filter((item) => !item.approved));
       })
       .catch((err) => {
         console.log(err);
@@ -171,11 +171,11 @@ export default function Administrator() {
     if (isApproved) {
       apir.updateFeedbackStatus(feedbackId)
         .then((feed) => {
-          setFeedbacks(state => state.map((item) => item._id === feed._id ? feed : item));
+          setFeedbacks(feedbacks.filter((item) => !(item._id === feed._id)));
           const productFeeds = feedbacks.filter((item) => item.productId === productId && item.approved);
           const ratingSum = productFeeds.reduce((sum, item) => sum + item.rating, 0) + feed.rating;
           const rating = ratingSum / (productFeeds.length + 1);
-          return apir.updateProductRating(productId, rating)
+          return apir.updateProductRating(productId, rating);
         })
         .then((product) => {
           setCards(state => state.map((item) => item._id === product._id ? product : item));

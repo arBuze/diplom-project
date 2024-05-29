@@ -64,15 +64,14 @@ export default function Client() {
     console.log('in', token);
     if (token) {
       console.log('ini');
-      Promise.all([api.getUserData(), api.getUserOrders(), api.getUserApplications(), api.getFeedbacks()])
-        .then(([userData, ordersData, applicationsData, feedData]) => {
+      Promise.all([api.getUserData(), api.getUserOrders(), api.getUserApplications()])
+        .then(([userData, ordersData, applicationsData]) => {
           setCurrentUser(userData);
           console.log(ordersData, userData);
           setOrders(ordersData);
           setApplications(applicationsData);
           setCart(userData.cart);
           setFavorites(userData.favorites);
-          setFeedbacks(feedData.filter((item) => item.approved));
         })
         .catch((err) => {
           console.log(err);
@@ -82,10 +81,11 @@ export default function Client() {
 
   /* получение товаров и акций */
   useEffect(() => {
-    Promise.all([api.getProducts()/* , api.getSales() */])
-      .then(([productData, salesData]) => {
-        /* setSales(salesData); */
+    Promise.all([api.getProducts(), api.getSales(), api.getFeedbacks()])
+      .then(([productData, salesData, feedData]) => {
+        setSales(salesData);
         setCards(productData.reverse());
+        setFeedbacks(feedData.filter((item) => item.approved));
       })
       .catch((err) => {
         console.log(err);
