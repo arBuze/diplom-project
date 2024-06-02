@@ -4,16 +4,17 @@ import photo from '../../images/user.svg';
 import { useEffect, useState } from 'react';
 import { BASE_PROD_URL } from '../../utils/constants';
 
-export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, isLoggedIn, onFeedOpen }) {
+export default function ProductView({ pathname, cards, onLike, onCartAdd, faves, cart, onDislike, onCartRemove, isLoggedIn, onFeedOpen, feed }) {
   const [currentCard, setCurrentCard] = useState({});
+  const [feedShown, setFeedShown] = useState([]);
   const ratingStars = [1, 2, 3, 4, 5];
-  const starsColored = Math.round(4.4);
   const isInCart = cart.find((item) => item.id === currentCard?._id);
 
   useEffect(() => {
     const id = pathname.slice(pathname.lastIndexOf('/') + 1,);
     const card = cards.find((item) => item._id === id);
     setCurrentCard(card);
+    setFeedShown(feed.filter((item) => item.product === id));
   }, [cards, pathname])
 
   function onLinkClick(e) {
@@ -63,13 +64,13 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
             <ul className="products-list__rating products-list__rating_place_product">
               {
                 ratingStars.map((item) =>
-                  <li key={item} className={`products-list__star ${item <= starsColored ? 'products-list__star_full' : ''}`} />
+                  <li key={item} className={`products-list__star ${item <= Math.round(currentCard?.rating) ? 'products-list__star_full' : ''}`} />
                 )
               }
             </ul>
-            <span className="product-view__rating-value">{/* currentCard?.rating?.toFixed(1) */4.4}</span>
+            <span className="product-view__rating-value">{currentCard?.rating?.toFixed(1)}</span>
             <a className="product-view__feedback-link" href="#feedback" onClick={onLinkClick}>Отзывы:
-              {/* <span className="product-view__feedback-number"> */} 3{/* </span> */}
+              {/* <span className="product-view__feedback-number"> */} {feedShown.length}{/* </span> */}
             </a>
           </div>
           {/* <div className="product-view__colors">
@@ -145,48 +146,61 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
           <ul className="products-list__rating products-list__rating_place_product">
             {
               ratingStars.map((item) =>
-                <li key={item} className={`products-list__star ${item <= starsColored ? 'products-list__star_full' : ''}`} />
+                <li key={item} className={`products-list__star ${item <= Math.round(currentCard?.rating) ? 'products-list__star_full' : ''}`} />
               )
             }
           </ul>
-          <span className="product-view__feed-rating">{/* currentCard?.rating?.toFixed(1) */4.4} / 5.0</span>
+          <span className="product-view__feed-rating">{currentCard?.rating?.toFixed(1)} / 5.0</span>
           {isLoggedIn && <button className="product-view__add-feedback-btn" type="button" onClick={onFeedOpen}>оставить отзыв</button>}
         </div>
         <ul className="product-view__feed-list" id="feedback">
-          <li className="product-view__feed-item">
-            <div className="product-view__user-info">
-              <img className="product-view__user-photo" crossOrigin="true" src={photo} alt='аватар' />
-              <span className="product-view__user-name">Иванов И.</span>
-              <ul className="products-list__rating products-list__rating_place_product">
-                <li className="products-list__star products-list__star_full"></li>
-                <li className="products-list__star products-list__star_full"></li>
-                <li className="products-list__star products-list__star_full"></li>
-                <li className="products-list__star products-list__star_full"></li>
-                <li className="products-list__star "></li>
-             </ul>
-             <span className="product-view__feed-data">10.05.24 13:02</span>
-            </div>
-            <div className="product-view__comment-container">
-              <span className="product-view__part-name">Достоинства</span>
-              <p className="product-view__comment">
-                Подойдет под длинную видеокарту, есть место для кабель менеджмента
-              </p>
-            </div>
-            <div className="product-view__comment-container">
-              <span className="product-view__part-name">Недостатки</span>
-              <p className="product-view__comment">Очень тонкий металл. Нет USB 3.0</p>
-            </div>
-            <div className="product-view__comment-container">
-              <span className="product-view__part-name">Комментарий</span>
-              <p className="product-view__comment">Передняя панель фактурная - не маркая и не глянцевая, возле кнопок глянцевая вставка, кнопки и разъемы рабочие</p>
-            </div>
-            <div className="product-view__feed-rating">
-              <button className="product-view__up-vote" type="button" />
-              <span className="product-view__feed-rating-value">1</span>
-              <button className="product-view__down-vote" type="button" />
-            </div>
-          </li>
-          <li className="product-view__feed-item">
+          {
+            feedShown?.map((item) =>
+              <li className="product-view__feed-item" key={item._id}>
+                <div className="product-view__user-info">
+                  <img className="product-view__user-photo" crossOrigin="true" src={photo} alt='аватар' />
+                  <span className="product-view__user-name">{item.name}</span>
+                  <ul className="products-list__rating products-list__rating_place_product">
+                    {
+                      ratingStars.map((star) =>
+                        <li key={item} className={`products-list__star ${star <= item.rating ? 'products-list__star_full' : ''}`} />
+                      )
+                    }
+                 </ul>
+                 <span className="product-view__feed-data">{[item.createdAt.slice(8,10), item.createdAt.slice(5,7), item.createdAt.slice(0,4)].join('.') + ' ' + item.createdAt.slice(11,16)}</span>
+                </div>
+                { item.pluses &&
+                  <div className="product-view__comment-container">
+                    <span className="product-view__part-name">Достоинства</span>
+                    <p className="product-view__comment">
+                      {item.pluses}
+                    </p>
+                  </div>
+                }
+                { item.minuses &&
+                  <div className="product-view__comment-container">
+                    <span className="product-view__part-name">Недостатки</span>
+                    <p className="product-view__comment">{item.minuses}</p>
+                  </div>
+                }
+                { item.comment &&
+                  <div className="product-view__comment-container">
+                    <span className="product-view__part-name">Комментарий</span>
+                    <p className="product-view__comment">{item.comment}</p>
+                  </div>
+                }
+                { (item.pluses && item.minuses && item.comment) &&
+                  <div className="product-view__feed-rating">
+                    <button className="product-view__up-vote" type="button" />
+                    <span className="product-view__feed-rating-value">{item.likes.length}</span>
+                    <button className="product-view__down-vote" type="button" />
+                  </div>
+                }
+              </li>
+            )
+          }
+        </ul>
+          {/* <li className="product-view__feed-item">
             <div className="product-view__user-info">
               <img className="product-view__user-photo" src={photo} alt='аватар' />
               <span className="product-view__user-name">Иванов И.</span>
@@ -216,9 +230,8 @@ export default function ProductView({ pathname, cards, onLike, onCartAdd, faves,
               <span className="product-view__feed-rating-value">1</span>
               <button className="product-view__down-vote" type="button" />
             </div>
-          </li>
-        </ul>
-        <button className="product-view__more-btn" type="button">показать еще</button>
+          </li> */}
+        {feed.length > 5 && <button className="product-view__more-btn" type="button">показать еще</button>}
       </div>
     </section>
   )

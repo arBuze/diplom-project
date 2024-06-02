@@ -101,13 +101,13 @@ export default function Login({ onAuth, navigate }) {
               <button className={`login__hide-btn ${shown ? 'unhidden' : ''}`} type="button" onClick={show} />
             </div>
           </label>
-          <div className="login__other">
+          {/* <div className="login__other"> */}
             {/* <label className="login__remember-label">
               <input type="checkbox" className="login__remember-check" />
               Запомнить меня
             </label> */}
-            <button type="button" className="login__forgot-btn">Забыли пароль</button>
-          </div>
+           {/*  <button type="button" className="login__forgot-btn">Забыли пароль</button>
+          </div> */}
           <span className="login__input-error">{errors?.password}</span>
 
           <span className="login__auth-error">{errors?.signin}</span>

@@ -81,9 +81,9 @@ export default function Client() {
 
   /* получение товаров и акций */
   useEffect(() => {
-    Promise.all([api.getProducts(), api.getSales(), api.getFeedbacks()])
-      .then(([productData, salesData, feedData]) => {
-        setSales(salesData);
+    Promise.all([api.getProducts(), /* api.getSales(), */ api.getFeedbacks()])
+      .then(([productData, /* salesData, */ feedData]) => {
+        /* setSales(salesData); */
         setCards(productData.reverse());
         setFeedbacks(feedData.filter((item) => item.approved));
       })
@@ -499,7 +499,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'computer-cases')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='processors' element={
                 <ComputerCases name='Процессоры' cards={cards.filter((item) => item.category === 'processors')} width={width} scroll={scroll} pathname={pathname}
@@ -513,7 +513,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'processors')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='motherboards' element={
                 <ComputerCases name='Материнские платы' cards={cards.filter((item) => item.category === 'motherboards')} width={width} scroll={scroll} pathname={pathname}
@@ -527,7 +527,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'motherboards')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='video-cards' element={
                 <ComputerCases name='Видеокарты' cards={cards.filter((item) => item.category === 'video-cards')} width={width} scroll={scroll} pathname={pathname}
@@ -541,7 +541,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'video-cards')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='coolers' element={
                 <ComputerCases name='Кулеры' cards={cards.filter((item) => item.category === 'coolers')} width={width} scroll={scroll} pathname={pathname}
@@ -555,7 +555,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'coolers')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='rams' element={
                 <ComputerCases name='Оперативная память' cards={cards.filter((item) => item.category === 'rams')} width={width} scroll={scroll} pathname={pathname}
@@ -569,7 +569,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'rams')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='power-units' element={
                 <ComputerCases name='Блок питания' cards={cards.filter((item) => item.category === 'power-units')} width={width} scroll={scroll} pathname={pathname}
@@ -583,7 +583,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'power-units')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='storages' element={
                 <ComputerCases name='Хранение данных' cards={cards.filter((item) => item.category === 'storages')} width={width} scroll={scroll} pathname={pathname}
@@ -597,7 +597,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'storages')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='sound-boards' element={
                 <ComputerCases name='Звуковые карты' cards={cards.filter((item) => item.category === 'sound-boards')} width={width} scroll={scroll} pathname={pathname}
@@ -611,7 +611,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'sound-boards')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
               <Route path='peripheral' element={
                 <ComputerCases name='Периферия' cards={cards.filter((item) => item.category === 'peripheral')} width={width} scroll={scroll} pathname={pathname}
@@ -625,7 +625,7 @@ export default function Client() {
                 <ProductView pathname={pathname} cards={cards.filter((item) => item.category === 'peripheral')} faves={favorites} cart={cart}
                   onLike={handleLikeClick} onCartAdd={handleAddToCartClick}
                   onDislike={handleDislikeClick} onCartRemove={handleRemoveFromCart}
-                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} />
+                  isLoggedIn={loggedIn} onFeedOpen={handleFeedOpen} feed={feedbacks} />
               } />
             </Route>
             <Route path='/repair' element={
