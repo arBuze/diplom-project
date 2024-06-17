@@ -2,13 +2,8 @@ import './Favorite.css'
 import '../Cart/Cart.css'
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 import ProductsList from '../ProductsList/ProductsList';
-import { useEffect } from 'react';
 
 export default function Favorite({ cards, width, pathname, faves, cart, onLike, onDislike, onCartAdd, onCartRemove }) {
-  useEffect(() => {
-    console.log(faves);
-  },[])
-
   return(
     <section className="favorite">
       <h2 className="favorite__title">Избранное</h2>

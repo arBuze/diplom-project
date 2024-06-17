@@ -1,5 +1,6 @@
 @import url(../../vendor/normalize.css);
 @import url(../../vendor/fonts/fonts.css);
+@import url(https://cdn.envybox.io/widget/cbk.css);
 
 .page {
   -webkit-font-smoothing: antialiased;

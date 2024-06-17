@@ -231,7 +231,7 @@ export default function ProductForm({ pathname, /* productInfo, */cards, onProdu
   return(
     <>
       <form className="product-upd__form" name="update">
-        <h2 className="product-upd__form-title">{pathname === '/admin/create-product' ? 'Создание' : 'Изменение'} товара</h2>
+        <h2 className="product-upd__form-title">{pathname === '/admin/create-product' ? 'Добавление' : 'Изменение'} товара</h2>
         <label className="product-upd__label" id='name'>
           <span className="product-upd__field-name">Название</span>
           <input type="text" className="product-upd__input product-upd__input_name"
@@ -390,7 +390,7 @@ export default function ProductForm({ pathname, /* productInfo, */cards, onProdu
         ? <div className="product-upd__btn-container">
             <button type="button" className="product-upd__create-btn"
               disabled={!isValid} onClick={handleSubmit} >
-              Создать
+              Добавить
             </button>
             <button type="button" className="product-upd__reset-btn" onClick={resetClick}>Сбросить</button>
           </div>

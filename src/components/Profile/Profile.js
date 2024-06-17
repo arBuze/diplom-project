@@ -3,7 +3,7 @@ import './Profile.css';
 import Breadcrumps from '../Breadcrumps/Breadcrumps';
 
 
-export default function Profile({ children, title, pathname }) {
+export default function Profile({ children, title, pathname, onSignOut }) {
   const navigate = useNavigate();
 
   function handleExitBtnClick() {
@@ -39,7 +39,7 @@ export default function Profile({ children, title, pathname }) {
               <Link to='/favorite' className="profile__link">Избранное</Link>
             </li>
           </ul>
-          <button type="button" className="profile__exit-btn" onClick={handleExitBtnClick}>Выйти из аккаунта</button>
+          <button type="button" className="profile__exit-btn" onClick={onSignOut}>Выйти из аккаунта</button>
         </div>
         <div className="profile__info-container">
           {children}

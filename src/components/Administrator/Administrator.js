@@ -242,7 +242,7 @@ export default function Administrator() {
           selectedOrder={selectedOrder} onStatusChange={handleStatusChangeClick} />
         <PopupCreateSale />
       </main>
-      <TopButton scroll={scroll} />
+      <TopButton scroll={scroll} pathname={pathname} />
     </div>
   );
 }

@@ -94,7 +94,7 @@ class Api {
         category,
         image: images[0],
         productName: name,
-        productCost: price,
+        productCost: category === 'video-cards' ? (price * 0.9).toFixed(0) : price,
         quantity: 1,
       })
     })

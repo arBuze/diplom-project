@@ -1,6 +1,7 @@
 import './TopButton.css';
 
-export default function TopButton({ scroll }) {
+export default function TopButton({ scroll, pathname }) {
+
   function scrollToTop() {
     window.scrollTo({
       top: 0,
@@ -12,7 +13,7 @@ export default function TopButton({ scroll }) {
   return(
     <div className='cont'>
       <button className={`top-button ${scroll <= 250 ? 'hidden' : ''}`} type="button" onClick={scrollToTop} />
-      <button className="top-button btn" />
+      {!pathname.includes('admin') && <a href="#showchat" className="top-button btn"  />}
     </div>
   );
 };
